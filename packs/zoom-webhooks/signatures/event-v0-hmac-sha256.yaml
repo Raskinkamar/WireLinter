@@ -1,0 +1,32 @@
+schemaVersion: 1
+id: event-v0-hmac-sha256
+sourceRefs:
+  - verification
+secret:
+  ref: secret-token
+  representation: utf8
+bindings:
+  signature-candidates:
+    fromHeader:
+      name: x-zm-signature
+      cardinality: exactly-one
+      trimSpace: true
+  timestamp:
+    fromHeader:
+      name: x-zm-request-timestamp
+      cardinality: exactly-one
+      trimSpace: true
+  body:
+    fromRawBody:
+      requireFidelity: exact
+message:
+  - literal: "v0:"
+  - binding: timestamp
+    suffix: ":"
+  - binding: body
+candidates:
+  binding: signature-candidates
+  encoding: hex
+  stripPrefix: "v0="
+mac:
+  algorithm: hmac-sha256

@@ -1,0 +1,29 @@
+packProtocol: "1.2"
+id: revenuecat-webhooks-hmac
+name: RevenueCat HMAC-Signed Webhooks
+packVersion: 0.1.0
+providerDocsRevision: "2026-08-17"
+minWireLinterVersion: 0.1.0
+capabilities:
+  - passive-lint
+secrets:
+  signing-secret:
+    env: REVENUECAT_WEBHOOK_SIGNING_SECRET
+    required: false
+    description: Signing secret generated when HMAC webhook signing is enabled
+docs:
+  webhooks:
+    url: https://www.revenuecat.com/docs/integrations/webhooks
+    revision: "2026-08-17"
+    section: Webhook Signature Verification (HMAC)
+signatures:
+  timestamp-body-v1: signatures/timestamp-body-v1.yaml
+rules:
+  - rules/signature.yaml
+  - rules/method.yaml
+  - rules/ack-status.yaml
+metadata:
+  status: preview
+  maintainer: wirelint
+  surface: hmac-signing-enabled
+  replayTolerance: receiver-policy

@@ -1,0 +1,12 @@
+schemaVersion: 1
+id: WL-ZOOP-METHOD-001
+kind: cel
+scope: envelope
+severity: error
+stability: preview
+title: Zoop marketplace webhooks must use POST
+explanation: Zoop's marketplace webhook registration API defines the webhook method as the fixed value POST.
+docsRef: registration
+assert: envelope.request.method == "POST"
+evidencePointers:
+  - /request/method

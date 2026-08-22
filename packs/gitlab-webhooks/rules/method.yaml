@@ -1,0 +1,13 @@
+schemaVersion: 1
+id: WL-GITLAB-METHOD-001
+kind: cel
+scope: envelope
+severity: error
+stability: preview
+title: GitLab webhook delivery must use POST
+explanation: GitLab project and group webhook events are delivered as HTTP POST requests.
+docsRef: webhook-events
+remediationKey: gitlab-webhook-method
+assert: envelope.request.method == "POST"
+evidencePointers:
+  - /request/method

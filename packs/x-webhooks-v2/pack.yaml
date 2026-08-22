@@ -1,0 +1,29 @@
+packProtocol: "1.2"
+id: x-webhooks-v2
+name: X Webhooks v2 Event Delivery
+packVersion: 0.1.0
+providerDocsRevision: "2026-08-17"
+minWireLinterVersion: 0.1.0
+capabilities:
+  - passive-lint
+secrets:
+  consumer-secret:
+    env: X_CONSUMER_SECRET
+    required: false
+    description: X app consumer secret used for webhook event signatures
+docs:
+  quickstart:
+    url: https://docs.x.com/x-api/webhooks/quickstart
+    revision: "2026-08-17"
+    section: Signature verification
+signatures:
+  event-hmac-sha256: signatures/event-hmac-sha256.yaml
+rules:
+  - rules/signature.yaml
+  - rules/method.yaml
+metadata:
+  status: preview
+  maintainer: wirelint
+  surface: v2-post-event-delivery
+  excludes:
+    - crc-get

@@ -1,0 +1,25 @@
+packProtocol: "1.2"
+id: okta-event-hook-verification
+name: Okta Event Hook Verification
+packVersion: 0.1.0
+providerDocsRevision: "2026-08-17"
+minWireLinterVersion: 0.1.0
+capabilities:
+  - passive-lint
+docs:
+  concepts:
+    url: https://developer.okta.com/docs/concepts/event-hooks/
+    revision: "2026-08-17"
+    section: One-time verification request
+  implementation:
+    url: https://developer.okta.com/docs/guides/event-hook-implementation/-/main/
+    revision: "2026-08-17"
+    section: Event hook initial verification
+rules:
+  - rules/method.yaml
+  - rules/challenge-header.yaml
+  - rules/echo-verification.yaml
+metadata:
+  status: preview
+  maintainer: wirelint
+  surface: one-time-event-hook-endpoint-verification

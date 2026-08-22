@@ -1,0 +1,12 @@
+schemaVersion: 1
+id: WL-PLUGNOTAS-POST-METHOD-001
+kind: cel
+scope: envelope
+severity: error
+stability: preview
+title: PlugNotas POST webhook must use POST
+explanation: PlugNotas webhook registration examples configure the callback method as POST; this contract is explicitly for that configuration.
+docsRef: webhooks
+assert: envelope.request.method == "POST"
+evidencePointers:
+  - /request/method

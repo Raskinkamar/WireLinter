@@ -1,0 +1,26 @@
+packProtocol: "1.2"
+id: clickup-webhooks
+name: ClickUp API Webhooks
+packVersion: 0.1.0
+providerDocsRevision: "2026-08-17"
+minWireLinterVersion: 0.1.0
+capabilities:
+  - passive-lint
+secrets:
+  webhook-secret:
+    env: CLICKUP_WEBHOOK_SECRET
+    required: false
+    description: Secret returned in the ClickUp webhook object
+docs:
+  signature:
+    url: https://developer.clickup.com/docs/webhooksignature
+    revision: "2026-08-17"
+    section: Webhook signature
+signatures:
+  payload-hmac-sha256: signatures/payload-hmac-sha256.yaml
+rules:
+  - rules/signature.yaml
+metadata:
+  status: preview
+  maintainer: wirelint
+  surface: api-webhook

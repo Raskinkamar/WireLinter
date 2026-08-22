@@ -1,0 +1,16 @@
+schemaVersion: 1
+id: WL-RD-STATION-ACK-STATUS-001
+kind: cel
+scope: envelope
+severity: error
+stability: preview
+title: RD Station webhook acknowledgement must be 2xx
+explanation: RD Station requires webhook endpoints to be functional and respond to POST requests with an HTTP 2xx status; initial subscription validation also requires a successful 2xx response.
+docsRef: webhooks
+remediationKey: rd-station-webhook-ack-status
+requires: has(envelope.response)
+assert: envelope.response.status >= 200 && envelope.response.status < 300
+evidencePointers:
+  - /response/status
+messages:
+  evidence-unavailable: "No response status was captured, so RD Station acknowledgement success cannot be decided."

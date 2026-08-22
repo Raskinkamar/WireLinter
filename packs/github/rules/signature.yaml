@@ -1,0 +1,20 @@
+schemaVersion: 1
+id: WL-GH-SIGNATURE-001
+kind: signature
+scope: envelope
+severity: error
+stability: preview
+title: GitHub webhook signature must be valid
+explanation: GitHub webhook authenticity must be verified against the exact request body and the webhook secret using X-Hub-Signature-256.
+signatureRef: webhook-hmac-sha256
+docsRef: webhook-signature-docs
+remediationKey: github-webhook-signature
+messages:
+  missing-signature: "X-Hub-Signature-256 is missing from a complete header capture. Configure a webhook secret and verify the SHA-256 signature before processing the delivery."
+  malformed-signature: "X-Hub-Signature-256 is malformed; GitHub SHA-256 signatures use the sha256=<hex digest> form."
+  missing-signature-input: "X-Hub-Signature-256 is missing the digest required for verification."
+  ambiguous-signature-input: "More than one X-Hub-Signature-256 value was observed where GitHub signature verification requires one delivery signature."
+  signature-mismatch: "X-Hub-Signature-256 does not match HMAC-SHA256 of the exact raw request body for the supplied webhook secret."
+  secret-unavailable: "Set GITHUB_WEBHOOK_SECRET to verify authenticity; the remaining delivery checks can still run without it."
+  insufficient-body-fidelity: "GitHub signs the exact request body. This capture contains reconstructed or unavailable body bytes, so signature verification is not trustworthy."
+  insufficient-header-evidence: "The captured header set is incomplete, so WireLinter cannot prove whether X-Hub-Signature-256 was absent."

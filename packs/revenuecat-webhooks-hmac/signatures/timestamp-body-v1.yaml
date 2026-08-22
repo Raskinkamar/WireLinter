@@ -1,0 +1,41 @@
+schemaVersion: 1
+id: timestamp-body-v1
+sourceRefs:
+  - webhooks
+secret:
+  ref: signing-secret
+  representation: utf8
+parsers:
+  signature-fields:
+    sourceHeader:
+      name: X-RevenueCat-Webhook-Signature
+      cardinality: exactly-one
+      trimSpace: true
+    format:
+      type: delimited-pairs
+      itemDelimiter: ","
+      pairDelimiter: "="
+      trimSpace: true
+bindings:
+  timestamp:
+    fromField:
+      parser: signature-fields
+      key: t
+      cardinality: exactly-one
+  signature-candidates:
+    fromField:
+      parser: signature-fields
+      key: v1
+      cardinality: exactly-one
+  body:
+    fromRawBody:
+      requireFidelity: exact
+message:
+  - binding: timestamp
+    suffix: "."
+  - binding: body
+candidates:
+  binding: signature-candidates
+  encoding: hex
+mac:
+  algorithm: hmac-sha256

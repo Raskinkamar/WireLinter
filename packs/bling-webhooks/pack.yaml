@@ -1,0 +1,31 @@
+packProtocol: "1.2"
+id: bling-webhooks
+name: Bling Webhooks
+packVersion: 0.1.0
+providerDocsRevision: "2026-08-18"
+minWireLinterVersion: 0.1.0
+capabilities:
+  - passive-lint
+secrets:
+  client-secret:
+    env: BLING_CLIENT_SECRET
+    required: false
+    description: Client secret do aplicativo Bling
+docs:
+  webhooks:
+    url: https://developer.bling.com.br/webhooks
+    revision: "2026-08-18"
+    section: Autenticação, Idempotência e Retentativas
+signatures:
+  payload-hmac-sha256: signatures/payload-hmac-sha256.yaml
+rules:
+  - rules/signature.yaml
+  - rules/ack-status.yaml
+  - rules/ack-duration.yaml
+metadata:
+  status: preview
+  maintainer: wirelint
+  vendor: bling
+  region: BR
+  surface: erp-webhook
+  deliveryModel: retries-up-to-three-days

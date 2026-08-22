@@ -1,0 +1,18 @@
+schemaVersion: 1
+id: WL-WEBEX-CC-SIGNATURE-001
+kind: signature
+scope: envelope
+severity: error
+stability: preview
+title: Webex Contact Center webhook signature must be valid
+explanation: When a subscription secret is configured, Webex Contact Center signs the unmodified raw request body with HMAC-SHA256 and sends the hexadecimal digest in X-WebexCC-Signature.
+signatureRef: raw-body-hmac-sha256
+docsRef: using-webhooks
+remediationKey: webex-contact-center-webhook-signature
+messages:
+  missing-signature: "X-WebexCC-Signature is missing from a complete capture of signed subscription mode."
+  malformed-signature: "X-WebexCC-Signature is malformed; Webex Contact Center uses a hexadecimal HMAC-SHA256 digest."
+  signature-mismatch: "X-WebexCC-Signature does not match HMAC-SHA256 of the exact raw request body for the supplied subscription secret."
+  secret-unavailable: "Set WEBEX_CC_WEBHOOK_SECRET to verify authenticity."
+  insufficient-body-fidelity: "Webex Contact Center signs the unmodified request body, so reconstructed or unavailable bytes cannot prove authenticity."
+  insufficient-header-evidence: "The captured header set is incomplete, so X-WebexCC-Signature cannot be proven absent."

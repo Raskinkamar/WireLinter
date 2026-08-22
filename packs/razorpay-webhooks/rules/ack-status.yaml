@@ -1,0 +1,16 @@
+schemaVersion: 1
+id: WL-RAZORPAY-ACK-STATUS-001
+kind: cel
+scope: envelope
+severity: error
+stability: preview
+title: Razorpay webhook acknowledgement must be 2xx
+explanation: Razorpay treats non-2xx responses as delivery failures and retries them.
+docsRef: delivery
+remediationKey: razorpay-webhook-ack-status
+requires: has(envelope.response)
+assert: envelope.response.status >= 200 && envelope.response.status < 300
+evidencePointers:
+  - /response/status
+messages:
+  evidence-unavailable: "No response status was captured, so Razorpay acknowledgement success cannot be decided."

@@ -1,0 +1,12 @@
+schemaVersion: 1
+id: WL-BLIP-MESSAGE-RECEIVER-METHOD-001
+kind: cel
+scope: envelope
+severity: error
+stability: preview
+title: Blip chatbot messages must be delivered with POST
+explanation: Blip documents that all messages are delivered to the configured chatbot messages URL as HTTP POST requests.
+docsRef: receiver
+assert: envelope.request.method == "POST"
+evidencePointers:
+  - /request/method

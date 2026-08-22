@@ -1,0 +1,12 @@
+schemaVersion: 1
+id: WL-MELHOR-ENVIO-METHOD-001
+kind: cel
+scope: envelope
+severity: error
+stability: preview
+title: Melhor Envio webhooks must use POST
+explanation: Melhor Envio documents webhook delivery requests using HTTP POST.
+docsRef: webhooks
+assert: envelope.request.method == "POST"
+evidencePointers:
+  - /request/method

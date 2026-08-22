@@ -1,0 +1,24 @@
+packProtocol: "1.2"
+id: zenvia-v2-webhooks-delivery
+name: Zenvia v2 Webhooks Delivery
+packVersion: 0.1.0
+providerDocsRevision: "2026-08-18"
+minWireLinterVersion: 0.1.0
+capabilities:
+  - passive-lint
+docs:
+  api:
+    url: https://zenvia.github.io/
+    revision: "2026-08-18"
+    section: Webhooks
+rules:
+  - rules/method.yaml
+  - rules/content-type.yaml
+metadata:
+  status: preview
+  maintainer: wirelint
+  vendor: zenvia
+  region: BR
+  surface: messaging-webhook-delivery-v2
+  authModel: oauth-client-credentials-when-configured
+  authPolicyNote: "Zenvia v2 supports webhook authentication through OAuth client_credentials. Access tokens are dynamic and the public reference does not define a stable token value for constant-time secret-match, so this contract validates the documented delivery wire format without pretending to authenticate the bearer token."

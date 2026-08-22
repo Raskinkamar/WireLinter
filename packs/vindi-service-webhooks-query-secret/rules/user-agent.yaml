@@ -1,0 +1,22 @@
+schemaVersion: 1
+id: WL-VINDI-SERVICE-USER-AGENT-001
+kind: cel
+scope: envelope
+severity: warning
+stability: preview
+title: Vindi Service webhook User-Agent should identify Vindi Hookshot
+explanation: Vindi documents User-Agent Vindi-Hookshot/1.0 on generated webhook requests.
+docsRef: delivery
+requires: >-
+  envelope.request.headersCompleteness == "complete" ||
+  envelope.request.headers.exists(h, h.name.lowerAscii() == "user-agent")
+assert: >-
+  envelope.request.headers.exists(
+    h,
+    h.name.lowerAscii() == "user-agent" &&
+    h.value == "Vindi-Hookshot/1.0"
+  )
+evidencePointers:
+  - /request/headers
+messages:
+  evidence-unavailable: "User-Agent was not observed, but the request header capture is incomplete."

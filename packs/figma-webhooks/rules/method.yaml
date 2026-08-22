@@ -1,0 +1,12 @@
+schemaVersion: 1
+id: WL-FIGMA-WEBHOOKS-METHOD-001
+kind: cel
+scope: envelope
+severity: error
+stability: preview
+title: Figma webhook events must use POST
+explanation: Figma delivers webhook events to the configured endpoint using HTTP POST requests.
+docsRef: events
+assert: envelope.request.method == "POST"
+evidencePointers:
+  - /request/method

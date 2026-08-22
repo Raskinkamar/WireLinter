@@ -1,0 +1,14 @@
+schemaVersion: 1
+id: WL-META-WA-WEBHOOK-STATUS-001
+kind: cel
+scope: envelope
+severity: error
+stability: preview
+title: Meta WhatsApp webhook delivery must be acknowledged with 2xx
+explanation: A successful webhook handler acknowledges the delivery with a successful HTTP status.
+docsRef: webhooks
+requires: has(envelope.response)
+assert: envelope.response.status >= 200 && envelope.response.status < 300
+evidencePointers: [/response/status]
+messages:
+  evidence-unavailable: "No application response was captured."

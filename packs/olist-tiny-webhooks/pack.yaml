@@ -1,0 +1,29 @@
+packProtocol: "1.2"
+id: olist-tiny-webhooks
+name: Olist Tiny Webhooks
+packVersion: 0.1.0
+providerDocsRevision: "2026-08-18"
+minWireLinterVersion: 0.1.0
+capabilities:
+  - passive-lint
+docs:
+  sales-webhooks:
+    url: https://tiny.com.br/api-docs/api2-webhooks-tiny
+    revision: "2026-08-18"
+    section: Confirmação de recebimento
+  webhooks-index:
+    url: https://tiny.com.br/api-docs/api2-webhooks
+    revision: "2026-08-18"
+    section: Webhooks disponíveis
+rules:
+  - rules/ack-status.yaml
+metadata:
+  status: preview
+  maintainer: wirelint
+  vendor: olist-tiny
+  region: BR
+  surface: erp-webhook-delivery
+  deliveryModel: retry-on-missing-http-200
+  salesMaxAttempts: 10
+  salesRetryStepMinutes: 5
+  scopeNote: "Olist API 2.0 exposes several webhook surfaces with different synchronous response bodies and retry counts. This common contract asserts only the HTTP 200 acknowledgement shared by the documented webhook surfaces."

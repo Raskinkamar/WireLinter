@@ -1,0 +1,16 @@
+schemaVersion: 1
+id: WL-PLUGNOTAS-ACK-STATUS-001
+kind: cel
+scope: envelope
+severity: error
+stability: preview
+title: PlugNotas webhook acknowledgement must be 2xx
+explanation: PlugNotas retries webhook delivery until its retry limit is exceeded or the receiving API returns a 2xx status code.
+docsRef: webhooks
+remediationKey: plugnotas-webhook-ack-status
+requires: has(envelope.response)
+assert: envelope.response.status >= 200 && envelope.response.status < 300
+evidencePointers:
+  - /response/status
+messages:
+  evidence-unavailable: "No response status was captured, so PlugNotas acknowledgement success cannot be decided."

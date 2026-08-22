@@ -1,0 +1,37 @@
+packProtocol: "1.2"
+id: box-v2-webhooks-primary-key
+name: Box V2 Webhooks Primary-Key Signature
+packVersion: 0.1.0
+providerDocsRevision: "2026-08-18"
+minWireLinterVersion: 0.1.0
+capabilities:
+  - passive-lint
+secrets:
+  primary-signature-key:
+    env: BOX_WEBHOOK_PRIMARY_SIGNATURE_KEY
+    required: false
+    description: Primary Box V2 webhook signature key from the Developer Console
+docs:
+  verification:
+    url: https://developer.box.com/guides/webhooks/v2/signatures-v2
+    revision: "2026-08-18"
+    section: Manual signature verification
+  delivery:
+    url: https://developer.box.com/guides/webhooks/v2/create-v2
+    revision: "2026-08-18"
+    section: Webhook address
+signatures:
+  primary-hmac-sha256: signatures/primary-hmac-sha256.yaml
+rules:
+  - rules/signature.yaml
+  - rules/signature-version.yaml
+  - rules/signature-algorithm.yaml
+  - rules/ack-status.yaml
+  - rules/ack-duration.yaml
+metadata:
+  status: preview
+  maintainer: wirelint
+  vendor: box
+  surface: v2-webhook-primary-signature-key
+  scopeNote: "Box supports simultaneous primary and secondary keys. This contract verifies the primary-key path only and does not claim OR semantics across both keys."
+  freshnessNote: "Box requires the RFC3339 delivery timestamp to be no older than ten minutes; the current generic freshness primitive accepts Unix seconds only, so this pack does not fake that check."

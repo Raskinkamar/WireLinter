@@ -1,0 +1,18 @@
+schemaVersion: 1
+id: WL-BITBUCKET-SIGNATURE-001
+kind: signature
+scope: envelope
+severity: error
+stability: preview
+title: Bitbucket Cloud webhook SHA-256 signature must be valid
+explanation: Bitbucket Cloud currently signs the payload verbatim with HMAC-SHA256 using the webhook secret and sends sha256=<hex digest> in X-Hub-Signature.
+signatureRef: payload-hmac-sha256
+docsRef: secure-webhooks
+remediationKey: bitbucket-cloud-webhook-signature
+messages:
+  missing-signature: "X-Hub-Signature is missing from a complete capture of a Bitbucket Cloud webhook configured with a secret."
+  malformed-signature: "This contract expects Bitbucket Cloud's currently documented sha256=<hex digest> X-Hub-Signature form."
+  signature-mismatch: "X-Hub-Signature does not match HMAC-SHA256 of the exact raw payload for the supplied Bitbucket Cloud webhook secret."
+  secret-unavailable: "Set BITBUCKET_WEBHOOK_SECRET to verify authenticity."
+  insufficient-body-fidelity: "Bitbucket Cloud signs the payload verbatim, so reconstructed or unavailable body bytes cannot prove authenticity."
+  insufficient-header-evidence: "The header capture is incomplete, so X-Hub-Signature cannot be proven absent."

@@ -1,0 +1,36 @@
+packProtocol: "1.2"
+id: clerk-webhooks
+name: Clerk Webhooks
+packVersion: 0.1.0
+providerDocsRevision: "2026-08-17"
+minWireLinterVersion: 0.1.0
+capabilities:
+  - passive-lint
+secrets:
+  signing-secret:
+    env: CLERK_WEBHOOK_SIGNING_SECRET
+    required: false
+    description: Clerk webhook signing secret with whsec_ prefix
+
+docs:
+  overview:
+    url: https://clerk.com/docs/guides/development/webhooks/overview
+    revision: "2026-08-17"
+    section: Clerk webhooks
+  verification:
+    url: https://clerk.com/docs/reference/backend/verify-webhook
+    revision: "2026-08-17"
+    section: verifyWebhook
+  signature-details:
+    url: https://clerk.com/articles/how-to-sync-clerk-user-data-to-your-database
+    revision: "2026-08-17"
+    section: Webhook signature verification
+signatures:
+  standard-webhook-v1: signatures/standard-webhook-v1.yaml
+rules:
+  - rules/signature.yaml
+  - rules/method.yaml
+metadata:
+  status: preview
+  maintainer: wirelint
+  surface: svix-standard-webhook

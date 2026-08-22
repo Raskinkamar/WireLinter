@@ -1,0 +1,27 @@
+packProtocol: "1.2"
+id: asana-webhook-handshake
+name: Asana Webhook Handshake
+packVersion: 0.1.0
+providerDocsRevision: "2026-08-17"
+minWireLinterVersion: 0.1.0
+capabilities:
+  - passive-lint
+docs:
+  webhooks:
+    url: https://developers.asana.com/docs/webhooks-guide
+    revision: "2026-08-17"
+    section: Webhook handshake
+  create-webhook:
+    url: https://developers.asana.com/reference/createwebhook
+    revision: "2026-08-17"
+    section: Webhook handshake
+rules:
+  - rules/method.yaml
+  - rules/request-secret.yaml
+  - rules/ack-status.yaml
+  - rules/echo-secret.yaml
+metadata:
+  status: preview
+  maintainer: wirelint
+  surface: webhook-creation-handshake
+  note: Event-delivery HMAC is intentionally excluded until the primary wire-format documentation proves the signature representation unambiguously

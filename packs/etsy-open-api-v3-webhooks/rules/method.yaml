@@ -1,0 +1,12 @@
+schemaVersion: 1
+id: WL-ETSY-V3-METHOD-001
+kind: cel
+scope: envelope
+severity: error
+stability: preview
+title: Etsy Open API v3 webhooks must use POST
+explanation: Etsy delivers each webhook request to the configured callback URL using HTTP POST.
+docsRef: webhooks
+assert: envelope.request.method == "POST"
+evidencePointers:
+  - /request/method

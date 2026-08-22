@@ -1,0 +1,156 @@
+name: Release
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: SemVer without a leading v (for example, 0.1.0)
+        required: true
+        type: string
+
+concurrency:
+  group: release-${{ github.run_id }}
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+  id-token: write
+  attestations: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    env:
+      GOTOOLCHAIN: local
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-go@v7
+        with:
+          go-version: "1.26.x"
+          cache: false
+
+      - name: Validate and create release tag
+        id: release_meta
+        shell: bash
+        run: |
+          set -euo pipefail
+          version='${{ inputs.version }}'
+          semver_re='^v(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)(-[0-9A-Za-z.-]+)?(\+[0-9A-Za-z.-]+)?$'
+          tag="v${version}"
+          [[ "$tag" =~ $semver_re ]] || { echo "invalid release version: $tag" >&2; exit 2; }
+          git tag --force "$tag" "$GITHUB_SHA"
+          git push --force origin "refs/tags/$tag"
+          printf 'version=%s\n' "$version" >> "$GITHUB_OUTPUT"
+          printf 'tag=%s\n' "$tag" >> "$GITHUB_OUTPUT"
+          if [[ "$version" == *-* ]]; then
+            printf 'prerelease=true\n' >> "$GITHUB_OUTPUT"
+          else
+            printf 'prerelease=false\n' >> "$GITHUB_OUTPUT"
+          fi
+
+      - run: go mod download
+      - run: go test ./...
+      - run: go test -race ./...
+      - run: go vet ./...
+      - name: Verify module files
+        shell: bash
+        run: |
+          set -euo pipefail
+          go mod tidy
+          git diff --exit-code -- go.mod go.sum
+
+      - name: Build release archives
+        env:
+          VERSION: ${{ steps.release_meta.outputs.version }}
+        run: bash scripts/release/build.sh "$VERSION" dist
+
+      - name: Smoke packaged Linux binary
+        env:
+          VERSION: ${{ steps.release_meta.outputs.version }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          smoke="$(mktemp -d)"
+          trap 'rm -rf "$smoke"' EXIT
+          tar -xzf "dist/wirelint_${VERSION}_linux_amd64.tar.gz" -C "$smoke"
+          [[ "$("$smoke/wirelint" version)" == "$VERSION" ]]
+          while IFS= read -r provider; do
+            [[ -n "$provider" ]] || continue
+            "$smoke/wirelint" validate-pack --provider "$provider"
+          done < <("$smoke/wirelint" providers)
+          ASAAS_WEBHOOK_TOKEN='asaas_wirelint_demo_X7mQ9vK2pR8sT4uW6yZ3nC5fH1j' \
+            "$smoke/wirelint" lint --provider asaas-webhooks examples/traces/asaas-webhooks-valid.json
+          GITHUB_WEBHOOK_SECRET="It's a Secret to Everybody" \
+            "$smoke/wirelint" lint --provider github examples/traces/github-valid.json
+          MERCADOPAGO_WEBHOOK_SECRET='mp_wirelint_demo_secret' \
+            "$smoke/wirelint" lint --provider mercadopago-webhooks examples/traces/mercadopago-webhooks-valid.json
+          META_WEBHOOK_VERIFY_TOKEN='meta_verify_demo' \
+            "$smoke/wirelint" lint --provider meta-whatsapp-webhook-verification examples/traces/meta-whatsapp-webhook-verification-valid.json
+          META_APP_SECRET='meta_wirelint_demo_secret' \
+            "$smoke/wirelint" lint --provider meta-whatsapp-webhooks examples/traces/meta-whatsapp-webhooks-valid.json
+          "$smoke/wirelint" lint --provider meta-whatsapp-cloud-api examples/traces/meta-whatsapp-cloud-api-valid.json
+          SHOPIFY_CLIENT_SECRET='shpss_wirelint_demo' \
+            "$smoke/wirelint" lint --provider shopify-https examples/traces/shopify-https-valid.json
+          STRIPE_WEBHOOK_SECRET='whsec_wirelint_demo' \
+            "$smoke/wirelint" lint --provider stripe examples/traces/stripe-valid.json
+
+      - name: Verify release checksums
+        working-directory: dist
+        run: sha256sum -c SHA256SUMS
+
+      - name: Test installer against release archives
+        shell: bash
+        env:
+          VERSION: ${{ steps.release_meta.outputs.version }}
+        run: |
+          set -euo pipefail
+          python3 -m http.server 8765 --directory dist >/tmp/wirelint-install-server.log 2>&1 &
+          server_pid=$!
+          trap 'kill "$server_pid" 2>/dev/null || true' EXIT
+          for _ in {1..20}; do
+            curl -fsS http://127.0.0.1:8765/SHA256SUMS >/dev/null && break
+            sleep 0.25
+          done
+          curl -fsS http://127.0.0.1:8765/SHA256SUMS >/dev/null
+          install_root="$(mktemp -d)"
+          WIRELINT_VERSION="$VERSION" \
+          WIRELINT_RELEASE_BASE_URL="http://127.0.0.1:8765" \
+          WIRELINT_INSTALL_DIR="$install_root/bin" \
+            sh scripts/install.sh
+          [[ "$("$install_root/bin/wirelint" version)" == "$VERSION" ]]
+          "$install_root/bin/wirelint" demo
+
+          windows_root="$(mktemp -d)"
+          WIRELINT_VERSION="$VERSION" \
+          WIRELINT_RELEASE_BASE_URL="http://127.0.0.1:8765" \
+          WIRELINT_INSTALL_DIR="$windows_root/bin" \
+          WIRELINT_SKIP_RUN="1" \
+            pwsh -NoProfile -File scripts/install.ps1
+          [[ -f "$windows_root/bin/wirelint.exe" ]]
+
+      - name: Attest release artifacts
+        uses: actions/attest@v4
+        with:
+          subject-checksums: dist/SHA256SUMS
+
+      - name: Create GitHub Release
+        env:
+          GH_TOKEN: ${{ github.token }}
+          TAG: ${{ steps.release_meta.outputs.tag }}
+          PRERELEASE: ${{ steps.release_meta.outputs.prerelease }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          install -m 0644 scripts/install.sh dist/install.sh
+          install -m 0644 scripts/install.ps1 dist/install.ps1
+          if gh release view "$TAG" >/dev/null 2>&1; then
+            gh release delete "$TAG" --yes
+          fi
+          mapfile -t assets < <(find dist -maxdepth 1 -type f -printf '%p\n' | LC_ALL=C sort)
+          args=(release create "$TAG" "${assets[@]}" --verify-tag --generate-notes --title "WireLinter $TAG")
+          if [[ "$PRERELEASE" == "true" ]]; then
+            args+=(--prerelease)
+          fi
+          gh "${args[@]}"

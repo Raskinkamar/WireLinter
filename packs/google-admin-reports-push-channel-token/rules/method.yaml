@@ -1,0 +1,13 @@
+schemaVersion: 1
+id: WL-GADMIN-REPORTS-METHOD-001
+kind: cel
+scope: envelope
+severity: error
+stability: preview
+title: Google Admin Reports push notification must use POST
+explanation: The Admin SDK Reports API sends channel notifications as HTTPS POST requests.
+docsRef: push
+remediationKey: google-admin-reports-push-method
+assert: envelope.request.method == "POST"
+evidencePointers:
+  - /request/method

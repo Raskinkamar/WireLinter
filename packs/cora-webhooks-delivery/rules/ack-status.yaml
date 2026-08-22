@@ -1,0 +1,16 @@
+schemaVersion: 1
+id: WL-CORA-WEBHOOK-ACK-001
+kind: cel
+scope: envelope
+severity: error
+stability: preview
+title: Cora webhook acknowledgement must be HTTP 200
+explanation: Cora's notification test reference identifies HTTP 200 as a successful webhook notification delivery.
+docsRef: notifications
+remediationKey: cora-webhook-ack-status
+requires: has(envelope.response)
+assert: envelope.response.status == 200
+evidencePointers:
+  - /response/status
+messages:
+  evidence-unavailable: "No response status was captured, so Cora webhook acknowledgement cannot be decided."

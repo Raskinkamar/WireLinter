@@ -1,0 +1,23 @@
+schemaVersion: 1
+id: payload-hmac-sha256
+sourceRefs:
+  - signing
+secret:
+  ref: signing-secret
+  representation: utf8
+bindings:
+  signature-candidates:
+    fromHeader:
+      name: X-Signature
+      cardinality: exactly-one
+      trimSpace: true
+  body:
+    fromRawBody:
+      requireFidelity: exact
+message:
+  - binding: body
+candidates:
+  binding: signature-candidates
+  encoding: hex
+mac:
+  algorithm: hmac-sha256

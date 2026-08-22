@@ -1,0 +1,17 @@
+schemaVersion: 1
+id: WL-OKTA-VERIFY-ECHO-001
+kind: cel
+scope: envelope
+severity: error
+stability: preview
+title: Okta verification response must echo the challenge in JSON verification
+explanation: Okta requires the challenge header value to be returned as the verification property of a JSON response object.
+docsRef: implementation
+remediationKey: okta-event-hook-verification-echo
+requires: has(envelope.response) && envelope.response.decodedBody != null && (envelope.request.headersCompleteness == "complete" || envelope.request.headers.exists(h, h.name.lowerAscii() == "x-okta-verification-challenge"))
+assert: envelope.request.headers.filter(h, h.name.lowerAscii() == "x-okta-verification-challenge").size() == 1 && envelope.response.decodedBody.verification == envelope.request.headers.filter(h, h.name.lowerAscii() == "x-okta-verification-challenge")[0].value
+evidencePointers:
+  - /request/headers
+  - /response/decodedBody
+messages:
+  evidence-unavailable: "The challenge header or decoded JSON response body is unavailable, so the Okta verification echo cannot be decided safely."

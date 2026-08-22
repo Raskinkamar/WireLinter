@@ -1,0 +1,16 @@
+schemaVersion: 1
+id: WL-MP-WEBHOOKS-ACK-STATUS-001
+kind: cel
+scope: envelope
+severity: error
+stability: preview
+title: Mercado Pago webhook acknowledgement must be 200 or 201
+explanation: Mercado Pago documents HTTP 200 (OK) or 201 (CREATED) as the successful acknowledgement statuses for received Webhooks.
+docsRef: webhook-ack-docs
+remediationKey: mercadopago-ack-status
+requires: has(envelope.response)
+assert: envelope.response.status == 200 || envelope.response.status == 201
+evidencePointers:
+  - /response/status
+messages:
+  evidence-unavailable: "No application response was captured, so WireLinter cannot determine whether Mercado Pago received the required 200 or 201 acknowledgement."

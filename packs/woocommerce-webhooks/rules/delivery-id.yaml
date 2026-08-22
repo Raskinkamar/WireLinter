@@ -1,0 +1,19 @@
+schemaVersion: 1
+id: WL-WOO-DELIVERY-001
+kind: cel
+scope: envelope
+severity: warning
+stability: preview
+title: WooCommerce webhook delivery identifier should be present
+explanation: WooCommerce webhook requests include X-WC-Webhook-Delivery-ID identifying the delivery log entry.
+docsRef: webhooks
+remediationKey: woocommerce-webhook-delivery-id
+requires: >-
+  envelope.request.headersCompleteness == "complete" ||
+  envelope.request.headers.exists(h, h.name.lowerAscii() == "x-wc-webhook-delivery-id" && h.value != "")
+assert: >-
+  envelope.request.headers.exists(h, h.name.lowerAscii() == "x-wc-webhook-delivery-id" && h.value != "")
+evidencePointers:
+  - /request/headers
+messages:
+  evidence-unavailable: "X-WC-Webhook-Delivery-ID was not observed, but the request header capture is incomplete."

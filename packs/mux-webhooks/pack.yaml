@@ -1,0 +1,34 @@
+packProtocol: "1.2"
+id: mux-webhooks
+name: Mux Webhooks
+packVersion: 0.1.0
+providerDocsRevision: "2026-08-17"
+minWireLinterVersion: 0.1.0
+capabilities:
+  - passive-lint
+secrets:
+  webhook-secret:
+    env: MUX_WEBHOOK_SECRET
+    required: false
+    description: Mux signing secret for the webhook endpoint
+docs:
+  verification:
+    url: https://www.mux.com/docs/core/verify-webhook-signatures
+    revision: "2026-08-17"
+    section: Verify webhook signatures
+  delivery:
+    url: https://www.mux.com/docs/core/listen-for-webhooks
+    revision: "2026-08-17"
+    section: Receiving events
+signatures:
+  timestamp-body-v1: signatures/timestamp-body-v1.yaml
+rules:
+  - rules/signature.yaml
+  - rules/method.yaml
+  - rules/ack-status.yaml
+  - rules/ack-duration.yaml
+metadata:
+  status: preview
+  maintainer: wirelint
+  surface: https-webhook
+  note: Signature authenticity is enforced; replay-window choice remains receiver policy in this pack

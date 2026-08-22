@@ -1,0 +1,21 @@
+schemaVersion: 1
+id: WL-ST-SIGNATURE-001
+kind: signature
+scope: envelope
+severity: error
+stability: preview
+title: Stripe webhook signature must be valid
+explanation: Stripe webhook authenticity must be verified against the exact request body and endpoint signing secret.
+signatureRef: webhook-v1
+docsRef: webhook-signature-docs
+remediationKey: stripe-webhook-signature
+messages:
+  missing-signature: "Stripe-Signature is missing from a complete header capture."
+  malformed-signature: "Stripe-Signature could not be parsed into a timestamp and one or more v1 signatures."
+  missing-signature-input: "Stripe-Signature is missing a required timestamp or v1 signature field."
+  ambiguous-signature-input: "A Stripe signature input that must be singular was observed more than once."
+  signature-mismatch: "No valid v1 candidate matches HMAC-SHA256(timestamp + '.' + exact raw body) for the supplied endpoint secret."
+  timestamp-stale: "The signed Stripe timestamp is older than the 300 second tolerance at the time this delivery was observed."
+  secret-unavailable: "Set STRIPE_WEBHOOK_SECRET to verify authenticity; structural checks can still run without it."
+  insufficient-body-fidelity: "Stripe signs the exact request body. This capture contains only reconstructed or unavailable body bytes, so signature verification is not trustworthy."
+  insufficient-header-evidence: "The captured header set is incomplete, so WireLinter cannot prove whether Stripe-Signature was absent."

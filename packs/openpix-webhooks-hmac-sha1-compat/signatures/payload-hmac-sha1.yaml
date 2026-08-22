@@ -1,0 +1,23 @@
+schemaVersion: 1
+id: payload-hmac-sha1
+sourceRefs:
+  - hmac
+secret:
+  ref: hmac-secret
+  representation: utf8
+bindings:
+  signature-candidates:
+    fromHeader:
+      name: X-OpenPix-Signature
+      cardinality: exactly-one
+      trimSpace: true
+  body:
+    fromRawBody:
+      requireFidelity: exact
+message:
+  - binding: body
+candidates:
+  binding: signature-candidates
+  encoding: base64-standard
+mac:
+  algorithm: hmac-sha1

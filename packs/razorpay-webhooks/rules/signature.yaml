@@ -1,0 +1,18 @@
+schemaVersion: 1
+id: WL-RAZORPAY-SIGNATURE-001
+kind: signature
+scope: envelope
+severity: error
+stability: preview
+title: Razorpay webhook signature must be valid
+explanation: Razorpay signs the exact raw webhook request body using HMAC-SHA256 and places the hex digest in X-Razorpay-Signature.
+signatureRef: payload-hmac-sha256
+docsRef: verification
+remediationKey: razorpay-webhook-signature
+messages:
+  missing-signature: "X-Razorpay-Signature is missing from a complete webhook capture."
+  malformed-signature: "X-Razorpay-Signature is not a valid hexadecimal HMAC-SHA256 digest."
+  signature-mismatch: "X-Razorpay-Signature does not match the exact raw payload for the supplied webhook secret."
+  secret-unavailable: "Set RAZORPAY_WEBHOOK_SECRET to verify authenticity."
+  insufficient-body-fidelity: "Razorpay signs the raw request body, so reconstructed or unavailable bytes cannot prove authenticity."
+  insufficient-header-evidence: "The header capture is incomplete, so X-Razorpay-Signature cannot be proven absent."

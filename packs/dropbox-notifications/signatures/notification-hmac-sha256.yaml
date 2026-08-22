@@ -1,0 +1,23 @@
+schemaVersion: 1
+id: notification-hmac-sha256
+sourceRefs:
+  - notifications
+secret:
+  ref: app-secret
+  representation: utf8
+bindings:
+  signature-candidates:
+    fromHeader:
+      name: X-Dropbox-Signature
+      cardinality: exactly-one
+      trimSpace: true
+  body:
+    fromRawBody:
+      requireFidelity: exact
+message:
+  - binding: body
+candidates:
+  binding: signature-candidates
+  encoding: hex
+mac:
+  algorithm: hmac-sha256

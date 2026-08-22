@@ -1,0 +1,16 @@
+schemaVersion: 1
+id: WL-MUX-ACK-DURATION-001
+kind: cel
+scope: envelope
+severity: error
+stability: preview
+title: Mux webhook attempt must respond within 5 seconds
+explanation: Mux currently times out a webhook request attempt after 5 seconds and retries it.
+docsRef: delivery
+remediationKey: mux-webhook-ack-duration
+requires: has(envelope.response)
+assert: double(envelope.response.durationMs) < 5000.0
+evidencePointers:
+  - /response/durationMs
+messages:
+  evidence-unavailable: "No response timing was captured, so the Mux five-second attempt deadline cannot be decided."

@@ -1,0 +1,15 @@
+schemaVersion: 1
+id: WL-GH-GQL-DIRECTION-001
+kind: cel
+scope: envelope
+severity: error
+stability: preview
+title: GitHub GraphQL calls must be captured as outbound traffic
+explanation: This contract describes requests made by the application to the GitHub GraphQL API, not inbound webhook deliveries.
+docsRef: graphql-calls
+requires: has(envelope.direction)
+assert: envelope.direction == "outbound"
+evidencePointers:
+  - /direction
+messages:
+  evidence-unavailable: "The capture does not declare request direction, so this outbound API contract cannot be applied safely."

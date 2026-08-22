@@ -1,0 +1,46 @@
+{
+  "schemaVersion": 1,
+  "traceId": "trace_meta_whatsapp_webhook_valid",
+  "provider": "meta-whatsapp-webhooks",
+  "startedAt": "2026-08-18T12:00:00Z",
+  "envelopes": [
+    {
+      "id": "env_meta_webhook",
+      "provider": "meta-whatsapp-webhooks",
+      "direction": "inbound",
+      "receivedAt": "2026-08-18T12:00:00Z",
+      "request": {
+        "method": "POST",
+        "url": "https://example.test/webhooks/meta",
+        "headers": [
+          {
+            "name": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "name": "X-Hub-Signature-256",
+            "value": "sha256=7f0d409e4b51b7a3ce538eb245613d19961e6367b4f244322d4a60c43c1602dc"
+          }
+        ],
+        "headersCompleteness": "complete",
+        "rawQuery": "",
+        "queryFidelity": "exact",
+        "bodyFidelity": "exact",
+        "rawBodyBase64": "eyJvYmplY3QiOiJ3aGF0c2FwcF9idXNpbmVzc19hY2NvdW50IiwiZW50cnkiOltdfQ==",
+        "decodedBody": {
+          "object": "whatsapp_business_account",
+          "entry": []
+        }
+      },
+      "response": {
+        "status": 200,
+        "headers": [],
+        "headersCompleteness": "complete",
+        "bodyFidelity": "exact",
+        "rawBodyBase64": "",
+        "durationMs": 12
+      }
+    }
+  ],
+  "observations": []
+}

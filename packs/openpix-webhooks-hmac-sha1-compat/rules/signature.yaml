@@ -1,0 +1,18 @@
+schemaVersion: 1
+id: WL-OPENPIX-HMAC-SHA1-001
+kind: signature
+scope: envelope
+severity: error
+stability: preview
+title: OpenPix HMAC compatibility signature must be valid
+explanation: OpenPix documents X-OpenPix-Signature as Base64-encoded HMAC-SHA1 over the exact raw webhook body using the webhook's HMAC secret key.
+signatureRef: payload-hmac-sha1
+docsRef: hmac
+remediationKey: openpix-webhook-hmac-sha1
+messages:
+  missing-signature: "X-OpenPix-Signature is missing from a complete HMAC-enabled OpenPix webhook capture."
+  malformed-signature: "X-OpenPix-Signature is not a valid Base64 HMAC-SHA1 digest."
+  signature-mismatch: "X-OpenPix-Signature does not match the exact raw body for the supplied OpenPix HMAC secret."
+  secret-unavailable: "Set OPENPIX_WEBHOOK_HMAC_SECRET to verify the compatibility HMAC signature."
+  insufficient-body-fidelity: "OpenPix HMAC uses the exact raw body, so reconstructed or unavailable bytes cannot prove authenticity."
+  insufficient-header-evidence: "The header capture is incomplete, so X-OpenPix-Signature cannot be proven absent."

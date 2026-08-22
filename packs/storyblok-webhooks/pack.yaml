@@ -1,0 +1,32 @@
+packProtocol: "1.2"
+id: storyblok-webhooks
+name: Storyblok Signed Webhooks
+packVersion: 0.1.0
+providerDocsRevision: "2026-08-17"
+minWireLinterVersion: 0.1.0
+capabilities:
+  - passive-lint
+secrets:
+  webhook-secret:
+    env: STORYBLOK_WEBHOOK_SECRET
+    required: false
+    description: Secret configured for the Storyblok webhook
+docs:
+  signed-webhooks:
+    url: https://www.storyblok.com/docs/concepts/webhooks/
+    revision: "2026-08-17"
+    section: Signed webhooks
+  signature-tutorial:
+    url: https://www.storyblok.com/tp/webhook-signature-validation
+    revision: "2026-08-17"
+    section: Validate the webhook signature
+signatures:
+  payload-hmac-sha1: signatures/payload-hmac-sha1.yaml
+rules:
+  - rules/signature.yaml
+  - rules/method.yaml
+  - rules/ack-status.yaml
+metadata:
+  status: preview
+  maintainer: wirelint
+  surface: signed-webhook

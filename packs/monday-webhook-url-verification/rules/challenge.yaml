@@ -1,0 +1,17 @@
+schemaVersion: 1
+id: WL-MONDAY-VERIFY-CHALLENGE-001
+kind: cel
+scope: envelope
+severity: error
+stability: preview
+title: monday.com webhook URL verification must echo the challenge
+explanation: monday.com expects the randomly generated challenge from the request JSON to be returned as the challenge field of the response JSON.
+docsRef: webhooks
+remediationKey: monday-webhook-url-verification-challenge
+requires: has(envelope.request.decodedBody) && has(envelope.response) && has(envelope.response.decodedBody)
+assert: has(envelope.request.decodedBody.challenge) && has(envelope.response.decodedBody.challenge) && envelope.response.decodedBody.challenge == envelope.request.decodedBody.challenge
+evidencePointers:
+  - /request/decodedBody
+  - /response/decodedBody
+messages:
+  evidence-unavailable: "Decoded request or response JSON is unavailable, so monday.com's challenge echo cannot be decided safely."

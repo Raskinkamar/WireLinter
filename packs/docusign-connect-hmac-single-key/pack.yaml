@@ -1,0 +1,32 @@
+packProtocol: "1.2"
+id: docusign-connect-hmac-single-key
+name: Docusign Connect HMAC Single-Key
+packVersion: 0.1.0
+providerDocsRevision: "2026-08-17"
+minWireLinterVersion: 0.1.0
+capabilities:
+  - passive-lint
+secrets:
+  hmac-secret:
+    env: DOCUSIGN_CONNECT_HMAC_SECRET
+    required: false
+    description: Single Docusign Connect HMAC secret key used by this contract
+docs:
+  hmac-validation:
+    url: https://www.docusign.com/blog/developers/manually-authenticating-hmac-signatures-docusign-connect-webhook-configurations
+    revision: "2026-08-17"
+    section: Manually verify the notification message HMAC signature
+  listener:
+    url: https://www.docusign.com/blog/developers/dsdev-webhook-listeners-part-1
+    revision: "2026-08-17"
+    section: Webhook listeners and Connect
+signatures:
+  connect-hmac-sha256: signatures/connect-hmac-sha256.yaml
+rules:
+  - rules/signature.yaml
+  - rules/method.yaml
+metadata:
+  status: preview
+  maintainer: wirelint
+  surface: connect-hmac-single-key
+  note: Docusign can emit multiple numbered HMAC headers when multiple keys are configured; this contract intentionally covers one-key configurations using X-Docusign-Signature-1

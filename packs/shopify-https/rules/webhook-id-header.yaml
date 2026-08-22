@@ -1,0 +1,25 @@
+schemaVersion: 1
+id: WL-SH-HTTPS-WEBHOOK-ID-001
+kind: cel
+scope: envelope
+severity: error
+stability: preview
+title: Shopify webhook delivery identifier must be present
+explanation: Shopify HTTPS deliveries include X-Shopify-Webhook-Id as the unique identifier used to recognize duplicate deliveries.
+docsRef: webhook-verification
+remediationKey: shopify-webhook-id-header
+requires: >-
+  envelope.request.headersCompleteness == "complete" ||
+  envelope.request.headers.exists(
+    h,
+    h.name.lowerAscii() == "x-shopify-webhook-id" && h.value != ""
+  )
+assert: >-
+  envelope.request.headers.exists(
+    h,
+    h.name.lowerAscii() == "x-shopify-webhook-id" && h.value != ""
+  )
+evidencePointers:
+  - /request/headers
+messages:
+  evidence-unavailable: "X-Shopify-Webhook-Id was not observed, but the request header capture is incomplete, so its absence cannot be proven."

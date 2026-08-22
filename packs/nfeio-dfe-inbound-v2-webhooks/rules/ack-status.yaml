@@ -1,0 +1,16 @@
+schemaVersion: 1
+id: WL-NFEIO-DFE-V2-ACK-001
+kind: cel
+scope: envelope
+severity: error
+stability: preview
+title: NFE.io DFe Inbound V2 acknowledgement must be 2xx
+explanation: NFE.io confirms DFe Inbound V2 delivery on HTTP 2xx responses; 408, 429 and 5xx are treated as temporary failures and retried.
+docsRef: inbound
+remediationKey: nfeio-dfe-v2-webhook-ack-status
+requires: has(envelope.response)
+assert: envelope.response.status >= 200 && envelope.response.status < 300
+evidencePointers:
+  - /response/status
+messages:
+  evidence-unavailable: "No response status was captured, so DFe Inbound V2 acknowledgement cannot be decided."

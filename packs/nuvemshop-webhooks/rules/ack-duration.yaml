@@ -1,0 +1,16 @@
+schemaVersion: 1
+id: WL-NUVEMSHOP-ACK-DURATION-001
+kind: cel
+scope: envelope
+severity: error
+stability: preview
+title: Nuvemshop webhook acknowledgement must complete within 3 seconds
+explanation: Nuvemshop waits three seconds for a 2xx acknowledgement before the retry policy is activated.
+docsRef: webhooks
+remediationKey: nuvemshop-webhook-ack-duration
+requires: has(envelope.response)
+assert: double(envelope.response.durationMs) < 3000.0
+evidencePointers:
+  - /response/durationMs
+messages:
+  evidence-unavailable: "No response timing was captured, so Nuvemshop's three-second timeout cannot be decided."

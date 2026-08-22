@@ -1,0 +1,19 @@
+schemaVersion: 1
+id: WL-CF-STREAM-SIGNATURE-001
+kind: signature
+scope: envelope
+severity: error
+stability: preview
+title: Cloudflare Stream webhook signature must be valid
+explanation: Cloudflare Stream signs time dot exact raw request body using HMAC-SHA256 and sends time and sig1 fields in Webhook-Signature.
+signatureRef: timestamp-body-v1
+docsRef: webhooks
+remediationKey: cloudflare-stream-webhook-signature
+messages:
+  missing-signature: "Webhook-Signature is missing from a complete Cloudflare Stream webhook capture."
+  missing-signature-input: "Cloudflare Stream Webhook-Signature must contain both time and sig1 fields."
+  malformed-signature: "Cloudflare Stream Webhook-Signature contains malformed signature material."
+  signature-mismatch: "Cloudflare Stream sig1 does not match HMAC-SHA256 of time dot exact raw body for the supplied signing secret."
+  secret-unavailable: "Set CLOUDFLARE_STREAM_WEBHOOK_SECRET to verify authenticity."
+  insufficient-body-fidelity: "Cloudflare Stream requires every request-body byte to remain unaltered for signature verification."
+  insufficient-header-evidence: "The captured header set is incomplete, so Webhook-Signature cannot be proven absent."

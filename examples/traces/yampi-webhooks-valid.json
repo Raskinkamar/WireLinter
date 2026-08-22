@@ -1,0 +1,54 @@
+{
+  "schemaVersion": 1,
+  "traceId": "trace_yampi_webhooks_valid",
+  "provider": "yampi-webhooks",
+  "startedAt": "2026-08-18T05:10:00Z",
+  "envelopes": [
+    {
+      "id": "env_yampi_webhooks_valid",
+      "provider": "yampi-webhooks",
+      "eventType": "order.paid",
+      "receivedAt": "2026-08-18T05:10:00Z",
+      "request": {
+        "method": "POST",
+        "url": "https://example.test/webhooks/yampi",
+        "headers": [
+          {
+            "name": "X-Yampi-Hmac-SHA256",
+            "value": "k224Dfoual6a5Fbip/sH8PbY2t1yIMg/TNs0NkjNwKM="
+          },
+          {
+            "name": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "headersCompleteness": "complete",
+        "rawQuery": "",
+        "queryFidelity": "exact",
+        "query": [],
+        "bodyFidelity": "exact",
+        "rawBodyBase64": "eyJldmVudCI6Im9yZGVyLnBhaWQiLCJ0aW1lIjoiMjAyNi0wOC0xOCAwMjoxMDowMCIsIm1lcmNoYW50Ijp7ImlkIjoxMjMsImFsaWFzIjoibG9qYS1kZW1vIn0sInJlc291cmNlIjp7ImlkIjoxMDAwMDAxfX0=",
+        "decodedBody": {
+          "event": "order.paid",
+          "time": "2026-08-18 02:10:00",
+          "merchant": {
+            "id": 123,
+            "alias": "loja-demo"
+          },
+          "resource": {
+            "id": 1000001
+          }
+        }
+      },
+      "response": {
+        "status": 204,
+        "headers": [],
+        "headersCompleteness": "complete",
+        "bodyFidelity": "exact",
+        "rawBodyBase64": "",
+        "durationMs": 42.0
+      }
+    }
+  ],
+  "observations": []
+}

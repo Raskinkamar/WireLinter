@@ -1,0 +1,30 @@
+packProtocol: "1.2"
+id: mailersend-webhooks
+name: MailerSend Webhooks
+packVersion: 0.1.0
+providerDocsRevision: "2026-08-18"
+minWireLinterVersion: 0.1.0
+capabilities:
+  - passive-lint
+secrets:
+  signing-secret:
+    env: MAILERSEND_WEBHOOK_SECRET
+    required: false
+    description: Signing Secret generated when the MailerSend webhook is created
+docs:
+  webhooks:
+    url: https://developers.mailersend.com/api/v1/account/webhooks
+    revision: "2026-08-18"
+    section: Security
+signatures:
+  payload-hmac-sha256: signatures/payload-hmac-sha256.yaml
+rules:
+  - rules/signature.yaml
+  - rules/method.yaml
+  - rules/ack-status.yaml
+  - rules/ack-duration.yaml
+metadata:
+  status: preview
+  maintainer: wirelint
+  vendor: mailersend
+  surface: account-webhook

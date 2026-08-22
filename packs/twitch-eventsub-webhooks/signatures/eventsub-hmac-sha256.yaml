@@ -1,0 +1,36 @@
+schemaVersion: 1
+id: eventsub-hmac-sha256
+sourceRefs:
+  - handling
+secret:
+  ref: eventsub-secret
+  representation: utf8
+bindings:
+  signature-candidates:
+    fromHeader:
+      name: Twitch-Eventsub-Message-Signature
+      cardinality: exactly-one
+      trimSpace: true
+  message-id:
+    fromHeader:
+      name: Twitch-Eventsub-Message-Id
+      cardinality: exactly-one
+      trimSpace: true
+  timestamp:
+    fromHeader:
+      name: Twitch-Eventsub-Message-Timestamp
+      cardinality: exactly-one
+      trimSpace: true
+  body:
+    fromRawBody:
+      requireFidelity: exact
+message:
+  - binding: message-id
+  - binding: timestamp
+  - binding: body
+candidates:
+  binding: signature-candidates
+  encoding: hex
+  stripPrefix: "sha256="
+mac:
+  algorithm: hmac-sha256

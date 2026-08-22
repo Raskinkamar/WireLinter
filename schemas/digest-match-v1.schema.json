@@ -1,0 +1,91 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://wirelint.dev/schemas/digest-match-v1.schema.json",
+  "title": "WireLinter Trusted Digest Match Recipe v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schemaVersion", "id", "sourceRefs", "secret", "candidate", "message", "hash", "comparison"],
+  "properties": {
+    "schemaVersion": { "const": 1 },
+    "id": { "$ref": "#/$defs/id" },
+    "sourceRefs": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": { "$ref": "#/$defs/id" }
+    },
+    "secret": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["ref", "representation"],
+      "properties": {
+        "ref": { "$ref": "#/$defs/id" },
+        "representation": { "const": "utf8" }
+      }
+    },
+    "candidate": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["fromHeader", "encoding"],
+      "properties": {
+        "fromHeader": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["name", "cardinality"],
+          "properties": {
+            "name": { "type": "string", "minLength": 1, "maxLength": 256 },
+            "cardinality": { "const": "exactly-one" },
+            "trimSpace": { "type": "boolean", "default": false }
+          }
+        },
+        "encoding": { "const": "hex" }
+      }
+    },
+    "message": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 16,
+      "items": { "$ref": "#/$defs/messageSegment" }
+    },
+    "hash": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["algorithm"],
+      "properties": { "algorithm": { "const": "sha256" } }
+    },
+    "comparison": { "const": "constant-time-exact" },
+    "metadata": { "type": "object", "additionalProperties": true }
+  },
+  "$defs": {
+    "id": { "type": "string", "pattern": "^[a-z][a-z0-9]*(?:[-_][a-z0-9]+)*$" },
+    "messageSegment": {
+      "oneOf": [
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["secret"],
+          "properties": { "secret": { "const": true } }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["literal"],
+          "properties": { "literal": { "type": "string", "maxLength": 1024 } }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["fromRawBody"],
+          "properties": {
+            "fromRawBody": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["requireFidelity"],
+              "properties": { "requireFidelity": { "const": "exact" } }
+            }
+          }
+        }
+      ]
+    }
+  }
+}

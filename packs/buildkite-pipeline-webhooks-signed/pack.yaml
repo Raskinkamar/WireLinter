@@ -1,0 +1,28 @@
+packProtocol: "1.2"
+id: buildkite-pipeline-webhooks-signed
+name: Buildkite Signed Pipelines Webhooks
+packVersion: 0.1.0
+providerDocsRevision: "2026-08-17"
+minWireLinterVersion: 0.1.0
+capabilities:
+  - passive-lint
+secrets:
+  webhook-token:
+    env: BUILDKITE_WEBHOOK_SECRET
+    required: false
+    description: Buildkite webhook token used as the HMAC signing key
+docs:
+  pipelines:
+    url: https://buildkite.com/docs/apis/webhooks/pipelines
+    revision: "2026-08-17"
+    section: Webhook signature
+signatures:
+  timestamp-body-hmac-sha256: signatures/timestamp-body-hmac-sha256.yaml
+rules:
+  - rules/signature.yaml
+  - rules/event-header.yaml
+metadata:
+  status: preview
+  maintainer: wirelint
+  surface: pipelines-hmac-signature-mode
+  replayWindow: receiver-policy

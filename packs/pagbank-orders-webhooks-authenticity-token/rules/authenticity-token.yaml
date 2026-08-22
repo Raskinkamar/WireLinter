@@ -1,0 +1,20 @@
+schemaVersion: 1
+id: WL-PAGBANK-ORDERS-AUTHENTICITY-001
+kind: digest-match
+scope: envelope
+severity: error
+stability: preview
+title: PagBank Orders webhook authenticity token must match
+explanation: PagBank computes SHA-256 over the account token, a hyphen, and the exact unformatted notification payload, then sends the hexadecimal digest in x-authenticity-token.
+digestMatchRef: authenticity-token
+docsRef: authenticity
+remediationKey: pagbank-orders-webhook-authenticity-token
+messages:
+  digest-match-valid: "x-authenticity-token matches SHA-256(account token + '-' + exact raw payload)."
+  secret-unavailable: "Set PAGBANK_ACCOUNT_TOKEN to verify the PagBank Orders webhook authenticity token."
+  missing-digest: "x-authenticity-token is missing from a complete PagBank Orders webhook capture."
+  ambiguous-digest-input: "Multiple x-authenticity-token values were observed; the authenticity digest must be unambiguous."
+  malformed-digest: "x-authenticity-token must be a 64-character hexadecimal SHA-256 digest."
+  digest-mismatch: "x-authenticity-token does not match SHA-256(account token + '-' + exact raw payload). Discard the event as untrusted."
+  insufficient-body-fidelity: "PagBank requires the payload exactly as received; parsed, reformatted or reconstructed JSON cannot prove authenticity."
+  insufficient-header-evidence: "The header capture is incomplete, so x-authenticity-token cannot be proven absent."

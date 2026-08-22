@@ -1,0 +1,22 @@
+schemaVersion: 1
+id: WL-TRANSFEERA-CONTENT-TYPE-001
+kind: cel
+scope: envelope
+severity: error
+stability: preview
+title: Transfeera payment event payload must be JSON
+explanation: Transfeera documents payment event payloads in JSON format.
+docsRef: events
+requires: >-
+  envelope.request.headersCompleteness == "complete" ||
+  envelope.request.headers.exists(h, h.name.lowerAscii() == "content-type")
+assert: >-
+  envelope.request.headers.exists(
+    h,
+    h.name.lowerAscii() == "content-type" &&
+    h.value.lowerAscii().startsWith("application/json")
+  )
+evidencePointers:
+  - /request/headers
+messages:
+  evidence-unavailable: "The request header capture is incomplete and Content-Type was not observed, so the JSON transport cannot be proven."

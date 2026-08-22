@@ -1,0 +1,28 @@
+packProtocol: "1.2"
+id: pipefy-audit-export-webhooks
+name: Pipefy Audit Export Webhooks
+packVersion: 0.1.0
+providerDocsRevision: "2026-08-18"
+minWireLinterVersion: 0.1.0
+capabilities:
+  - passive-lint
+docs:
+  export:
+    url: https://developers.pipefy.com/reference/export-pipe-audit-logs-report
+    revision: "2026-08-18"
+    section: Webhook delivery
+  webhooks:
+    url: https://developers.pipefy.com/reference/pipe-table-webhooks
+    revision: "2026-08-18"
+    section: Activities Export Finished
+rules:
+  - rules/method.yaml
+  - rules/action.yaml
+  - rules/correlation-id.yaml
+metadata:
+  status: preview
+  maintainer: wirelint
+  vendor: pipefy
+  region: BR-global
+  surface: audit-log-export-finished-webhook
+  scopeNote: "This contract is deliberately scoped to audit_log.export_finished push notifications rather than generalizing every Pipefy webhook action or configurable header."

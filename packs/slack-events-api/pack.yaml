@@ -1,0 +1,34 @@
+packProtocol: "1.2"
+id: slack-events-api
+name: Slack Events API
+packVersion: 0.1.0
+providerDocsRevision: "2026-08-17"
+minWireLinterVersion: 0.1.0
+capabilities:
+  - passive-lint
+secrets:
+  signing-secret:
+    env: SLACK_SIGNING_SECRET
+    required: false
+    description: Slack app signing secret
+
+docs:
+  request-signing:
+    url: https://docs.slack.dev/authentication/verifying-requests-from-slack/
+    revision: "2026-08-17"
+    section: Validating a request
+  events-api:
+    url: https://docs.slack.dev/apis/events-api/
+    revision: "2026-08-17"
+    section: Responding to events
+signatures:
+  request-v0: signatures/request-v0.yaml
+rules:
+  - rules/signature.yaml
+  - rules/method.yaml
+  - rules/ack-status.yaml
+  - rules/ack-duration.yaml
+metadata:
+  status: preview
+  maintainer: wirelint
+  surface: events-api-https

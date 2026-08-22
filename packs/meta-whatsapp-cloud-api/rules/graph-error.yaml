@@ -1,0 +1,14 @@
+schemaVersion: 1
+id: WL-META-WA-CLOUD-GRAPH-ERROR-001
+kind: cel
+scope: envelope
+severity: error
+stability: preview
+title: WhatsApp Cloud API response must not contain a Graph API error
+explanation: Meta Graph API returns structured failures in the response error member, which must be checked separately from transport handling.
+docsRef: graph-errors
+requires: has(envelope.response) && has(envelope.response.decodedBody)
+assert: type(envelope.response.decodedBody) != type({}) || !has(envelope.response.decodedBody.error)
+evidencePointers: [/response/decodedBody]
+messages:
+  evidence-unavailable: "Decoded Meta response JSON is unavailable."

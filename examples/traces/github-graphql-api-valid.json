@@ -1,0 +1,46 @@
+{
+  "schemaVersion": 1,
+  "traceId": "trace_github_graphql_valid",
+  "provider": "github-graphql-api",
+  "startedAt": "2026-08-18T05:00:00Z",
+  "envelopes": [
+    {
+      "id": "env_github_graphql_valid",
+      "provider": "github-graphql-api",
+      "direction": "outbound",
+      "receivedAt": "2026-08-18T05:00:00Z",
+      "request": {
+        "method": "POST",
+        "url": "https://api.github.com/graphql",
+        "headers": [
+          { "name": "Authorization", "value": "Bearer <redacted>", "redacted": true },
+          { "name": "Content-Type", "value": "application/json" }
+        ],
+        "headersCompleteness": "complete",
+        "rawQuery": "",
+        "queryFidelity": "exact",
+        "query": [],
+        "bodyFidelity": "exact",
+        "rawBodyBase64": "eyJxdWVyeSI6InF1ZXJ5IFZpZXdlciB7IHZpZXdlciB7IGxvZ2luIH0gfSIsIm9wZXJhdGlvbk5hbWUiOiJWaWV3ZXIiLCJ2YXJpYWJsZXMiOnt9fQ==",
+        "decodedBody": {
+          "query": "query Viewer { viewer { login } }",
+          "operationName": "Viewer",
+          "variables": {}
+        }
+      },
+      "response": {
+        "status": 200,
+        "headers": [
+          { "name": "Content-Type", "value": "application/json" },
+          { "name": "X-RateLimit-Remaining", "value": "4999" }
+        ],
+        "headersCompleteness": "complete",
+        "bodyFidelity": "exact",
+        "rawBodyBase64": "eyJkYXRhIjp7InZpZXdlciI6eyJsb2dpbiI6Im9jdG9jYXQifX19",
+        "decodedBody": { "data": { "viewer": { "login": "octocat" } } },
+        "durationMs": 42.3
+      }
+    }
+  ],
+  "observations": []
+}

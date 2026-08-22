@@ -1,0 +1,28 @@
+packProtocol: "1.2"
+id: zapsign-webhooks-delivery
+name: ZapSign Webhooks Delivery
+packVersion: 0.1.0
+providerDocsRevision: "2026-08-18"
+minWireLinterVersion: 0.1.0
+capabilities:
+  - passive-lint
+docs:
+  webhooks:
+    url: https://docs.zapsign.com.br/webhooks/como-funciona
+    revision: "2026-08-18"
+    section: Como funcionam os Webhooks
+  configuration:
+    url: https://docs.zapsign.com.br/webhooks/criar-webhook
+    revision: "2026-08-18"
+    section: Configurando headers para webhooks
+rules:
+  - rules/method.yaml
+  - rules/ack-status.yaml
+metadata:
+  status: preview
+  maintainer: wirelint
+  vendor: zapsign
+  region: BR
+  surface: electronic-signature-webhook-delivery
+  payloadModel: json
+  authPolicyNote: "ZapSign lets integrators configure arbitrary outbound headers, including Authorization. Because both header name and value are integrator-defined, this delivery contract does not invent a fixed authentication field."

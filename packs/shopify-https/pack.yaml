@@ -1,0 +1,45 @@
+packProtocol: "1.2"
+id: shopify-https
+name: Shopify HTTPS Webhooks
+packVersion: 0.1.0
+providerDocsRevision: "2026-08-17"
+minWireLinterVersion: 0.1.0
+capabilities:
+  - passive-lint
+secrets:
+  client-secret:
+    env: SHOPIFY_CLIENT_SECRET
+    required: false
+    description: Shopify app client secret used to sign HTTPS webhook deliveries
+docs:
+  webhook-verification:
+    url: https://shopify.dev/docs/apps/build/webhooks/verify-deliveries
+    revision: "2026-08-17"
+    section: HMAC verification
+  webhook-delivery:
+    url: https://shopify.dev/docs/apps/build/webhooks
+    revision: "2026-08-17"
+    section: Headers
+  webhook-subscriptions:
+    url: https://shopify.dev/docs/apps/build/webhooks/subscribe
+    revision: "2026-08-17"
+    section: Update the API version
+  webhook-troubleshooting:
+    url: https://shopify.dev/docs/apps/build/webhooks/verify-deliveries
+    revision: "2026-08-17"
+    section: HTTPS delivery considerations
+signatures:
+  webhook-hmac-sha256: signatures/webhook-hmac-sha256.yaml
+rules:
+  - rules/signature.yaml
+  - rules/method.yaml
+  - rules/topic-header.yaml
+  - rules/webhook-id-header.yaml
+  - rules/api-version-header.yaml
+  - rules/ack-status.yaml
+  - rules/ack-duration.yaml
+metadata:
+  status: preview
+  maintainer: wirelint
+  vendor: shopify
+  surface: https-webhook

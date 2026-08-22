@@ -1,0 +1,12 @@
+schemaVersion: 1
+id: WL-GH-GQL-METHOD-001
+kind: cel
+scope: envelope
+severity: error
+stability: preview
+title: GitHub GraphQL JSON calls must use POST
+explanation: GitHub documents POST for GraphQL requests that carry a query or mutation body; GET is reserved for the unusual introspection case without a body.
+docsRef: graphql-calls
+assert: envelope.request.method == "POST"
+evidencePointers:
+  - /request/method

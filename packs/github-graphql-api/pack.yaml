@@ -1,0 +1,37 @@
+packProtocol: "1.2"
+id: github-graphql-api
+name: GitHub GraphQL API
+packVersion: 0.1.0
+providerDocsRevision: "2026-08-18"
+minWireLinterVersion: 0.1.0
+capabilities:
+  - passive-lint
+
+docs:
+  graphql-calls:
+    url: https://docs.github.com/en/graphql/guides/forming-calls-with-graphql
+    revision: "2026-08-18"
+    section: Forming calls with GraphQL
+  graphql-rate-limits:
+    url: https://docs.github.com/en/graphql/overview/rate-limits-and-query-limits-for-the-graphql-api
+    revision: "2026-08-18"
+    section: Exceeding the rate limit
+  graphql-response:
+    url: https://spec.graphql.org/September2025/#sec-Response
+    revision: "September 2025"
+    section: Response
+rules:
+  - rules/direction.yaml
+  - rules/endpoint.yaml
+  - rules/method.yaml
+  - rules/authorization.yaml
+  - rules/content-type.yaml
+  - rules/request-envelope.yaml
+  - rules/http-status.yaml
+  - rules/response-envelope.yaml
+  - rules/graphql-errors.yaml
+  - rules/rate-limit.yaml
+metadata:
+  status: preview
+  maintainer: wirelint
+  surface: outbound-graphql-api

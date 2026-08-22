@@ -1,0 +1,18 @@
+schemaVersion: 1
+id: WL-LD-SIGNATURE-001
+kind: signature
+scope: envelope
+severity: error
+stability: preview
+title: LaunchDarkly signed webhook signature must be valid
+explanation: LaunchDarkly signed webhooks include X-LD-Signature containing an HMAC-SHA256 hex digest of the payload using the webhook secret.
+signatureRef: payload-hmac-sha256
+docsRef: webhooks
+remediationKey: launchdarkly-webhook-signature
+messages:
+  missing-signature: "X-LD-Signature is missing from a complete capture of LaunchDarkly signed-webhook mode."
+  malformed-signature: "X-LD-Signature is malformed; LaunchDarkly uses a hex HMAC-SHA256 digest."
+  signature-mismatch: "X-LD-Signature does not match the exact raw payload for the supplied webhook secret."
+  secret-unavailable: "Set LAUNCHDARKLY_WEBHOOK_SECRET to verify signed-webhook authenticity."
+  insufficient-body-fidelity: "LaunchDarkly signs the webhook payload, so reconstructed or unavailable body bytes cannot prove the signature."
+  insufficient-header-evidence: "The header capture is incomplete, so X-LD-Signature cannot be proven absent."

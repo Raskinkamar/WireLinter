@@ -1,0 +1,29 @@
+packProtocol: "1.2"
+id: xero-webhooks
+name: Xero API Webhooks
+packVersion: 0.1.0
+providerDocsRevision: "2026-08-17"
+minWireLinterVersion: 0.1.0
+capabilities:
+  - passive-lint
+secrets:
+  webhook-key:
+    env: XERO_WEBHOOK_KEY
+    required: false
+    description: Xero webhook key used to sign event payloads
+docs:
+  webhooks:
+    url: https://developer.xero.com/documentation/guides/webhooks/overview/
+    revision: "2026-08-17"
+    section: Intent to receive and endpoint requirements
+signatures:
+  payload-hmac-sha256: signatures/payload-hmac-sha256.yaml
+rules:
+  - rules/signature.yaml
+  - rules/method.yaml
+  - rules/ack-status.yaml
+  - rules/ack-duration.yaml
+metadata:
+  status: preview
+  maintainer: wirelint
+  surface: api-webhook-post

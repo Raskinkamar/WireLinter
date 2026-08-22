@@ -1,0 +1,16 @@
+schemaVersion: 1
+id: WL-REVENUECAT-ACK-STATUS-001
+kind: cel
+scope: envelope
+severity: error
+stability: preview
+title: RevenueCat webhook acknowledgement must be HTTP 200
+explanation: RevenueCat requires the receiver to return HTTP 200; other statuses are treated as failures and retried.
+docsRef: webhooks
+remediationKey: revenuecat-webhook-ack-status
+requires: has(envelope.response)
+assert: envelope.response.status == 200
+evidencePointers:
+  - /response/status
+messages:
+  evidence-unavailable: "No response was captured, so RevenueCat's HTTP 200 acknowledgement cannot be decided."

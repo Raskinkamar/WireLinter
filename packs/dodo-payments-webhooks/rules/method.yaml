@@ -1,0 +1,12 @@
+schemaVersion: 1
+id: WL-DODO-PAYMENTS-METHOD-001
+kind: cel
+scope: envelope
+severity: error
+stability: preview
+title: Dodo Payments webhooks must use POST
+explanation: Dodo Payments sends webhook event payloads to configured endpoints using HTTP POST.
+docsRef: webhooks
+assert: envelope.request.method == "POST"
+evidencePointers:
+  - /request/method

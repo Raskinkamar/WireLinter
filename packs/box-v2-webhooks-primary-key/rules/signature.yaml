@@ -1,0 +1,18 @@
+schemaVersion: 1
+id: WL-BOX-V2-PRIMARY-SIGNATURE-001
+kind: signature
+scope: envelope
+severity: error
+stability: preview
+title: Box V2 primary webhook signature must be valid
+explanation: Box appends the BOX-DELIVERY-TIMESTAMP bytes to the exact payload bytes, computes HMAC-SHA256 with the primary signature key, Base64-encodes the digest, and sends it in BOX-SIGNATURE-PRIMARY.
+signatureRef: primary-hmac-sha256
+docsRef: verification
+remediationKey: box-v2-primary-webhook-signature
+messages:
+  missing-signature: "BOX-SIGNATURE-PRIMARY or BOX-DELIVERY-TIMESTAMP is missing from a complete webhook capture."
+  malformed-signature: "BOX-SIGNATURE-PRIMARY is not a valid Base64 HMAC-SHA256 digest."
+  signature-mismatch: "BOX-SIGNATURE-PRIMARY does not match exact body + BOX-DELIVERY-TIMESTAMP for the supplied primary key."
+  secret-unavailable: "Set BOX_WEBHOOK_PRIMARY_SIGNATURE_KEY to verify the primary signature."
+  insufficient-body-fidelity: "Box signs the payload bytes before the timestamp, so reconstructed or unavailable body bytes cannot prove authenticity."
+  insufficient-header-evidence: "The header capture is incomplete, so required Box signature headers cannot be proven absent."

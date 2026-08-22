@@ -1,0 +1,29 @@
+schemaVersion: 1
+id: timestamp-body-hmac-sha256
+sourceRefs:
+  - verification
+secret:
+  ref: client-secret
+  representation: utf8
+bindings:
+  signature-candidates:
+    fromHeader:
+      name: x-webhook-signature
+      cardinality: exactly-one
+      trimSpace: true
+  timestamp:
+    fromHeader:
+      name: x-webhook-timestamp
+      cardinality: exactly-one
+      trimSpace: true
+  body:
+    fromRawBody:
+      requireFidelity: exact
+message:
+  - binding: timestamp
+  - binding: body
+candidates:
+  binding: signature-candidates
+  encoding: base64-standard
+mac:
+  algorithm: hmac-sha256

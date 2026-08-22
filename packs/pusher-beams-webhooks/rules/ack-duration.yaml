@@ -1,0 +1,16 @@
+schemaVersion: 1
+id: WL-PUSHER-BEAMS-ACK-DURATION-001
+kind: cel
+scope: envelope
+severity: error
+stability: preview
+title: Pusher Beams webhook acknowledgement must complete within 3 seconds
+explanation: Pusher Beams treats responses taking more than three seconds as failures.
+docsRef: webhooks
+remediationKey: pusher-beams-ack-duration
+requires: has(envelope.response)
+assert: double(envelope.response.durationMs) < 3000.0
+evidencePointers:
+  - /response/durationMs
+messages:
+  evidence-unavailable: "No response timing was captured, so Pusher Beams' three-second deadline cannot be decided."

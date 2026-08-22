@@ -1,0 +1,38 @@
+packProtocol: "1.2"
+id: supabase-auth-http-hooks-standard-webhooks
+name: Supabase Auth HTTP Hooks Standard Webhooks
+packVersion: 0.1.0
+providerDocsRevision: "2026-08-18"
+minWireLinterVersion: 0.1.0
+capabilities:
+  - passive-lint
+secrets:
+  hook-secret:
+    env: SUPABASE_AUTH_HOOK_SECRET
+    required: false
+    description: Supabase Auth HTTP Hook secret in v1,whsec_<base64> form
+docs:
+  auth-hooks:
+    url: https://supabase.com/docs/guides/auth/auth-hooks
+    revision: "2026-08-18"
+    section: Auth Hooks
+  send-email-hook:
+    url: https://supabase.com/docs/guides/auth/auth-hooks/send-email-hook?language=http&queryGroups=language
+    revision: "2026-08-18"
+    section: HTTP example
+  standard-webhooks:
+    url: https://github.com/standard-webhooks/standard-webhooks/blob/main/spec/standard-webhooks.md
+    revision: "2026-08-18"
+    section: Webhook signatures
+signatures:
+  standard-webhook-v1: signatures/standard-webhook-v1.yaml
+rules:
+  - rules/signature.yaml
+  - rules/method.yaml
+  - rules/duration.yaml
+metadata:
+  status: preview
+  maintainer: wirelint
+  vendor: supabase
+  surface: auth-http-hooks-standard-webhooks
+  secretFormatNote: "Supabase's HTTP hook example exposes secrets as v1,whsec_<base64_secret>; this contract decodes that exact representation inside the trusted signature primitive."

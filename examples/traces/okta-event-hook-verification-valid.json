@@ -1,0 +1,32 @@
+{
+  "schemaVersion": 1,
+  "traceId": "trace_okta_event_hook_verification_valid",
+  "provider": "okta-event-hook-verification",
+  "startedAt": "2026-08-18T03:30:00Z",
+  "envelopes": [{
+    "id": "env_okta_verify_valid",
+    "provider": "okta-event-hook-verification",
+    "receivedAt": "2026-08-18T03:30:00Z",
+    "request": {
+      "method": "GET",
+      "url": "http://localhost:4242/webhooks/okta",
+      "headers": [{"name": "x-okta-verification-challenge", "value": "okta-fixture-challenge"}],
+      "headersCompleteness": "complete",
+      "rawQuery": "",
+      "queryFidelity": "exact",
+      "query": [],
+      "bodyFidelity": "exact",
+      "rawBodyBase64": ""
+    },
+    "response": {
+      "status": 200,
+      "headers": [{"name": "Content-Type", "value": "application/json"}],
+      "headersCompleteness": "complete",
+      "bodyFidelity": "exact",
+      "rawBodyBase64": "eyJ2ZXJpZmljYXRpb24iOiJva3RhLWZpeHR1cmUtY2hhbGxlbmdlIn0=",
+      "decodedBody": {"verification": "okta-fixture-challenge"},
+      "durationMs": 15.0
+    }
+  }],
+  "observations": []
+}

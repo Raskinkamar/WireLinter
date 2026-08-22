@@ -1,0 +1,12 @@
+schemaVersion: 1
+id: WL-OPENPIX-METHOD-001
+kind: cel
+scope: envelope
+severity: error
+stability: preview
+title: OpenPix webhooks must use POST
+explanation: OpenPix documents that its webhook endpoint always receives HTTP POST requests.
+docsRef: platform
+assert: envelope.request.method == "POST"
+evidencePointers:
+  - /request/method

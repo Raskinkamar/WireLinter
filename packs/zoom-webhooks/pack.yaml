@@ -1,0 +1,36 @@
+packProtocol: "1.2"
+id: zoom-webhooks
+name: Zoom Webhook Events
+packVersion: 0.1.0
+providerDocsRevision: "2026-08-17"
+minWireLinterVersion: 0.1.0
+capabilities:
+  - passive-lint
+secrets:
+  secret-token:
+    env: ZOOM_WEBHOOK_SECRET_TOKEN
+    required: false
+    description: Secret token from the Zoom app webhook/event subscription configuration
+docs:
+  verification:
+    url: https://developers.zoom.us/docs/api/webhooks/
+    revision: "2026-08-17"
+    section: Verify webhook events
+  api-reference:
+    url: https://developers.zoom.us/docs/api/
+    revision: "2026-08-17"
+    section: Event subscriptions
+signatures:
+  event-v0-hmac-sha256: signatures/event-v0-hmac-sha256.yaml
+rules:
+  - rules/signature.yaml
+  - rules/method.yaml
+  - rules/ack-status.yaml
+  - rules/ack-duration.yaml
+metadata:
+  status: preview
+  maintainer: wirelint
+  surface: event-notification-webhook
+  excludes:
+    - endpoint-url-validation-challenge
+    - deprecated-verification-token

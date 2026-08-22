@@ -1,0 +1,34 @@
+schemaVersion: 1
+id: outbound-v1
+sourceRefs:
+  - outbound
+secret:
+  ref: secret-token
+  representation: utf8
+parsers:
+  signatures:
+    sourceHeader:
+      name: circleci-signature
+      cardinality: exactly-one
+      trimSpace: true
+    format:
+      type: delimited-pairs
+      itemDelimiter: ","
+      pairDelimiter: "="
+      trimSpace: true
+bindings:
+  signature-candidates:
+    fromField:
+      parser: signatures
+      key: v1
+      cardinality: exactly-one
+  body:
+    fromRawBody:
+      requireFidelity: exact
+message:
+  - binding: body
+candidates:
+  binding: signature-candidates
+  encoding: hex
+mac:
+  algorithm: hmac-sha256

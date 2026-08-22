@@ -1,0 +1,22 @@
+schemaVersion: 1
+id: WL-VINDI-SERVICE-CONTENT-TYPE-001
+kind: cel
+scope: envelope
+severity: error
+stability: preview
+title: Vindi Service webhook content type must be JSON
+explanation: Vindi Service sends webhook bodies as JSON and documents Content-Type application/json; charset=UTF-8.
+docsRef: delivery
+requires: >-
+  envelope.request.headersCompleteness == "complete" ||
+  envelope.request.headers.exists(h, h.name.lowerAscii() == "content-type")
+assert: >-
+  envelope.request.headers.exists(
+    h,
+    h.name.lowerAscii() == "content-type" &&
+    h.value.lowerAscii().startsWith("application/json")
+  )
+evidencePointers:
+  - /request/headers
+messages:
+  evidence-unavailable: "Content-Type was not observed, but the request header capture is incomplete."

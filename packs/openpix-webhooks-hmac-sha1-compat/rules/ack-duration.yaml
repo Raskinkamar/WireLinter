@@ -1,0 +1,16 @@
+schemaVersion: 1
+id: WL-OPENPIX-ACK-DURATION-001
+kind: cel
+scope: envelope
+severity: error
+stability: preview
+title: OpenPix webhook response must complete within 100 seconds
+explanation: OpenPix cancels a webhook request if the receiving URL does not respond within 100 seconds.
+docsRef: timeout
+remediationKey: openpix-webhook-ack-duration
+requires: has(envelope.response)
+assert: double(envelope.response.durationMs) < 100000.0
+evidencePointers:
+  - /response/durationMs
+messages:
+  evidence-unavailable: "No response timing was captured, so OpenPix's 100-second timeout cannot be decided."

@@ -1,0 +1,12 @@
+schemaVersion: 1
+id: WL-NFEIO-DFE-V2-METHOD-001
+kind: cel
+scope: envelope
+severity: error
+stability: preview
+title: NFE.io DFe Inbound V2 webhooks must use POST
+explanation: NFE.io DFe Inbound V2 sends document and event notifications to the configured URL using HTTP POST.
+docsRef: inbound
+assert: envelope.request.method == "POST"
+evidencePointers:
+  - /request/method

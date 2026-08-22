@@ -1,0 +1,16 @@
+schemaVersion: 1
+id: WL-AS-WEBHOOKS-ACK-STATUS-001
+kind: cel
+scope: envelope
+severity: error
+stability: preview
+title: Asaas webhook acknowledgement must be HTTP 200
+explanation: The current Asaas Webhooks FAQ states that only HTTP 200 is treated as successful processing, even though broader pages still describe the 2xx family.
+docsRef: webhook-faq
+remediationKey: asaas-ack-status
+requires: has(envelope.response)
+assert: envelope.response.status == 200
+evidencePointers:
+  - /response/status
+messages:
+  evidence-unavailable: "No application response was captured, so WireLinter cannot determine whether Asaas received the required HTTP 200 acknowledgement."

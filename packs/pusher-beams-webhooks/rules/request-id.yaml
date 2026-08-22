@@ -1,0 +1,19 @@
+schemaVersion: 1
+id: WL-PUSHER-BEAMS-REQUEST-001
+kind: cel
+scope: envelope
+severity: warning
+stability: preview
+title: Pusher Beams webhook request identifier should be present
+explanation: Pusher Beams includes Webhook-Request-ID-UUID and keeps it stable when retrying the same request.
+docsRef: webhooks
+remediationKey: pusher-beams-request-id
+requires: >-
+  envelope.request.headersCompleteness == "complete" ||
+  envelope.request.headers.exists(h, h.name.lowerAscii() == "webhook-request-id-uuid" && h.value != "")
+assert: >-
+  envelope.request.headers.exists(h, h.name.lowerAscii() == "webhook-request-id-uuid" && h.value != "")
+evidencePointers:
+  - /request/headers
+messages:
+  evidence-unavailable: "Webhook-Request-ID-UUID was not observed, but the request header capture is incomplete."

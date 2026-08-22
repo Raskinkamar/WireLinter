@@ -1,0 +1,37 @@
+packProtocol: "1.3"
+id: hotmart-webhooks-hottok
+name: Hotmart Webhooks Hottok
+packVersion: 0.1.0
+providerDocsRevision: "2026-08-18"
+minWireLinterVersion: 0.1.0
+capabilities:
+  - passive-lint
+secrets:
+  hottok:
+    env: HOTMART_HOTTOK
+    required: false
+    description: Unique Hottok credential from the Hotmart account webhook authentication settings
+docs:
+  hottok-auth:
+    url: https://developers.hotmart.com/docs/pt-BR/2.0.0/webhook/purchase-webhook/
+    revision: "2026-08-18"
+    section: hottok
+  webhook-v2:
+    url: https://developers.hotmart.com/docs/pt-BR/tutorials/use-webhook-for-subscriptions/
+    revision: "2026-08-18"
+    section: Estruturando seu ambiente para receber os eventos
+secretMatches:
+  hottok-header: secret-matches/hottok-header.yaml
+rules:
+  - rules/hottok.yaml
+metadata:
+  status: preview
+  maintainer: wirelint
+  vendor: hotmart
+  region: BR
+  surface: webhook-hottok-authentication
+  categories:
+    - creator-economy
+    - payments
+    - subscriptions
+  authPolicyNote: "Hotmart documents a unique account Hottok sent in X-HOTMART-HOTTOK on webhook requests and recommends validating it before processing the payload."

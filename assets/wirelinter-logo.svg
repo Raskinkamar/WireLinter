@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 1200" role="img" aria-labelledby="title desc">
+  <title id="title">WireLinter</title>
+  <desc id="desc">White code brackets around a red signal line, with the WireLinter wordmark and Lint for Integrations tagline on black.</desc>
+  <rect width="1200" height="1200" rx="88" fill="#050505"/>
+
+  <g fill="none" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M355 345 265 440 355 535" stroke="#F7F7F7" stroke-width="30"/>
+    <path d="M845 345 935 440 845 535" stroke="#F7F7F7" stroke-width="30"/>
+    <path d="M340 440 H445 L485 515 550 275 620 555 670 440 H790" stroke="#FF252B" stroke-width="30"/>
+  </g>
+
+  <text x="600" y="780" text-anchor="middle" font-family="JetBrains Mono, SFMono-Regular, Menlo, Consolas, Liberation Mono, monospace" font-size="104" font-weight="700" letter-spacing="8">
+    <tspan fill="#F7F7F7">WIRE</tspan><tspan fill="#FF252B">LINTER</tspan>
+  </text>
+
+  <text x="600" y="860" text-anchor="middle" font-family="JetBrains Mono, SFMono-Regular, Menlo, Consolas, Liberation Mono, monospace" font-size="40" letter-spacing="2">
+    <tspan fill="#D8D8D8">Lint for Integrations</tspan><tspan fill="#FF252B">.</tspan>
+  </text>
+</svg>

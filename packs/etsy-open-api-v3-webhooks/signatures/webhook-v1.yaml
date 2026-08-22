@@ -1,0 +1,55 @@
+schemaVersion: 1
+id: webhook-v1
+sourceRefs:
+  - webhooks
+secret:
+  ref: signing-secret
+  representation: prefixed-base64
+  prefix: "whsec_"
+parsers:
+  signatures:
+    sourceHeader:
+      name: webhook-signature
+      cardinality: exactly-one
+      trimSpace: true
+    format:
+      type: delimited-pairs
+      itemDelimiter: " "
+      pairDelimiter: ","
+      trimSpace: true
+bindings:
+  signature-candidates:
+    fromField:
+      parser: signatures
+      key: v1
+      cardinality: one-or-more
+  message-id:
+    fromHeader:
+      name: webhook-id
+      cardinality: exactly-one
+      trimSpace: true
+  timestamp:
+    fromHeader:
+      name: webhook-timestamp
+      cardinality: exactly-one
+      trimSpace: true
+  body:
+    fromRawBody:
+      requireFidelity: exact
+message:
+  - binding: message-id
+    suffix: "."
+  - binding: timestamp
+    suffix: "."
+  - binding: body
+candidates:
+  binding: signature-candidates
+  encoding: base64-standard
+mac:
+  algorithm: hmac-sha256
+freshness:
+  timestampBinding: timestamp
+  format: unix-seconds
+  reference: envelope-received-at
+  maxAgeSeconds: 300
+  maxFutureSeconds: 300

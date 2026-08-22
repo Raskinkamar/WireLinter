@@ -1,0 +1,13 @@
+schemaVersion: 1
+id: WL-REVENUECAT-METHOD-001
+kind: cel
+scope: envelope
+severity: error
+stability: preview
+title: RevenueCat webhook delivery must use POST
+explanation: RevenueCat sends webhook notifications as HTTP POST requests with a JSON body.
+docsRef: webhooks
+remediationKey: revenuecat-webhook-method
+assert: envelope.request.method == "POST"
+evidencePointers:
+  - /request/method

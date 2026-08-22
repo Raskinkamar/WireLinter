@@ -1,0 +1,16 @@
+schemaVersion: 1
+id: WL-MP-WEBHOOKS-ACK-DURATION-001
+kind: cel
+scope: envelope
+severity: error
+stability: preview
+title: Mercado Pago webhook acknowledgement must complete before timeout
+explanation: Mercado Pago waits up to 22 seconds for acknowledgement before treating the notification as not received and retrying it.
+docsRef: webhook-ack-docs
+remediationKey: mercadopago-ack-duration
+requires: has(envelope.response)
+assert: double(envelope.response.durationMs) < 22000.0
+evidencePointers:
+  - /response/durationMs
+messages:
+  evidence-unavailable: "No application response timing was captured, so WireLinter cannot determine whether the handler completed within Mercado Pago's 22-second acknowledgement window."

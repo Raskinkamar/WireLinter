@@ -1,0 +1,28 @@
+packProtocol: "1.2"
+id: cora-webhooks-delivery
+name: Cora Webhooks Delivery
+packVersion: 0.1.0
+providerDocsRevision: "2026-08-18"
+minWireLinterVersion: 0.1.0
+capabilities:
+  - passive-lint
+docs:
+  notifications:
+    url: https://developers.cora.com.br/reference/exemplo-de-post-da-notifica%C3%A7%C3%A3o
+    revision: "2026-08-18"
+    section: Exemplo de POST da Notificação
+  endpoints:
+    url: https://developers.cora.com.br/reference/cria%C3%A7%C3%A3o-de-endpoints
+    revision: "2026-08-18"
+    section: Criação de endpoints
+rules:
+  - rules/method.yaml
+  - rules/user-agent.yaml
+  - rules/ack-status.yaml
+metadata:
+  status: preview
+  maintainer: wirelint
+  vendor: cora
+  region: BR
+  surface: banking-webhook-delivery
+  authPolicyNote: "This contract validates Cora's documented outbound notification wire behavior. Endpoint registration authentication is not treated as proof of authenticity of an observed outbound webhook."

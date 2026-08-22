@@ -1,0 +1,19 @@
+schemaVersion: 1
+id: WL-ZENDESK-SIGNATURE-001
+kind: signature
+scope: envelope
+severity: error
+stability: preview
+title: Zendesk webhook signature must be valid
+explanation: Zendesk signs the signature timestamp concatenated with the exact request body using HMAC-SHA256 and Base64.
+signatureRef: timestamp-body-hmac-sha256
+docsRef: verification
+remediationKey: zendesk-webhook-signature
+messages:
+  missing-signature: "X-Zendesk-Webhook-Signature is missing from a complete signed-webhook capture."
+  missing-signature-input: "Zendesk signature verification requires both signature and timestamp headers."
+  malformed-signature: "X-Zendesk-Webhook-Signature is not valid Base64 signature material."
+  signature-mismatch: "The Zendesk webhook signature does not match timestamp plus exact raw body for the supplied signing secret."
+  secret-unavailable: "Set ZENDESK_WEBHOOK_SIGNING_SECRET to verify authenticity."
+  insufficient-body-fidelity: "Zendesk signs the raw request body, so reconstructed or unavailable body bytes cannot prove authenticity."
+  insufficient-header-evidence: "The captured header set is incomplete, so required Zendesk signature headers cannot be proven absent."

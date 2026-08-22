@@ -1,0 +1,12 @@
+schemaVersion: 1
+id: WL-ZAPSIGN-WEBHOOK-METHOD-001
+kind: cel
+scope: envelope
+severity: error
+stability: preview
+title: ZapSign webhooks must use POST
+explanation: ZapSign sends webhook event details to the configured application URL using HTTP POST with a JSON payload.
+docsRef: webhooks
+assert: envelope.request.method == "POST"
+evidencePointers:
+  - /request/method

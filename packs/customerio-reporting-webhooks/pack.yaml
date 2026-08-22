@@ -1,0 +1,28 @@
+packProtocol: "1.2"
+id: customerio-reporting-webhooks
+name: Customer.io Reporting Webhooks
+packVersion: 0.1.0
+providerDocsRevision: "2026-08-18"
+minWireLinterVersion: 0.1.0
+capabilities:
+  - passive-lint
+secrets:
+  signing-secret:
+    env: CUSTOMERIO_WEBHOOK_SIGNING_SECRET
+    required: false
+    description: Customer.io webhook signing key
+docs:
+  reporting-webhooks:
+    url: https://docs.customer.io/integrations/data-out/connections/webhooks/
+    revision: "2026-08-18"
+    section: Securely verify requests
+signatures:
+  v0-timestamp-body: signatures/v0-timestamp-body.yaml
+rules:
+  - rules/signature.yaml
+  - rules/method.yaml
+metadata:
+  status: preview
+  maintainer: wirelint
+  vendor: customerio
+  surface: reporting-webhook

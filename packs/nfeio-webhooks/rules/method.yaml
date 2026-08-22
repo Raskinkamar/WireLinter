@@ -1,0 +1,12 @@
+schemaVersion: 1
+id: WL-NFEIO-METHOD-001
+kind: cel
+scope: envelope
+severity: error
+stability: preview
+title: NFE.io webhook delivery must use POST
+explanation: NFE.io delivers webhook events and validates newly registered webhook endpoints using HTTP POST.
+docsRef: registration
+assert: envelope.request.method == "POST"
+evidencePointers:
+  - /request/method

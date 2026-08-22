@@ -1,0 +1,20 @@
+schemaVersion: 1
+id: WL-ETSY-V3-SIGNATURE-001
+kind: signature
+scope: envelope
+severity: error
+stability: preview
+title: Etsy Open API v3 webhook signature must be valid and fresh
+explanation: Etsy signs webhook-id, webhook-timestamp, and the exact raw request body joined by dots using HMAC-SHA256 with the Base64 key material from the whsec_ signing secret, and recommends rejecting timestamps outside a 300-second margin.
+signatureRef: webhook-v1
+docsRef: webhooks
+remediationKey: etsy-v3-webhook-signature
+messages:
+  missing-signature: "A required Etsy webhook signature header is missing from a complete capture."
+  malformed-signature: "webhook-signature does not contain a valid v1 Base64 signature or webhook-timestamp is malformed."
+  signature-mismatch: "The Etsy webhook signature does not match webhook-id + webhook-timestamp + exact raw body."
+  secret-unavailable: "Set ETSY_WEBHOOK_SIGNING_SECRET to the whsec_ signing secret from the Etsy Webhook Portal."
+  insufficient-body-fidelity: "Etsy signs the exact raw request body, so reconstructed or unavailable bytes cannot prove authenticity."
+  insufficient-header-evidence: "The header capture is incomplete, so required Etsy webhook headers cannot be proven absent."
+  timestamp-stale: "The Etsy webhook timestamp is more than 300 seconds older than the captured receive time."
+  timestamp-future: "The Etsy webhook timestamp is more than 300 seconds ahead of the captured receive time."

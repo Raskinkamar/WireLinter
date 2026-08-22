@@ -1,0 +1,28 @@
+packProtocol: "1.2"
+id: transfeera-payment-events
+name: Transfeera Payment Events
+packVersion: 0.1.0
+providerDocsRevision: "2026-08-18"
+minWireLinterVersion: 0.1.0
+capabilities:
+  - passive-lint
+docs:
+  events:
+    url: https://docs.transfeera.dev/reference/pagamentos-eventos
+    revision: "2026-08-18"
+    section: Eventos
+rules:
+  - rules/method.yaml
+  - rules/content-type.yaml
+  - rules/ack-status.yaml
+metadata:
+  status: preview
+  maintainer: wirelint
+  vendor: transfeera
+  region: BR
+  surface: payment-event-webhook
+  categories:
+    - banking
+    - payments
+    - pix
+  retryAttemptsAfterFailure: 2

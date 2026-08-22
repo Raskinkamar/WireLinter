@@ -1,0 +1,21 @@
+schemaVersion: 1
+id: payload-hmac-sha256
+sourceRefs: [webhooks]
+secret:
+  ref: app-secret
+  representation: utf8
+bindings:
+  signature-candidates:
+    fromHeader:
+      name: X-Hub-Signature-256
+      cardinality: exactly-one
+  body:
+    fromRawBody:
+      requireFidelity: exact
+message: [{binding: body}]
+candidates:
+  binding: signature-candidates
+  encoding: hex
+  stripPrefix: "sha256="
+mac:
+  algorithm: hmac-sha256

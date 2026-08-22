@@ -1,0 +1,15 @@
+schemaVersion: 1
+id: WL-GH-GQL-HTTP-001
+kind: cel
+scope: envelope
+severity: error
+stability: preview
+title: GitHub GraphQL transport must complete with a successful HTTP status
+explanation: Authentication, transport and upstream failures can surface as non-2xx HTTP responses before GraphQL result semantics are considered.
+docsRef: graphql-calls
+requires: has(envelope.response)
+assert: envelope.response.status >= 200 && envelope.response.status < 300
+evidencePointers:
+  - /response/status
+messages:
+  evidence-unavailable: "No provider response was captured, so the HTTP outcome cannot be decided."

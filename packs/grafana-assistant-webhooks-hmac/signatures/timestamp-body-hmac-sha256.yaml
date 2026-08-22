@@ -1,0 +1,30 @@
+schemaVersion: 1
+id: timestamp-body-hmac-sha256
+sourceRefs:
+  - automations
+secret:
+  ref: hmac-secret
+  representation: utf8
+bindings:
+  signature-candidates:
+    fromHeader:
+      name: X-Assistant-Signature
+      cardinality: exactly-one
+      trimSpace: true
+  timestamp:
+    fromHeader:
+      name: X-Assistant-Signature-Timestamp
+      cardinality: exactly-one
+      trimSpace: true
+  body:
+    fromRawBody:
+      requireFidelity: exact
+message:
+  - binding: timestamp
+    suffix: ":"
+  - binding: body
+candidates:
+  binding: signature-candidates
+  encoding: hex
+mac:
+  algorithm: hmac-sha256

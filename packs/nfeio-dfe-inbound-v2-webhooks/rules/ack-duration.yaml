@@ -1,0 +1,16 @@
+schemaVersion: 1
+id: WL-NFEIO-DFE-V2-DURATION-001
+kind: cel
+scope: envelope
+severity: error
+stability: preview
+title: NFE.io DFe Inbound V2 response must complete within 30 seconds
+explanation: NFE.io treats a DFe Inbound V2 webhook response taking more than 30 seconds as a temporary failure and retries it.
+docsRef: inbound
+remediationKey: nfeio-dfe-v2-webhook-ack-duration
+requires: has(envelope.response)
+assert: double(envelope.response.durationMs) <= 30000.0
+evidencePointers:
+  - /response/durationMs
+messages:
+  evidence-unavailable: "No response timing was captured, so DFe Inbound V2's 30-second timeout cannot be decided."

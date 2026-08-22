@@ -1,0 +1,31 @@
+schemaVersion: 1
+id: v0-timestamp-body
+sourceRefs:
+  - reporting-webhooks
+secret:
+  ref: signing-secret
+  representation: utf8
+bindings:
+  signature-candidates:
+    fromHeader:
+      name: X-CIO-Signature
+      cardinality: exactly-one
+      trimSpace: true
+  timestamp:
+    fromHeader:
+      name: X-CIO-Timestamp
+      cardinality: exactly-one
+      trimSpace: true
+  body:
+    fromRawBody:
+      requireFidelity: exact
+message:
+  - literal: "v0:"
+  - binding: timestamp
+    suffix: ":"
+  - binding: body
+candidates:
+  binding: signature-candidates
+  encoding: hex
+mac:
+  algorithm: hmac-sha256

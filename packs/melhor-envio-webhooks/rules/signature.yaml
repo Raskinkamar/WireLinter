@@ -1,0 +1,18 @@
+schemaVersion: 1
+id: WL-MELHOR-ENVIO-SIGNATURE-001
+kind: signature
+scope: envelope
+severity: error
+stability: preview
+title: Melhor Envio webhook signature must be valid
+explanation: Melhor Envio signs the webhook request body with HMAC-SHA256 using the application's secret and sends the Base64 digest in X-ME-Signature.
+signatureRef: payload-hmac-sha256
+docsRef: webhooks
+remediationKey: melhor-envio-webhook-signature
+messages:
+  missing-signature: "X-ME-Signature is missing from a complete Melhor Envio webhook capture."
+  malformed-signature: "X-ME-Signature is not a valid Base64 HMAC-SHA256 digest."
+  signature-mismatch: "X-ME-Signature does not match the exact raw request body for the supplied application secret."
+  secret-unavailable: "Set MELHOR_ENVIO_APP_SECRET to verify webhook authenticity."
+  insufficient-body-fidelity: "Melhor Envio signs the request body, so reconstructed or unavailable body bytes cannot prove authenticity."
+  insufficient-header-evidence: "The header capture is incomplete, so X-ME-Signature cannot be proven absent."

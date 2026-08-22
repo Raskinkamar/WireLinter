@@ -1,0 +1,16 @@
+schemaVersion: 1
+id: WL-GADMIN-REPORTS-CHANNEL-001
+kind: cel
+scope: envelope
+severity: error
+stability: preview
+title: Google Admin Reports channel identifier must be present
+explanation: Reports push notifications include X-Goog-Channel-ID identifying the notification channel.
+docsRef: push
+remediationKey: google-admin-reports-channel-id
+requires: envelope.request.headersCompleteness == "complete" || envelope.request.headers.exists(h, h.name.lowerAscii() == "x-goog-channel-id" && h.value != "")
+assert: envelope.request.headers.exists(h, h.name.lowerAscii() == "x-goog-channel-id" && h.value != "")
+evidencePointers:
+  - /request/headers
+messages:
+  evidence-unavailable: "X-Goog-Channel-ID was not observed, but the header capture is incomplete."

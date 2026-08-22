@@ -1,0 +1,33 @@
+packProtocol: "1.3"
+id: figma-webhooks
+name: Figma Webhooks
+packVersion: 0.1.0
+providerDocsRevision: "2026-08-18"
+minWireLinterVersion: 0.1.0
+capabilities:
+  - passive-lint
+secrets:
+  webhook-passcode:
+    env: FIGMA_WEBHOOK_PASSCODE
+    required: false
+    description: Passcode configured when creating the Figma webhook
+docs:
+  security:
+    url: https://developers.figma.com/docs/rest-api/webhooks-security/
+    revision: "2026-08-18"
+    section: Security
+  events:
+    url: https://developers.figma.com/docs/rest-api/webhooks-events/
+    revision: "2026-08-18"
+    section: Events
+secretMatches:
+  passcode: secret-matches/passcode.yaml
+rules:
+  - rules/passcode.yaml
+  - rules/method.yaml
+metadata:
+  status: preview
+  maintainer: wirelint
+  vendor: figma
+  surface: webhook-events
+  authPolicyNote: "Figma returns the configured passcode in webhook event payloads and recommends comparing it before acting on the event."

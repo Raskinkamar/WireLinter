@@ -1,0 +1,16 @@
+schemaVersion: 1
+id: WL-DROPBOX-ACK-STATUS-001
+kind: cel
+scope: envelope
+severity: error
+stability: preview
+title: Dropbox notification acknowledgement must be HTTP 200
+explanation: Dropbox retries change notifications that return a non-200 response.
+docsRef: notifications
+remediationKey: dropbox-notification-ack-status
+requires: has(envelope.response)
+assert: envelope.response.status == 200
+evidencePointers:
+  - /response/status
+messages:
+  evidence-unavailable: "No application response was captured, so WireLinter cannot decide whether Dropbox received HTTP 200."

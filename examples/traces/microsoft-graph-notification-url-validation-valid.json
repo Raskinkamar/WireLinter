@@ -1,0 +1,31 @@
+{
+  "schemaVersion": 1,
+  "traceId": "trace_graph_notification_url_validation_valid",
+  "provider": "microsoft-graph-notification-url-validation",
+  "startedAt": "2026-08-18T03:25:00Z",
+  "envelopes": [{
+    "id": "env_graph_validate_valid",
+    "provider": "microsoft-graph-notification-url-validation",
+    "receivedAt": "2026-08-18T03:25:00Z",
+    "request": {
+      "method": "POST",
+      "url": "http://localhost:4242/webhooks/graph?validationToken=graph%20fixture",
+      "headers": [{"name": "Content-Type", "value": "text/plain; charset=utf-8"}],
+      "headersCompleteness": "complete",
+      "rawQuery": "validationToken=graph%20fixture",
+      "queryFidelity": "exact",
+      "query": [{"name": "validationToken", "value": "graph fixture"}],
+      "bodyFidelity": "exact",
+      "rawBodyBase64": ""
+    },
+    "response": {
+      "status": 200,
+      "headers": [{"name": "Content-Type", "value": "text/plain"}],
+      "headersCompleteness": "complete",
+      "bodyFidelity": "exact",
+      "rawBodyBase64": "Z3JhcGggZml4dHVyZQ==",
+      "durationMs": 20.0
+    }
+  }],
+  "observations": []
+}

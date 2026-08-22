@@ -1,0 +1,12 @@
+schemaVersion: 1
+id: WL-EFI-PIX-METHOD-001
+kind: cel
+scope: envelope
+severity: error
+stability: preview
+title: Efí Pix webhook notifications must use POST
+explanation: Efí documents Pix webhook receiving routes as HTTP POST endpoints.
+docsRef: webhooks
+assert: envelope.request.method == "POST"
+evidencePointers:
+  - /request/method

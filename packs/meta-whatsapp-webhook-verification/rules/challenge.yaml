@@ -1,0 +1,14 @@
+schemaVersion: 1
+id: WL-META-WA-VERIFY-CHALLENGE-001
+kind: cel
+scope: envelope
+severity: error
+stability: preview
+title: Meta webhook verification must echo hub.challenge
+explanation: A successful callback verification returns the hub.challenge value as the response body.
+docsRef: verification
+requires: has(envelope.response) && envelope.request.queryFidelity == "exact" && envelope.response.bodyFidelity == "exact"
+assert: envelope.request.query.filter(q, q.name == "hub.challenge").size() == 1 && envelope.response.rawBodyBase64 == bytes(envelope.request.query.filter(q, q.name == "hub.challenge")[0].value)
+evidencePointers: [/request/query, /response/rawBodyBase64]
+messages:
+  evidence-unavailable: "Exact challenge and response-body evidence is required to verify the echo."

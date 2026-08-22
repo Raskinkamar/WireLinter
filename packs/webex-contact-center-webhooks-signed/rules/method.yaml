@@ -1,0 +1,13 @@
+schemaVersion: 1
+id: WL-WEBEX-CC-METHOD-001
+kind: cel
+scope: envelope
+severity: error
+stability: preview
+title: Webex Contact Center webhook delivery must use POST
+explanation: Webex Contact Center sends webhook notifications as POST requests to the subscription destination URL.
+docsRef: using-webhooks
+remediationKey: webex-contact-center-webhook-method
+assert: envelope.request.method == "POST"
+evidencePointers:
+  - /request/method

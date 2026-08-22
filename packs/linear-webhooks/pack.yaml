@@ -1,0 +1,32 @@
+packProtocol: "1.2"
+id: linear-webhooks
+name: Linear Webhooks
+packVersion: 0.1.0
+providerDocsRevision: "2026-08-17"
+minWireLinterVersion: 0.1.0
+capabilities:
+  - passive-lint
+secrets:
+  signing-secret:
+    env: LINEAR_WEBHOOK_SECRET
+    required: false
+    description: Signing secret configured for the Linear webhook
+
+docs:
+  webhooks:
+    url: https://linear.app/developers/webhooks
+    revision: "2026-08-17"
+    section: Webhooks
+signatures:
+  payload-hmac-sha256: signatures/payload-hmac-sha256.yaml
+rules:
+  - rules/signature.yaml
+  - rules/method.yaml
+  - rules/delivery-header.yaml
+  - rules/event-header.yaml
+  - rules/ack-status.yaml
+  - rules/ack-duration.yaml
+metadata:
+  status: preview
+  maintainer: wirelint
+  surface: https-webhook

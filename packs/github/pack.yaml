@@ -1,0 +1,40 @@
+packProtocol: "1.2"
+id: github
+name: GitHub Webhooks
+packVersion: 0.1.0
+providerDocsRevision: "2026-08-17"
+minWireLinterVersion: 0.1.0
+capabilities:
+  - passive-lint
+secrets:
+  webhook-secret:
+    env: GITHUB_WEBHOOK_SECRET
+    required: false
+    description: Secret configured on the GitHub webhook
+
+docs:
+  webhook-signature-docs:
+    url: https://docs.github.com/en/webhooks/using-webhooks/validating-webhook-deliveries
+    revision: "2026-08-17"
+    section: Validating webhook deliveries
+  webhook-delivery-docs:
+    url: https://docs.github.com/en/webhooks/webhook-events-and-payloads
+    revision: "2026-08-17"
+    section: Delivery headers
+  webhook-troubleshooting-docs:
+    url: https://docs.github.com/en/webhooks/testing-and-troubleshooting-webhooks/troubleshooting-webhooks
+    revision: "2026-08-17"
+    section: Timed out
+signatures:
+  webhook-hmac-sha256: signatures/webhook-hmac-sha256.yaml
+rules:
+  - rules/signature.yaml
+  - rules/method.yaml
+  - rules/delivery-header.yaml
+  - rules/event-header.yaml
+  - rules/ack-status.yaml
+  - rules/ack-duration.yaml
+metadata:
+  status: preview
+  maintainer: wirelint
+  surface: https-webhook

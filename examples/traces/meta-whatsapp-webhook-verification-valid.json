@@ -1,0 +1,36 @@
+{
+  "schemaVersion": 1,
+  "traceId": "trace_meta_whatsapp_verification_valid",
+  "provider": "meta-whatsapp-webhook-verification",
+  "startedAt": "2026-08-18T12:00:00Z",
+  "envelopes": [{
+    "id": "env_meta_verify",
+    "provider": "meta-whatsapp-webhook-verification",
+    "direction": "inbound",
+    "receivedAt": "2026-08-18T12:00:00Z",
+    "request": {
+      "method": "GET",
+      "url": "https://example.test/webhooks/meta?hub.mode=subscribe&hub.verify_token=meta_verify_demo&hub.challenge=123456",
+      "headers": [],
+      "headersCompleteness": "complete",
+      "rawQuery": "hub.mode=subscribe&hub.verify_token=meta_verify_demo&hub.challenge=123456",
+      "queryFidelity": "exact",
+      "query": [
+        {"name": "hub.mode", "value": "subscribe"},
+        {"name": "hub.verify_token", "value": "meta_verify_demo"},
+        {"name": "hub.challenge", "value": "123456"}
+      ],
+      "bodyFidelity": "exact",
+      "rawBodyBase64": ""
+    },
+    "response": {
+      "status": 200,
+      "headers": [],
+      "headersCompleteness": "complete",
+      "bodyFidelity": "exact",
+      "rawBodyBase64": "MTIzNDU2",
+      "durationMs": 5
+    }
+  }],
+  "observations": []
+}

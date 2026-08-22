@@ -1,0 +1,19 @@
+schemaVersion: 1
+id: WL-LEMON-EVENT-001
+kind: cel
+scope: envelope
+severity: warning
+stability: preview
+title: Lemon Squeezy event name header should be present
+explanation: Lemon Squeezy webhook requests include X-Event-Name identifying the event type.
+docsRef: requests
+remediationKey: lemonsqueezy-event-header
+requires: >-
+  envelope.request.headersCompleteness == "complete" ||
+  envelope.request.headers.exists(h, h.name.lowerAscii() == "x-event-name" && h.value != "")
+assert: >-
+  envelope.request.headers.exists(h, h.name.lowerAscii() == "x-event-name" && h.value != "")
+evidencePointers:
+  - /request/headers
+messages:
+  evidence-unavailable: "X-Event-Name was not observed, but the header capture is incomplete."

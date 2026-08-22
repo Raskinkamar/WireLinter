@@ -1,0 +1,28 @@
+packProtocol: "1.2"
+id: launchdarkly-signed-webhooks
+name: LaunchDarkly Signed Webhooks
+packVersion: 0.1.0
+providerDocsRevision: "2026-08-17"
+minWireLinterVersion: 0.1.0
+capabilities:
+  - passive-lint
+secrets:
+  webhook-secret:
+    env: LAUNCHDARKLY_WEBHOOK_SECRET
+    required: false
+    description: Secret configured when signing the LaunchDarkly webhook
+docs:
+  webhooks:
+    url: https://launchdarkly.com/docs/api/webhooks
+    revision: "2026-08-17"
+    section: Signing the webhook
+signatures:
+  payload-hmac-sha256: signatures/payload-hmac-sha256.yaml
+rules:
+  - rules/signature.yaml
+  - rules/method.yaml
+  - rules/ack-status.yaml
+metadata:
+  status: preview
+  maintainer: wirelint
+  surface: signed-webhook

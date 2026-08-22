@@ -1,0 +1,18 @@
+schemaVersion: 1
+id: WL-QBO-SIGNATURE-001
+kind: signature
+scope: envelope
+severity: error
+stability: preview
+title: QuickBooks Online webhook signature must be valid
+explanation: QuickBooks Online signs the notification payload with HMAC-SHA256 using the app verifier token and sends the Base64 digest in intuit-signature.
+signatureRef: notification-hmac-sha256
+docsRef: configuration
+remediationKey: quickbooks-webhook-signature
+messages:
+  missing-signature: "intuit-signature is missing from a complete QuickBooks Online webhook capture."
+  malformed-signature: "intuit-signature is not valid Base64 signature material."
+  signature-mismatch: "intuit-signature does not match the exact raw notification payload for the supplied verifier token."
+  secret-unavailable: "Set QUICKBOOKS_WEBHOOK_VERIFIER_TOKEN to verify authenticity."
+  insufficient-body-fidelity: "QuickBooks Online signs the notification payload, so reconstructed or unavailable body bytes cannot prove authenticity."
+  insufficient-header-evidence: "The header capture is incomplete, so intuit-signature cannot be proven absent."

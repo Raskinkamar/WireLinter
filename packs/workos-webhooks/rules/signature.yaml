@@ -1,0 +1,20 @@
+schemaVersion: 1
+id: WL-WORKOS-SIGNATURE-001
+kind: signature
+scope: envelope
+severity: error
+stability: preview
+title: WorkOS webhook signature must be valid
+explanation: WorkOS signs the issued timestamp and exact request body using HMAC-SHA256 and the webhook secret.
+signatureRef: webhook-v1
+docsRef: webhooks
+remediationKey: workos-webhook-signature
+messages:
+  missing-signature: "WorkOS-Signature is missing from a complete header capture. Verify webhook authenticity before processing the event."
+  malformed-signature: "WorkOS-Signature is malformed; expected t=<timestamp>,v1=<hex digest>."
+  missing-signature-input: "A required WorkOS signing field is missing from WorkOS-Signature."
+  ambiguous-signature-input: "A WorkOS signing field appeared more than once where exactly one value is required."
+  signature-mismatch: "The WorkOS v1 signature does not match HMAC-SHA256 of <timestamp>.<raw body> for the supplied webhook secret."
+  secret-unavailable: "Set WORKOS_WEBHOOK_SECRET to verify WorkOS webhook authenticity."
+  insufficient-body-fidelity: "WorkOS verification requires the exact request body. Reconstructed or unavailable body bytes cannot prove the signature."
+  insufficient-header-evidence: "The captured header set is incomplete, so WireLinter cannot safely decide whether WorkOS-Signature was absent."

@@ -1,0 +1,33 @@
+packProtocol: "1.2"
+id: nylas-webhooks
+name: Nylas Webhook Notifications
+packVersion: 0.1.0
+providerDocsRevision: "2026-08-17"
+minWireLinterVersion: 0.1.0
+capabilities:
+  - passive-lint
+secrets:
+  webhook-secret:
+    env: NYLAS_WEBHOOK_SECRET
+    required: false
+    description: webhook_secret generated for the Nylas destination
+docs:
+  verification:
+    url: https://developer.nylas.com/docs/cookbook/use-cases/build/verify-webhook-signatures/
+    revision: "2026-08-17"
+    section: Verify webhook signatures
+  notifications:
+    url: https://developer.nylas.com/docs/v3/notifications/
+    revision: "2026-08-17"
+    section: Respond to webhook notifications
+signatures:
+  raw-body-hmac-sha256: signatures/raw-body-hmac-sha256.yaml
+rules:
+  - rules/signature.yaml
+  - rules/method.yaml
+  - rules/ack-status.yaml
+metadata:
+  status: preview
+  maintainer: wirelint
+  surface: v3-webhook-notification
+  note: For compressed_delivery the signature covers the compressed raw bytes, which WireLinter preserves when body fidelity is exact

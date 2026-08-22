@@ -1,0 +1,42 @@
+packProtocol: "1.2"
+id: clicksign-webhooks-content-hmac
+name: Clicksign Webhooks Content-Hmac
+packVersion: 0.1.0
+providerDocsRevision: "2026-08-18"
+minWireLinterVersion: 0.1.0
+capabilities:
+  - passive-lint
+secrets:
+  hmac-secret:
+    env: CLICKSIGN_WEBHOOK_HMAC_SECRET
+    required: false
+    description: HMAC SHA256 Secret gerado no cadastro do webhook Clicksign
+docs:
+  security:
+    url: https://developers.clicksign.com/docs/seguranca-de-webhooks
+    revision: "2026-08-18"
+    section: HMAC
+  delivery:
+    url: https://developers.clicksign.com/docs/disparos-de-webhooks
+    revision: "2026-08-18"
+    section: Anatomia de uma requisição Webhook
+  best-practices:
+    url: https://developers.clicksign.com/v3.0/docs/melhores-praticas-webhooks
+    revision: "2026-08-18"
+    section: Responda com HTTP Status Code 200
+signatures:
+  content-hmac-sha256: signatures/content-hmac-sha256.yaml
+rules:
+  - rules/signature.yaml
+  - rules/method.yaml
+  - rules/content-type.yaml
+  - rules/ack-status.yaml
+  - rules/ack-duration.yaml
+metadata:
+  status: preview
+  maintainer: wirelint
+  vendor: clicksign
+  region: BR
+  surface: webhook-content-hmac
+  headerVariant: Content-Hmac
+  scopeNote: "This contract follows Clicksign's dedicated webhook security documentation, which specifies Content-Hmac with sha256=<hex>. Other Clicksign surfaces or newer header aliases are not conflated with this wire contract."

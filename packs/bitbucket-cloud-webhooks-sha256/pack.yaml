@@ -1,0 +1,33 @@
+packProtocol: "1.2"
+id: bitbucket-cloud-webhooks-sha256
+name: Bitbucket Cloud Webhooks SHA-256
+packVersion: 0.1.0
+providerDocsRevision: "2026-08-17"
+minWireLinterVersion: 0.1.0
+capabilities:
+  - passive-lint
+secrets:
+  webhook-secret:
+    env: BITBUCKET_WEBHOOK_SECRET
+    required: false
+    description: Secret configured for the Bitbucket Cloud webhook
+docs:
+  secure-webhooks:
+    url: https://support.atlassian.com/bitbucket-cloud/docs/manage-webhooks/
+    revision: "2026-08-17"
+    section: Secure webhooks
+  event-payloads:
+    url: https://support.atlassian.com/bitbucket-cloud/docs/event-payloads/
+    revision: "2026-08-17"
+    section: HTTP headers
+signatures:
+  payload-hmac-sha256: signatures/payload-hmac-sha256.yaml
+rules:
+  - rules/signature.yaml
+  - rules/method.yaml
+  - rules/event-key.yaml
+metadata:
+  status: preview
+  maintainer: wirelint
+  surface: cloud-webhook-current-sha256
+  note: Bitbucket Cloud documents WebSub-style method agility and currently sends sha256; this contract intentionally covers the current SHA-256 method only

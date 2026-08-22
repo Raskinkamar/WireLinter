@@ -1,0 +1,19 @@
+schemaVersion: 1
+id: WL-WOO-TOPIC-001
+kind: cel
+scope: envelope
+severity: error
+stability: preview
+title: WooCommerce webhook topic header must be present
+explanation: WooCommerce sends X-WC-Webhook-Topic to identify the resource event that triggered a webhook.
+docsRef: webhooks
+remediationKey: woocommerce-webhook-topic
+requires: >-
+  envelope.request.headersCompleteness == "complete" ||
+  envelope.request.headers.exists(h, h.name.lowerAscii() == "x-wc-webhook-topic" && h.value != "")
+assert: >-
+  envelope.request.headers.exists(h, h.name.lowerAscii() == "x-wc-webhook-topic" && h.value != "")
+evidencePointers:
+  - /request/headers
+messages:
+  evidence-unavailable: "X-WC-Webhook-Topic was not observed, but the request header capture is incomplete."

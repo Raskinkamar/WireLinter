@@ -1,0 +1,16 @@
+schemaVersion: 1
+id: WL-SLACK-ACK-STATUS-001
+kind: cel
+scope: envelope
+severity: error
+stability: preview
+title: Slack Events API acknowledgement must be 2xx
+explanation: Slack considers an Events API delivery successful when the endpoint responds with an HTTP 2xx status.
+docsRef: events-api
+remediationKey: slack-events-ack-status
+requires: has(envelope.response)
+assert: envelope.response.status >= 200 && envelope.response.status < 300
+evidencePointers:
+  - /response/status
+messages:
+  evidence-unavailable: "No application response was captured, so WireLinter cannot decide whether Slack received a successful acknowledgement."

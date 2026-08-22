@@ -1,0 +1,31 @@
+packProtocol: "1.2"
+id: omie-webhooks-delivery
+name: Omie Webhooks Delivery
+packVersion: 0.1.0
+providerDocsRevision: "2026-08-18"
+minWireLinterVersion: 0.1.0
+capabilities:
+  - passive-lint
+docs:
+  webhooks:
+    url: https://ajuda.omie.com.br/pt-BR/articles/9565655-caracteristicas-e-recomendacoes-dos-webhooks
+    revision: "2026-08-18"
+    section: Funcionamento e detalhes técnicos
+  setup:
+    url: https://ajuda.omie.com.br/pt-BR/articles/5412754-utilizando-os-webhooks-no-omie
+    revision: "2026-08-18"
+    section: Configurando o endpoint
+rules:
+  - rules/method.yaml
+  - rules/ack-status.yaml
+  - rules/ack-duration.yaml
+metadata:
+  status: preview
+  maintainer: wirelint
+  vendor: omie
+  region: BR
+  surface: erp-webhook-delivery
+  mainQueueAttempts: 3
+  mainQueueTimeoutSeconds: 7
+  deadLetterRetryWindowDays: 5
+  processingNote: "Omie recommends acknowledging quickly, storing the event, and processing it asynchronously."

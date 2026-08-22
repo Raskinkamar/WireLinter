@@ -1,0 +1,178 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://wirelint.dev/schemas/trace-v1.schema.json",
+  "title": "WireLinter Trace v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schemaVersion", "traceId", "provider", "startedAt", "envelopes", "observations"],
+  "properties": {
+    "schemaVersion": { "const": 1 },
+    "traceId": { "$ref": "#/$defs/nonEmptyString" },
+    "provider": { "$ref": "#/$defs/providerId" },
+    "scenario": { "$ref": "#/$defs/nonEmptyString" },
+    "startedAt": { "type": "string", "format": "date-time" },
+    "endedAt": { "type": "string", "format": "date-time" },
+    "envelopes": { "type": "array", "items": { "$ref": "#/$defs/envelope" } },
+    "observations": { "type": "array", "items": { "$ref": "#/$defs/observation" } },
+    "metadata": { "type": "object", "additionalProperties": true }
+  },
+  "$defs": {
+    "nonEmptyString": { "type": "string", "minLength": 1 },
+    "providerId": { "type": "string", "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$" },
+    "base64Bytes": { "type": "string", "contentEncoding": "base64" },
+    "bodyFidelity": { "enum": ["exact", "reconstructed", "unavailable"] },
+    "queryFidelity": { "enum": ["exact", "reconstructed", "unavailable"] },
+    "headersCompleteness": { "enum": ["complete", "partial", "unavailable"] },
+    "header": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["name", "value"],
+      "properties": {
+        "name": { "$ref": "#/$defs/nonEmptyString" },
+        "value": { "type": "string" },
+        "redacted": {
+          "description": "True when the captured value was intentionally replaced before entering Trace evidence.",
+          "type": "boolean"
+        }
+      }
+    },
+    "queryItem": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["name", "value"],
+      "properties": {
+        "name": { "type": "string" },
+        "value": { "type": "string" },
+        "redacted": {
+          "description": "True when the captured value was intentionally replaced before entering Trace evidence.",
+          "type": "boolean"
+        }
+      }
+    },
+    "request": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "method",
+        "url",
+        "headers",
+        "headersCompleteness",
+        "rawQuery",
+        "queryFidelity",
+        "bodyFidelity",
+        "rawBodyBase64"
+      ],
+      "properties": {
+        "method": { "type": "string", "pattern": "^[A-Z]+$" },
+        "url": { "type": "string", "format": "uri" },
+        "protocol": {
+          "description": "Observed HTTP protocol version when known, for example HTTP/1.1 or HTTP/2.0.",
+          "type": "string",
+          "minLength": 1
+        },
+        "headers": {
+          "description": "Semantic header field entries as exposed by the capture source. Duplicate values can be preserved, but casing/order MUST NOT be interpreted as raw wire bytes.",
+          "type": "array",
+          "items": { "$ref": "#/$defs/header" }
+        },
+        "headersCompleteness": {
+          "description": "Whether the semantic header collection is known complete, intentionally partial, or unavailable. A missing header proves absence only when this value is complete.",
+          "$ref": "#/$defs/headersCompleteness"
+        },
+        "rawQuery": {
+          "description": "Observed or reconstructed query component without the leading question mark. queryFidelity states whether it is exact.",
+          "type": "string"
+        },
+        "queryFidelity": { "$ref": "#/$defs/queryFidelity" },
+        "query": {
+          "description": "Ordered decoded query items when available.",
+          "type": "array",
+          "items": { "$ref": "#/$defs/queryItem" }
+        },
+        "bodyFidelity": { "$ref": "#/$defs/bodyFidelity" },
+        "rawBodyBase64": {
+          "oneOf": [{ "$ref": "#/$defs/base64Bytes" }, { "type": "null" }]
+        },
+        "bodySha256": { "type": "string", "pattern": "^[a-f0-9]{64}$" },
+        "decodedBody": true
+      },
+      "allOf": [
+        {
+          "if": { "properties": { "bodyFidelity": { "const": "unavailable" } }, "required": ["bodyFidelity"] },
+          "then": { "properties": { "rawBodyBase64": { "type": "null" } } },
+          "else": { "properties": { "rawBodyBase64": { "$ref": "#/$defs/base64Bytes" } } }
+        },
+        {
+          "if": { "properties": { "headersCompleteness": { "const": "unavailable" } }, "required": ["headersCompleteness"] },
+          "then": { "properties": { "headers": { "maxItems": 0 } } }
+        }
+      ]
+    },
+    "response": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["status", "headers", "headersCompleteness", "bodyFidelity", "rawBodyBase64", "durationMs"],
+      "properties": {
+        "status": { "type": "integer", "minimum": 100, "maximum": 599 },
+        "protocol": { "type": "string", "minLength": 1 },
+        "headers": {
+          "description": "Semantic response header field entries; never raw wire bytes unless a future evidence type explicitly says so.",
+          "type": "array",
+          "items": { "$ref": "#/$defs/header" }
+        },
+        "headersCompleteness": { "$ref": "#/$defs/headersCompleteness" },
+        "bodyFidelity": { "$ref": "#/$defs/bodyFidelity" },
+        "rawBodyBase64": {
+          "oneOf": [{ "$ref": "#/$defs/base64Bytes" }, { "type": "null" }]
+        },
+        "bodySha256": { "type": "string", "pattern": "^[a-f0-9]{64}$" },
+        "decodedBody": true,
+        "durationMs": { "type": "number", "minimum": 0 }
+      },
+      "allOf": [
+        {
+          "if": { "properties": { "bodyFidelity": { "const": "unavailable" } }, "required": ["bodyFidelity"] },
+          "then": { "properties": { "rawBodyBase64": { "type": "null" } } },
+          "else": { "properties": { "rawBodyBase64": { "$ref": "#/$defs/base64Bytes" } } }
+        },
+        {
+          "if": { "properties": { "headersCompleteness": { "const": "unavailable" } }, "required": ["headersCompleteness"] },
+          "then": { "properties": { "headers": { "maxItems": 0 } } }
+        }
+      ]
+    },
+    "envelope": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "provider", "receivedAt", "request"],
+      "properties": {
+        "id": { "$ref": "#/$defs/nonEmptyString" },
+        "provider": { "$ref": "#/$defs/providerId" },
+        "direction": {
+          "description": "Direction of the integration exchange relative to the application under test. Omitted on legacy or direction-unknown captures.",
+          "enum": ["inbound", "outbound"]
+        },
+        "eventType": { "$ref": "#/$defs/nonEmptyString" },
+        "deliveryId": { "$ref": "#/$defs/nonEmptyString" },
+        "scenarioStep": { "$ref": "#/$defs/nonEmptyString" },
+        "receivedAt": { "type": "string", "format": "date-time" },
+        "request": { "$ref": "#/$defs/request" },
+        "response": { "$ref": "#/$defs/response" },
+        "metadata": { "type": "object", "additionalProperties": true }
+      }
+    },
+    "observation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "type", "at"],
+      "properties": {
+        "id": { "$ref": "#/$defs/nonEmptyString" },
+        "type": { "type": "string", "pattern": "^[a-z][a-z0-9]*(?:\\.[a-z][a-z0-9_-]*)+$" },
+        "at": { "type": "string", "format": "date-time" },
+        "envelopeId": { "$ref": "#/$defs/nonEmptyString" },
+        "scenarioStep": { "$ref": "#/$defs/nonEmptyString" },
+        "attributes": { "type": "object", "additionalProperties": true }
+      }
+    }
+  }
+}

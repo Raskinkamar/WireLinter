@@ -1,0 +1,19 @@
+schemaVersion: 1
+id: WL-BUILDKITE-SIGNATURE-001
+kind: signature
+scope: envelope
+severity: error
+stability: preview
+title: Buildkite Pipelines webhook signature must be valid
+explanation: Buildkite signs timestamp dot raw-body with HMAC-SHA256 using the webhook token when signature mode is enabled.
+signatureRef: timestamp-body-hmac-sha256
+docsRef: pipelines
+remediationKey: buildkite-pipeline-webhook-signature
+messages:
+  missing-signature: "X-Buildkite-Signature is missing from a complete capture of signature mode."
+  missing-signature-input: "Buildkite signature mode requires both timestamp and signature fields."
+  malformed-signature: "X-Buildkite-Signature contains malformed signature material."
+  signature-mismatch: "The Buildkite signature does not match timestamp dot exact raw body for the supplied webhook token."
+  secret-unavailable: "Set BUILDKITE_WEBHOOK_SECRET to verify Buildkite signature mode."
+  insufficient-body-fidelity: "Buildkite signs the raw request body, so reconstructed or unavailable bytes cannot prove authenticity."
+  insufficient-header-evidence: "The header capture is incomplete, so X-Buildkite-Signature cannot be proven absent."

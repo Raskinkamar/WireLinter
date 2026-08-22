@@ -1,0 +1,16 @@
+schemaVersion: 1
+id: WL-VINDI-SERVICE-ACK-STATUS-001
+kind: cel
+scope: envelope
+severity: error
+stability: preview
+title: Vindi Service webhook acknowledgement must be 2xx
+explanation: Vindi Service requires an HTTP 2xx response for webhook delivery and also uses a 2xx response when testing a new webhook URL.
+docsRef: delivery
+remediationKey: vindi-service-webhook-ack-status
+requires: has(envelope.response)
+assert: envelope.response.status >= 200 && envelope.response.status < 300
+evidencePointers:
+  - /response/status
+messages:
+  evidence-unavailable: "No response status was captured, so Vindi Service acknowledgement success cannot be decided."

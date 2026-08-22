@@ -1,0 +1,18 @@
+schemaVersion: 1
+id: WL-CELCOIN-ITP-SIGNATURE-001
+kind: signature
+scope: envelope
+severity: error
+stability: preview
+title: Celcoin ITP webhook signature must be valid
+explanation: Celcoin ITP signs the exact raw webhook body with HMAC-SHA256 and sends the hexadecimal digest prefixed with sha256= in x-celcoin-signature.
+signatureRef: payload-hmac-sha256
+docsRef: webhooks
+remediationKey: celcoin-itp-webhook-signature
+messages:
+  missing-signature: "x-celcoin-signature is missing from a complete Celcoin ITP webhook capture."
+  malformed-signature: "x-celcoin-signature must use sha256=<hex HMAC-SHA256 digest>."
+  signature-mismatch: "x-celcoin-signature does not match the exact raw request body for the supplied webhook secret."
+  secret-unavailable: "Set CELCOIN_ITP_WEBHOOK_SECRET to verify webhook authenticity."
+  insufficient-body-fidelity: "Celcoin ITP signs the raw body, so reconstructed or unavailable bytes cannot prove authenticity."
+  insufficient-header-evidence: "The header capture is incomplete, so x-celcoin-signature cannot be proven absent."

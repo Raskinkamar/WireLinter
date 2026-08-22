@@ -1,0 +1,13 @@
+schemaVersion: 1
+id: WL-MUX-METHOD-001
+kind: cel
+scope: envelope
+severity: error
+stability: preview
+title: Mux webhook delivery must use POST
+explanation: Mux delivers webhook events as HTTP POST requests to the configured endpoint.
+docsRef: delivery
+remediationKey: mux-webhook-method
+assert: envelope.request.method == "POST"
+evidencePointers:
+  - /request/method

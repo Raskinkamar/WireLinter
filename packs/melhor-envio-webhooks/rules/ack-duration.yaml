@@ -1,0 +1,16 @@
+schemaVersion: 1
+id: WL-MELHOR-ENVIO-ACK-DURATION-001
+kind: cel
+scope: envelope
+severity: error
+stability: preview
+title: Melhor Envio webhook response must complete within 6 seconds
+explanation: Melhor Envio retries a webhook when the receiver does not respond before its six-second timeout.
+docsRef: webhooks
+remediationKey: melhor-envio-webhook-ack-duration
+requires: has(envelope.response)
+assert: double(envelope.response.durationMs) < 6000.0
+evidencePointers:
+  - /response/durationMs
+messages:
+  evidence-unavailable: "No response timing was captured, so Melhor Envio's six-second timeout cannot be decided."

@@ -1,0 +1,22 @@
+schemaVersion: 1
+id: WL-CLICKSIGN-CONTENT-TYPE-001
+kind: cel
+scope: envelope
+severity: error
+stability: preview
+title: Clicksign webhook payload must be JSON
+explanation: Clicksign's webhook request anatomy documents Content-Type application/json.
+docsRef: delivery
+requires: >-
+  envelope.request.headersCompleteness == "complete" ||
+  envelope.request.headers.exists(h, h.name.lowerAscii() == "content-type")
+assert: >-
+  envelope.request.headers.exists(
+    h,
+    h.name.lowerAscii() == "content-type" &&
+    h.value.lowerAscii().startsWith("application/json")
+  )
+evidencePointers:
+  - /request/headers
+messages:
+  evidence-unavailable: "Content-Type was not observed, but the Clicksign request header capture is incomplete."

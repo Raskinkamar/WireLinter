@@ -1,0 +1,22 @@
+schemaVersion: 1
+id: WL-ZOOP-CONTENT-TYPE-001
+kind: cel
+scope: envelope
+severity: error
+stability: preview
+title: Zoop authorized webhook payload must be JSON
+explanation: Zoop's authorized-webhook example sends the event body with Content-Type application/json.
+docsRef: authorization
+requires: >-
+  envelope.request.headersCompleteness == "complete" ||
+  envelope.request.headers.exists(h, h.name.lowerAscii() == "content-type")
+assert: >-
+  envelope.request.headers.exists(
+    h,
+    h.name.lowerAscii() == "content-type" &&
+    h.value.lowerAscii().startsWith("application/json")
+  )
+evidencePointers:
+  - /request/headers
+messages:
+  evidence-unavailable: "Content-Type was not observed, but the Zoop webhook header capture is incomplete."

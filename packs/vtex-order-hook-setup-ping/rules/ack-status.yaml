@@ -1,0 +1,16 @@
+schemaVersion: 1
+id: WL-VTEX-ORDER-HOOK-PING-ACK-001
+kind: cel
+scope: envelope
+severity: error
+stability: preview
+title: VTEX Order Hook setup ping must receive HTTP 200
+explanation: VTEX rejects the hook configuration if the setup ping endpoint does not return HTTP 200.
+docsRef: hook
+remediationKey: vtex-order-hook-setup-ping-ack
+requires: has(envelope.response)
+assert: envelope.response.status == 200
+evidencePointers:
+  - /response/status
+messages:
+  evidence-unavailable: "No response status was captured, so VTEX Order Hook setup validation cannot be decided."

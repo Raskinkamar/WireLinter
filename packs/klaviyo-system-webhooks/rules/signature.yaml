@@ -1,0 +1,19 @@
+schemaVersion: 1
+id: WL-KLAVIYO-SIGNATURE-001
+kind: signature
+scope: envelope
+severity: error
+stability: preview
+title: Klaviyo system webhook signature must be valid
+explanation: Klaviyo computes HMAC-SHA256 using the exact request body followed by the Klaviyo-Timestamp value and sends the hexadecimal digest in Klaviyo-Signature.
+signatureRef: body-timestamp-hmac-sha256
+docsRef: system-webhooks
+remediationKey: klaviyo-system-webhook-signature
+messages:
+  missing-signature: "Klaviyo-Signature is missing from a complete system-webhook capture."
+  missing-signature-input: "Klaviyo verification requires both Klaviyo-Signature and Klaviyo-Timestamp."
+  malformed-signature: "Klaviyo-Signature is malformed; the documented comparison uses a hexadecimal HMAC-SHA256 digest."
+  signature-mismatch: "Klaviyo-Signature does not match HMAC-SHA256 of the exact raw body followed by Klaviyo-Timestamp for the supplied secret."
+  secret-unavailable: "Set KLAVIYO_WEBHOOK_SECRET to verify authenticity."
+  insufficient-body-fidelity: "Klaviyo signs the request body, so reconstructed or unavailable body bytes cannot prove authenticity."
+  insufficient-header-evidence: "The captured header set is incomplete, so required Klaviyo signature headers cannot be proven absent."

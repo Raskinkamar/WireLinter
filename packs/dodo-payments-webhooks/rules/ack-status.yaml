@@ -1,0 +1,16 @@
+schemaVersion: 1
+id: WL-DODO-PAYMENTS-ACK-STATUS-001
+kind: cel
+scope: envelope
+severity: error
+stability: preview
+title: Dodo Payments webhook acknowledgement must be 2xx
+explanation: Dodo Payments requires a 2xx response to acknowledge receipt; other statuses are treated as delivery failures and retried.
+docsRef: webhooks
+remediationKey: dodo-payments-webhook-ack-status
+requires: has(envelope.response)
+assert: envelope.response.status >= 200 && envelope.response.status < 300
+evidencePointers:
+  - /response/status
+messages:
+  evidence-unavailable: "No response status was captured, so Dodo Payments acknowledgement success cannot be decided."

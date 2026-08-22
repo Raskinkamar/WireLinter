@@ -1,0 +1,29 @@
+packProtocol: "1.2"
+id: pusher-channels-webhooks
+name: Pusher Channels Webhooks
+packVersion: 0.1.0
+providerDocsRevision: "2026-08-17"
+minWireLinterVersion: 0.1.0
+capabilities:
+  - passive-lint
+secrets:
+  token-secret:
+    env: PUSHER_CHANNELS_WEBHOOK_SECRET
+    required: false
+    description: Secret for the Pusher Channels app token used to sign webhooks
+docs:
+  webhooks:
+    url: https://pusher.com/docs/channels/server_api/webhooks/
+    revision: "2026-08-17"
+    section: Webhook format
+signatures:
+  payload-hmac-sha256: signatures/payload-hmac-sha256.yaml
+rules:
+  - rules/signature.yaml
+  - rules/method.yaml
+  - rules/key-header.yaml
+metadata:
+  status: preview
+  maintainer: wirelint
+  surface: channels-webhook
+  note: X-Pusher-Key identifies the token whose secret must be supplied to this pack

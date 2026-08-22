@@ -1,0 +1,22 @@
+schemaVersion: 1
+id: WL-NFEIO-DFE-V2-CONTENT-TYPE-001
+kind: cel
+scope: envelope
+severity: error
+stability: preview
+title: NFE.io DFe Inbound V2 payload must be JSON
+explanation: NFE.io documents DFe Inbound V2 webhook requests with Content-Type application/json; charset=utf-8.
+docsRef: inbound
+requires: >-
+  envelope.request.headersCompleteness == "complete" ||
+  envelope.request.headers.exists(h, h.name.lowerAscii() == "content-type")
+assert: >-
+  envelope.request.headers.exists(
+    h,
+    h.name.lowerAscii() == "content-type" &&
+    h.value.lowerAscii().startsWith("application/json")
+  )
+evidencePointers:
+  - /request/headers
+messages:
+  evidence-unavailable: "Content-Type was not observed, but the DFe Inbound V2 header capture is incomplete."

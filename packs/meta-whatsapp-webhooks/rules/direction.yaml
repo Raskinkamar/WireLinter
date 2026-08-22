@@ -1,0 +1,14 @@
+schemaVersion: 1
+id: WL-META-WA-WEBHOOK-DIRECTION-001
+kind: cel
+scope: envelope
+severity: error
+stability: preview
+title: Meta WhatsApp webhook delivery must be inbound
+explanation: This contract describes notifications delivered by Meta to the application.
+docsRef: webhooks
+requires: has(envelope.direction)
+assert: envelope.direction == "inbound"
+evidencePointers: [/direction]
+messages:
+  evidence-unavailable: "The capture does not declare traffic direction."

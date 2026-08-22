@@ -1,0 +1,39 @@
+packProtocol: "1.3"
+id: vindi-service-webhooks-query-secret
+name: Vindi Service Webhooks Query Secret
+packVersion: 0.1.0
+providerDocsRevision: "2026-08-18"
+minWireLinterVersion: 0.1.0
+capabilities:
+  - passive-lint
+secrets:
+  query-secret:
+    env: VINDI_WEBHOOK_QUERY_SECRET
+    required: false
+    description: Parâmetro secreto configurado na URL do webhook Vindi Service
+docs:
+  security:
+    url: https://developers.vindi.com.br/reference/webhooks-seguran%C3%A7a-e-testes
+    revision: "2026-08-18"
+    section: Allow list e segurança
+  delivery:
+    url: https://developers.vindi.com.br/reference/webhooks-formatos-e-m%C3%A9todos-de-envio
+    revision: "2026-08-18"
+    section: Webhooks Formatos e métodos de envio
+secretMatches:
+  query-secret: secret-matches/query-secret.yaml
+rules:
+  - rules/query-secret.yaml
+  - rules/method.yaml
+  - rules/content-type.yaml
+  - rules/user-agent.yaml
+  - rules/ack-status.yaml
+  - rules/ack-duration.yaml
+metadata:
+  status: preview
+  maintainer: wirelint
+  vendor: vindi
+  region: BR
+  surface: service-webhook-query-secret
+  authVariant: query-secret
+  scopeNote: "Vindi Service also supports HTTP Basic credentials and optional mTLS. This contract intentionally models only the documented secret-query variant so authentication semantics stay unambiguous."

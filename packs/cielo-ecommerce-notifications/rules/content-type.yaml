@@ -1,0 +1,22 @@
+schemaVersion: 1
+id: WL-CIELO-NOTIFICATION-CONTENT-TYPE-001
+kind: cel
+scope: envelope
+severity: error
+stability: preview
+title: Cielo notification payload must be JSON
+explanation: Cielo requires the configured notification URL to follow Content-Type application/json and documents JSON notification bodies.
+docsRef: notifications
+requires: >-
+  envelope.request.headersCompleteness == "complete" ||
+  envelope.request.headers.exists(h, h.name.lowerAscii() == "content-type")
+assert: >-
+  envelope.request.headers.exists(
+    h,
+    h.name.lowerAscii() == "content-type" &&
+    h.value.lowerAscii().startsWith("application/json")
+  )
+evidencePointers:
+  - /request/headers
+messages:
+  evidence-unavailable: "Content-Type was not observed, but the Cielo notification header capture is incomplete."

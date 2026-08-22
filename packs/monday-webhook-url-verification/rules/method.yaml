@@ -1,0 +1,12 @@
+schemaVersion: 1
+id: WL-MONDAY-VERIFY-METHOD-001
+kind: cel
+scope: envelope
+severity: error
+stability: preview
+title: monday.com webhook URL verification must use POST
+explanation: monday.com verifies a webhook URL by sending a JSON POST body containing a challenge field.
+docsRef: webhooks
+assert: envelope.request.method == "POST"
+evidencePointers:
+  - /request/method

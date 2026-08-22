@@ -1,0 +1,16 @@
+schemaVersion: 1
+id: WL-GRAPH-VALIDATE-DURATION-001
+kind: cel
+scope: envelope
+severity: error
+stability: preview
+title: Microsoft Graph notification URL validation must complete within 10 seconds
+explanation: Microsoft Graph requires the validation response within ten seconds.
+docsRef: validation
+remediationKey: graph-notification-url-validation-duration
+requires: has(envelope.response)
+assert: double(envelope.response.durationMs) < 10000.0
+evidencePointers:
+  - /response/durationMs
+messages:
+  evidence-unavailable: "No response timing was captured, so Microsoft Graph's ten-second validation deadline cannot be decided."

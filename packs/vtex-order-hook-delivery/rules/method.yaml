@@ -1,0 +1,12 @@
+schemaVersion: 1
+id: WL-VTEX-ORDER-HOOK-METHOD-001
+kind: cel
+scope: envelope
+severity: error
+stability: preview
+title: VTEX Order Hook notifications must use POST
+explanation: VTEX Order Hook sends order update notifications automatically to the configured integration URL as HTTP POST requests.
+docsRef: hook
+assert: envelope.request.method == "POST"
+evidencePointers:
+  - /request/method

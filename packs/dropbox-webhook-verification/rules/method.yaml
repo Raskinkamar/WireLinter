@@ -1,0 +1,13 @@
+schemaVersion: 1
+id: WL-DROPBOX-VERIFY-METHOD-001
+kind: cel
+scope: envelope
+severity: error
+stability: preview
+title: Dropbox webhook verification must use GET
+explanation: Dropbox verifies a newly configured webhook URI with an HTTP GET request.
+docsRef: webhooks
+remediationKey: dropbox-webhook-verification-method
+assert: envelope.request.method == "GET"
+evidencePointers:
+  - /request/method

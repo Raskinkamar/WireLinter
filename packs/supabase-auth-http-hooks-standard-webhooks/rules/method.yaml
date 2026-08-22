@@ -1,0 +1,12 @@
+schemaVersion: 1
+id: WL-SUPABASE-AUTH-HOOK-METHOD-001
+kind: cel
+scope: envelope
+severity: error
+stability: preview
+title: Supabase Auth HTTP Hooks must use POST
+explanation: Supabase's HTTP Auth Hook implementation examples receive hook payloads using HTTP POST.
+docsRef: send-email-hook
+assert: envelope.request.method == "POST"
+evidencePointers:
+  - /request/method

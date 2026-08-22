@@ -1,0 +1,23 @@
+schemaVersion: 1
+id: authenticity-token
+sourceRefs:
+  - authenticity
+secret:
+  ref: account-token
+  representation: utf8
+candidate:
+  fromHeader:
+    name: x-authenticity-token
+    cardinality: exactly-one
+    trimSpace: true
+  encoding: hex
+message:
+  - secret: true
+  - literal: "-"
+  - fromRawBody:
+      requireFidelity: exact
+hash:
+  algorithm: sha256
+comparison: constant-time-exact
+metadata:
+  construction: token-hyphen-raw-payload

@@ -1,0 +1,16 @@
+schemaVersion: 1
+id: WL-OMIE-WEBHOOK-ACK-DURATION-001
+kind: cel
+scope: envelope
+severity: error
+stability: preview
+title: Omie main-queue webhook response must complete within 7 seconds
+explanation: Omie's primary webhook delivery queue has a seven-second timeout before a failed attempt is retried and can eventually move to the dead-letter queue.
+docsRef: webhooks
+remediationKey: omie-webhook-ack-duration
+requires: has(envelope.response)
+assert: double(envelope.response.durationMs) < 7000.0
+evidencePointers:
+  - /response/durationMs
+messages:
+  evidence-unavailable: "No response timing was captured, so Omie's seven-second primary-queue timeout cannot be decided."

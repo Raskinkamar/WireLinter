@@ -1,0 +1,16 @@
+schemaVersion: 1
+id: WL-SLACK-ACK-DURATION-001
+kind: cel
+scope: envelope
+severity: error
+stability: preview
+title: Slack Events API acknowledgement must complete within three seconds
+explanation: Slack requires an HTTP 2xx response to Events API requests within three seconds.
+docsRef: events-api
+remediationKey: slack-events-ack-duration
+requires: has(envelope.response)
+assert: double(envelope.response.durationMs) < 3000.0
+evidencePointers:
+  - /response/durationMs
+messages:
+  evidence-unavailable: "No application response timing was captured, so WireLinter cannot decide whether the handler met Slack's three-second deadline."

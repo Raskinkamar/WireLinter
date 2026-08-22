@@ -1,0 +1,18 @@
+schemaVersion: 1
+id: WL-EFI-PIX-QUERY-TOKEN-001
+kind: secret-match
+scope: envelope
+severity: error
+stability: preview
+title: Efí Pix webhook query verification token must match
+explanation: Efí recommends registering a private hash or HMAC-like identifier in the webhook URL query and validating that same value on every notification as an additional security layer alongside mTLS.
+secretMatchRef: query-token
+docsRef: webhooks
+remediationKey: efi-pix-webhook-query-token
+messages:
+  secret-match-valid: "The hmac query value matches the configured Efí Pix webhook verification token."
+  secret-unavailable: "Set EFI_PIX_WEBHOOK_QUERY_TOKEN to verify the hmac query value."
+  missing-secret-input: "The hmac query parameter is missing from an exact Efí Pix webhook query capture."
+  ambiguous-secret-input: "Multiple hmac query values were observed; the verification token must be unambiguous."
+  secret-mismatch: "The hmac query value does not match the configured Efí Pix webhook verification token."
+  insufficient-query-evidence: "The query capture is not exact, so the Efí Pix verification token cannot be decided safely."

@@ -1,0 +1,16 @@
+schemaVersion: 1
+id: WL-MAILERSEND-ACK-STATUS-001
+kind: cel
+scope: envelope
+severity: error
+stability: preview
+title: MailerSend webhook acknowledgement must be 2xx
+explanation: MailerSend marks non-2xx webhook responses as failed attempts.
+docsRef: webhooks
+remediationKey: mailersend-webhook-ack-status
+requires: has(envelope.response)
+assert: envelope.response.status >= 200 && envelope.response.status < 300
+evidencePointers:
+  - /response/status
+messages:
+  evidence-unavailable: "No response status was captured, so MailerSend acknowledgement success cannot be decided."

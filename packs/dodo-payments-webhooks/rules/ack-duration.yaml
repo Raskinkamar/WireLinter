@@ -1,0 +1,16 @@
+schemaVersion: 1
+id: WL-DODO-PAYMENTS-ACK-DURATION-001
+kind: cel
+scope: envelope
+severity: error
+stability: preview
+title: Dodo Payments webhook acknowledgement must complete within 15 seconds
+explanation: Dodo Payments documents a 15-second timeout window for webhook connection and read operations.
+docsRef: webhooks
+remediationKey: dodo-payments-webhook-ack-duration
+requires: has(envelope.response)
+assert: double(envelope.response.durationMs) < 15000.0
+evidencePointers:
+  - /response/durationMs
+messages:
+  evidence-unavailable: "No response timing was captured, so Dodo Payments' 15-second timeout cannot be decided."

@@ -1,0 +1,18 @@
+schemaVersion: 1
+id: WL-XERO-SIGNATURE-001
+kind: signature
+scope: envelope
+severity: error
+stability: preview
+title: Xero webhook signature must be valid
+explanation: Xero HMAC-SHA256 hashes the payload with the webhook key and Base64 encodes the digest into x-xero-signature.
+signatureRef: payload-hmac-sha256
+docsRef: webhooks
+remediationKey: xero-webhook-signature
+messages:
+  missing-signature: "x-xero-signature is missing from a complete webhook capture."
+  malformed-signature: "x-xero-signature is not valid Base64 signature material."
+  signature-mismatch: "x-xero-signature does not match the exact raw payload for the supplied webhook key."
+  secret-unavailable: "Set XERO_WEBHOOK_KEY to verify authenticity."
+  insufficient-body-fidelity: "Xero signs the payload, so reconstructed or unavailable body bytes cannot prove authenticity."
+  insufficient-header-evidence: "The header capture is incomplete, so x-xero-signature cannot be proven absent."

@@ -1,0 +1,33 @@
+packProtocol: "1.2"
+id: vercel-webhooks
+name: Vercel Webhooks
+packVersion: 0.1.0
+providerDocsRevision: "2026-08-17"
+minWireLinterVersion: 0.1.0
+capabilities:
+  - passive-lint
+secrets:
+  webhook-secret:
+    env: VERCEL_WEBHOOK_SECRET
+    required: false
+    description: Vercel account-webhook secret or Integration Secret used for webhook signing
+docs:
+  webhook-api:
+    url: https://vercel.com/docs/webhooks/webhooks-api
+    revision: "2026-01-13"
+    section: Securing webhooks
+  setup:
+    url: https://vercel.com/docs/webhooks
+    revision: "2026-01-08"
+    section: Setting Up Webhooks
+signatures:
+  payload-hmac-sha1: signatures/payload-hmac-sha1.yaml
+rules:
+  - rules/signature.yaml
+  - rules/method.yaml
+  - rules/ack-status.yaml
+  - rules/ack-duration.yaml
+metadata:
+  status: preview
+  maintainer: wirelint
+  surface: platform-webhook

@@ -1,0 +1,12 @@
+schemaVersion: 1
+id: WL-ZENVIA-V2-METHOD-001
+kind: cel
+scope: envelope
+severity: error
+stability: preview
+title: Zenvia v2 webhook callbacks must use POST
+explanation: Zenvia's v2 subscription reference defines webhook callbacks as HTTP POST requests to the registered webhook URL.
+docsRef: api
+assert: envelope.request.method == "POST"
+evidencePointers:
+  - /request/method

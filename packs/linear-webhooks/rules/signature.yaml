@@ -1,0 +1,18 @@
+schemaVersion: 1
+id: WL-LINEAR-SIGNATURE-001
+kind: signature
+scope: envelope
+severity: error
+stability: preview
+title: Linear webhook signature must be valid
+explanation: Linear signs the exact raw webhook body with HMAC-SHA256 using the webhook signing secret.
+signatureRef: payload-hmac-sha256
+docsRef: webhooks
+remediationKey: linear-webhook-signature
+messages:
+  missing-signature: "Linear-Signature is missing from a complete header capture. Verify the HMAC before processing the webhook."
+  malformed-signature: "Linear-Signature is malformed; Linear sends a hex-encoded HMAC-SHA256 digest."
+  signature-mismatch: "Linear-Signature does not match HMAC-SHA256 of the exact raw request body for the supplied signing secret."
+  secret-unavailable: "Set LINEAR_WEBHOOK_SECRET to verify authenticity; delivery checks can still run without it."
+  insufficient-body-fidelity: "Linear signs the exact raw request body. Reconstructed or unavailable body bytes cannot prove the signature."
+  insufficient-header-evidence: "The captured header set is incomplete, so WireLinter cannot prove whether Linear-Signature was absent."

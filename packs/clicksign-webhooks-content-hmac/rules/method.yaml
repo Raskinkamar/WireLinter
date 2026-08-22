@@ -1,0 +1,12 @@
+schemaVersion: 1
+id: WL-CLICKSIGN-METHOD-001
+kind: cel
+scope: envelope
+severity: error
+stability: preview
+title: Clicksign webhooks must use POST
+explanation: Clicksign dispatches document-event webhooks as HTTP POST requests.
+docsRef: delivery
+assert: envelope.request.method == "POST"
+evidencePointers:
+  - /request/method

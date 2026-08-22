@@ -1,0 +1,15 @@
+schemaVersion: 1
+id: WL-BOX-V2-SIGNATURE-ALGORITHM-001
+kind: cel
+scope: envelope
+severity: error
+stability: preview
+title: Box V2 webhook signature algorithm must be HmacSHA256
+explanation: Box documents BOX-SIGNATURE-ALGORITHM as always having the value HmacSHA256 for V2 webhooks.
+docsRef: verification
+requires: envelope.request.headersCompleteness == "complete" || envelope.request.headers.exists(h, h.name.lowerAscii() == "box-signature-algorithm")
+assert: envelope.request.headers.filter(h, h.name.lowerAscii() == "box-signature-algorithm").size() == 1 && envelope.request.headers.exists(h, h.name.lowerAscii() == "box-signature-algorithm" && h.value == "HmacSHA256")
+evidencePointers:
+  - /request/headers
+messages:
+  evidence-unavailable: "BOX-SIGNATURE-ALGORITHM was not observed, but the header capture is incomplete."

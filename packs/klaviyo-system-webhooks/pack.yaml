@@ -1,0 +1,31 @@
+packProtocol: "1.2"
+id: klaviyo-system-webhooks
+name: Klaviyo System Webhooks
+packVersion: 0.1.0
+providerDocsRevision: "2026-08-17"
+minWireLinterVersion: 0.1.0
+capabilities:
+  - passive-lint
+secrets:
+  webhook-secret:
+    env: KLAVIYO_WEBHOOK_SECRET
+    required: false
+    description: Secret key returned for the Klaviyo system webhook subscription
+docs:
+  system-webhooks:
+    url: https://developers.klaviyo.com/en/v2025-10-15/docs/working_with_system_webhooks
+    revision: "2026-08-17"
+    section: HMAC signature verification
+signatures:
+  body-timestamp-hmac-sha256: signatures/body-timestamp-hmac-sha256.yaml
+rules:
+  - rules/signature.yaml
+  - rules/method.yaml
+  - rules/webhook-id.yaml
+  - rules/timestamp.yaml
+  - rules/ack-status.yaml
+  - rules/ack-duration.yaml
+metadata:
+  status: preview
+  maintainer: wirelint
+  surface: system-webhook-delivery

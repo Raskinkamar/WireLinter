@@ -1,0 +1,32 @@
+packProtocol: "1.2"
+id: quickbooks-online-webhooks
+name: QuickBooks Online Webhooks
+packVersion: 0.1.0
+providerDocsRevision: "2026-08-17"
+minWireLinterVersion: 0.1.0
+capabilities:
+  - passive-lint
+secrets:
+  verifier-token:
+    env: QUICKBOOKS_WEBHOOK_VERIFIER_TOKEN
+    required: false
+    description: App-specific verifier token from the QuickBooks Online webhook configuration
+docs:
+  configuration:
+    url: https://developer.intuit.com/app/developer/qbo/docs/develop/webhooks/configure-webhooks
+    revision: "2026-08-17"
+    section: Validate webhook notifications
+  best-practices:
+    url: https://developer.intuit.com/app/developer/qbo/docs/develop/webhooks/best-practices
+    revision: "2026-08-17"
+    section: Respond promptly to notifications
+signatures:
+  notification-hmac-sha256: signatures/notification-hmac-sha256.yaml
+rules:
+  - rules/signature.yaml
+  - rules/ack-status.yaml
+  - rules/ack-duration.yaml
+metadata:
+  status: preview
+  maintainer: wirelint
+  surface: qbo-change-notification

@@ -1,0 +1,18 @@
+schemaVersion: 1
+id: WL-CASHFREE-PAYMENTS-SIGNATURE-001
+kind: signature
+scope: envelope
+severity: error
+stability: preview
+title: Cashfree Payments webhook signature must be valid
+explanation: Cashfree concatenates x-webhook-timestamp with the exact raw request body, signs that value with HMAC-SHA256, and Base64 encodes the digest.
+signatureRef: timestamp-body-hmac-sha256
+docsRef: verification
+remediationKey: cashfree-webhook-signature
+messages:
+  missing-signature: "x-webhook-signature or x-webhook-timestamp is missing from a complete webhook capture."
+  malformed-signature: "x-webhook-signature is not a valid Base64 HMAC-SHA256 digest."
+  signature-mismatch: "The Cashfree signature does not match x-webhook-timestamp plus the exact raw request body."
+  secret-unavailable: "Set CASHFREE_CLIENT_SECRET to verify authenticity."
+  insufficient-body-fidelity: "Cashfree signs the raw request body, so reconstructed or unavailable bytes cannot prove authenticity."
+  insufficient-header-evidence: "The header capture is incomplete, so required Cashfree signature headers cannot be proven absent."

@@ -1,0 +1,16 @@
+schemaVersion: 1
+id: WL-SH-HTTPS-ACK-STATUS-001
+kind: cel
+scope: envelope
+severity: error
+stability: preview
+title: Shopify HTTPS webhook acknowledgement must be 2xx
+explanation: Shopify treats responses outside the successful 2xx range as delivery errors for HTTPS webhooks.
+docsRef: webhook-troubleshooting
+remediationKey: shopify-https-ack-status
+requires: has(envelope.response)
+assert: envelope.response.status >= 200 && envelope.response.status < 300
+evidencePointers:
+  - /response/status
+messages:
+  evidence-unavailable: "No application response was captured, so WireLinter cannot decide whether Shopify received a successful acknowledgement."

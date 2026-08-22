@@ -1,0 +1,13 @@
+schemaVersion: 1
+id: WL-KLAVIYO-METHOD-001
+kind: cel
+scope: envelope
+severity: error
+stability: preview
+title: Klaviyo system webhook delivery must use POST
+explanation: Klaviyo sends system webhook event batches to the configured endpoint as HTTP POST requests.
+docsRef: system-webhooks
+remediationKey: klaviyo-system-webhook-method
+assert: envelope.request.method == "POST"
+evidencePointers:
+  - /request/method

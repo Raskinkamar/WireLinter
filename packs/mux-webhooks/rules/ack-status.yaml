@@ -1,0 +1,16 @@
+schemaVersion: 1
+id: WL-MUX-ACK-STATUS-001
+kind: cel
+scope: envelope
+severity: error
+stability: preview
+title: Mux webhook acknowledgement must be 2xx
+explanation: Mux retries deliveries when the receiver does not return a 2xx response.
+docsRef: delivery
+remediationKey: mux-webhook-ack-status
+requires: has(envelope.response)
+assert: envelope.response.status >= 200 && envelope.response.status < 300
+evidencePointers:
+  - /response/status
+messages:
+  evidence-unavailable: "No response was captured, so Mux acknowledgement status cannot be decided."

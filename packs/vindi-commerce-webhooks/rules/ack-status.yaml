@@ -1,0 +1,16 @@
+schemaVersion: 1
+id: WL-VINDI-COMMERCE-ACK-001
+kind: cel
+scope: envelope
+severity: error
+stability: preview
+title: Vindi Commerce webhook acknowledgement must be HTTP 200
+explanation: Vindi Commerce explicitly expects HTTP 200; failures are retried every 12 hours for three days.
+docsRef: webhooks
+remediationKey: vindi-commerce-webhook-ack-status
+requires: has(envelope.response)
+assert: envelope.response.status == 200
+evidencePointers:
+  - /response/status
+messages:
+  evidence-unavailable: "No response status was captured, so Vindi Commerce acknowledgement success cannot be decided."

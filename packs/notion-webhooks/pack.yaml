@@ -1,0 +1,26 @@
+packProtocol: "1.2"
+id: notion-webhooks
+name: Notion Webhooks
+packVersion: 0.1.0
+providerDocsRevision: "2026-08-17"
+minWireLinterVersion: 0.1.0
+capabilities:
+  - passive-lint
+secrets:
+  verification-token:
+    env: NOTION_WEBHOOK_VERIFICATION_TOKEN
+    required: false
+    description: Verification token received when the Notion webhook subscription is verified
+docs:
+  webhooks:
+    url: https://developers.notion.com/reference/webhooks
+    revision: "2026-08-17"
+    section: Payload validation
+signatures:
+  payload-hmac-sha256: signatures/payload-hmac-sha256.yaml
+rules:
+  - rules/signature.yaml
+metadata:
+  status: preview
+  maintainer: wirelint
+  surface: post-verification-event-delivery

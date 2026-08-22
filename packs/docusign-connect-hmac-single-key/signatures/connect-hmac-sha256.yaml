@@ -1,0 +1,23 @@
+schemaVersion: 1
+id: connect-hmac-sha256
+sourceRefs:
+  - hmac-validation
+secret:
+  ref: hmac-secret
+  representation: utf8
+bindings:
+  signature-candidates:
+    fromHeader:
+      name: X-Docusign-Signature-1
+      cardinality: exactly-one
+      trimSpace: true
+  body:
+    fromRawBody:
+      requireFidelity: exact
+message:
+  - binding: body
+candidates:
+  binding: signature-candidates
+  encoding: base64-standard
+mac:
+  algorithm: hmac-sha256

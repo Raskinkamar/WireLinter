@@ -1,0 +1,22 @@
+schemaVersion: 1
+id: WL-IUGU-CONTENT-TYPE-001
+kind: cel
+scope: envelope
+severity: error
+stability: preview
+title: iugu trigger payload must use form URL encoding
+explanation: iugu explicitly sends trigger calls with Content-Type application/x-www-form-urlencoded.
+docsRef: triggers
+requires: >-
+  envelope.request.headersCompleteness == "complete" ||
+  envelope.request.headers.exists(h, h.name.lowerAscii() == "content-type")
+assert: >-
+  envelope.request.headers.exists(
+    h,
+    h.name.lowerAscii() == "content-type" &&
+    h.value.lowerAscii().startsWith("application/x-www-form-urlencoded")
+  )
+evidencePointers:
+  - /request/headers
+messages:
+  evidence-unavailable: "Content-Type was not observed, but the iugu trigger header capture is incomplete."

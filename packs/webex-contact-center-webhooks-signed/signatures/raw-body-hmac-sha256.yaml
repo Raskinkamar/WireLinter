@@ -1,0 +1,23 @@
+schemaVersion: 1
+id: raw-body-hmac-sha256
+sourceRefs:
+  - using-webhooks
+secret:
+  ref: subscription-secret
+  representation: utf8
+bindings:
+  signature-candidates:
+    fromHeader:
+      name: X-WebexCC-Signature
+      cardinality: exactly-one
+      trimSpace: true
+  body:
+    fromRawBody:
+      requireFidelity: exact
+message:
+  - binding: body
+candidates:
+  binding: signature-candidates
+  encoding: hex
+mac:
+  algorithm: hmac-sha256

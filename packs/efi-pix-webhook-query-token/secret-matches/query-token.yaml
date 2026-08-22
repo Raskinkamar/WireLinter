@@ -1,0 +1,15 @@
+schemaVersion: 1
+id: query-token
+sourceRefs:
+  - webhooks
+secret:
+  ref: verification-token
+  representation: utf8
+candidate:
+  fromQuery:
+    name: hmac
+    cardinality: exactly-one
+comparison: constant-time-exact
+metadata:
+  transport: query
+  providerGenerated: false

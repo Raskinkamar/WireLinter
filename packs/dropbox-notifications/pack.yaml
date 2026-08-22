@@ -1,0 +1,30 @@
+packProtocol: "1.2"
+id: dropbox-notifications
+name: Dropbox Notification Webhooks
+packVersion: 0.1.0
+providerDocsRevision: "2026-08-17"
+minWireLinterVersion: 0.1.0
+capabilities:
+  - passive-lint
+secrets:
+  app-secret:
+    env: DROPBOX_APP_SECRET
+    required: false
+    description: Dropbox app secret used to sign notification requests
+docs:
+  notifications:
+    url: https://www.dropbox.com/developers/reference/webhooks
+    revision: "2026-08-17"
+    section: Receiving notifications
+signatures:
+  notification-hmac-sha256: signatures/notification-hmac-sha256.yaml
+rules:
+  - rules/signature.yaml
+  - rules/method.yaml
+  - rules/ack-status.yaml
+metadata:
+  status: preview
+  maintainer: wirelint
+  surface: notification-post
+  excludes:
+    - verification-get

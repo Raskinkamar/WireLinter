@@ -1,0 +1,29 @@
+schemaVersion: 1
+id: primary-hmac-sha256
+sourceRefs:
+  - verification
+secret:
+  ref: primary-signature-key
+  representation: utf8
+bindings:
+  signature-candidates:
+    fromHeader:
+      name: BOX-SIGNATURE-PRIMARY
+      cardinality: exactly-one
+      trimSpace: true
+  timestamp:
+    fromHeader:
+      name: BOX-DELIVERY-TIMESTAMP
+      cardinality: exactly-one
+      trimSpace: true
+  body:
+    fromRawBody:
+      requireFidelity: exact
+message:
+  - binding: body
+  - binding: timestamp
+candidates:
+  binding: signature-candidates
+  encoding: base64-standard
+mac:
+  algorithm: hmac-sha256

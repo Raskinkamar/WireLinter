@@ -1,0 +1,16 @@
+schemaVersion: 1
+id: WL-VINDI-SERVICE-ACK-DURATION-001
+kind: cel
+scope: envelope
+severity: error
+stability: preview
+title: Vindi Service webhook acknowledgement must complete within 20 seconds
+explanation: Vindi Service expects a 2xx webhook response in no more than 20 seconds.
+docsRef: delivery
+remediationKey: vindi-service-webhook-ack-duration
+requires: has(envelope.response)
+assert: double(envelope.response.durationMs) < 20000.0
+evidencePointers:
+  - /response/durationMs
+messages:
+  evidence-unavailable: "No response timing was captured, so Vindi Service's 20-second deadline cannot be decided."

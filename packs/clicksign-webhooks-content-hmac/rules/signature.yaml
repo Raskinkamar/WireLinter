@@ -1,0 +1,18 @@
+schemaVersion: 1
+id: WL-CLICKSIGN-CONTENT-HMAC-001
+kind: signature
+scope: envelope
+severity: error
+stability: preview
+title: Clicksign webhook Content-Hmac must be valid
+explanation: Clicksign generates an HMAC SHA256 secret for a webhook and sends a sha256-prefixed hexadecimal HMAC of the exact request body in Content-Hmac.
+signatureRef: content-hmac-sha256
+docsRef: security
+remediationKey: clicksign-webhook-content-hmac
+messages:
+  missing-signature: "Content-Hmac is missing from a complete Clicksign webhook capture."
+  malformed-signature: "Content-Hmac must use sha256=<hex HMAC-SHA256 digest>."
+  signature-mismatch: "Content-Hmac does not match the exact raw body for the supplied Clicksign webhook secret."
+  secret-unavailable: "Set CLICKSIGN_WEBHOOK_HMAC_SECRET to verify webhook integrity."
+  insufficient-body-fidelity: "Clicksign signs the received body, so reconstructed or unavailable body bytes cannot prove integrity."
+  insufficient-header-evidence: "The header capture is incomplete, so Content-Hmac cannot be proven absent."

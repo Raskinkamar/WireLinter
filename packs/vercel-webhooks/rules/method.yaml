@@ -1,0 +1,13 @@
+schemaVersion: 1
+id: WL-VERCEL-METHOD-001
+kind: cel
+scope: envelope
+severity: error
+stability: preview
+title: Vercel webhook delivery must use POST
+explanation: Vercel delivers webhook events to the configured endpoint using HTTP POST.
+docsRef: setup
+remediationKey: vercel-webhook-method
+assert: envelope.request.method == "POST"
+evidencePointers:
+  - /request/method

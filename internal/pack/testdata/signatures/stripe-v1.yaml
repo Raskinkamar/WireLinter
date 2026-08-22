@@ -1,0 +1,46 @@
+schemaVersion: 1
+id: stripe-v1
+sourceRefs:
+  - webhook-signature-docs
+  - stripe-go-validator
+secret:
+  ref: webhook-secret
+  representation: utf8
+parsers:
+  signature-fields:
+    sourceHeader:
+      name: Stripe-Signature
+      cardinality: exactly-one
+    format:
+      type: delimited-pairs
+      itemDelimiter: ","
+      pairDelimiter: "="
+      trimSpace: false
+bindings:
+  timestamp:
+    fromField:
+      parser: signature-fields
+      key: t
+      cardinality: exactly-one
+  signature-candidates:
+    fromField:
+      parser: signature-fields
+      key: v1
+      cardinality: one-or-more
+  body:
+    fromRawBody:
+      requireFidelity: exact
+message:
+  - binding: timestamp
+  - literal: "."
+  - binding: body
+candidates:
+  binding: signature-candidates
+  encoding: hex
+mac:
+  algorithm: hmac-sha256
+freshness:
+  timestampBinding: timestamp
+  format: unix-seconds
+  reference: envelope-received-at
+  maxAgeSeconds: 300

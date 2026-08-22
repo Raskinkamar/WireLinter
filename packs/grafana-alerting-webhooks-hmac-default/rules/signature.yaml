@@ -1,0 +1,18 @@
+schemaVersion: 1
+id: WL-GRAFANA-SIGNATURE-001
+kind: signature
+scope: envelope
+severity: error
+stability: preview
+title: Grafana Alerting default HMAC webhook signature must be valid
+explanation: With HMAC enabled, the default signature header, and no timestamp header configured, Grafana signs the exact raw request body with HMAC-SHA256 and sends a hexadecimal digest in X-Grafana-Alerting-Signature.
+signatureRef: raw-body-hmac-sha256
+docsRef: notifier
+remediationKey: grafana-alerting-webhook-hmac
+messages:
+  missing-signature: "X-Grafana-Alerting-Signature is missing from a complete capture of the default-header HMAC mode."
+  malformed-signature: "X-Grafana-Alerting-Signature is malformed; Grafana sends a hexadecimal HMAC-SHA256 digest."
+  signature-mismatch: "X-Grafana-Alerting-Signature does not match HMAC-SHA256 of the exact raw request body for the supplied shared secret."
+  secret-unavailable: "Set GRAFANA_ALERTING_WEBHOOK_SECRET to verify authenticity."
+  insufficient-body-fidelity: "Grafana signs the raw request body, so reconstructed or unavailable body bytes cannot prove authenticity."
+  insufficient-header-evidence: "The captured header set is incomplete, so X-Grafana-Alerting-Signature cannot be proven absent."

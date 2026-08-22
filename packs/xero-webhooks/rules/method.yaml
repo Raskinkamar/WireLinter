@@ -1,0 +1,13 @@
+schemaVersion: 1
+id: WL-XERO-METHOD-001
+kind: cel
+scope: envelope
+severity: error
+stability: preview
+title: Xero webhook delivery must use POST
+explanation: Xero sends webhook events as HTTP POST payloads to the configured endpoint.
+docsRef: webhooks
+remediationKey: xero-webhook-method
+assert: envelope.request.method == "POST"
+evidencePointers:
+  - /request/method

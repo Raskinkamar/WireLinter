@@ -1,0 +1,34 @@
+{
+  "schemaVersion": 1,
+  "traceId": "trace_dropbox_webhook_verification_valid",
+  "provider": "dropbox-webhook-verification",
+  "startedAt": "2026-08-18T03:25:00Z",
+  "envelopes": [{
+    "id": "env_dropbox_verify_valid",
+    "provider": "dropbox-webhook-verification",
+    "receivedAt": "2026-08-18T03:25:00Z",
+    "request": {
+      "method": "GET",
+      "url": "http://localhost:4242/webhooks/dropbox?challenge=dropbox-fixture-123",
+      "headers": [],
+      "headersCompleteness": "complete",
+      "rawQuery": "challenge=dropbox-fixture-123",
+      "queryFidelity": "exact",
+      "query": [{"name": "challenge", "value": "dropbox-fixture-123"}],
+      "bodyFidelity": "exact",
+      "rawBodyBase64": ""
+    },
+    "response": {
+      "status": 200,
+      "headers": [
+        {"name": "Content-Type", "value": "text/plain"},
+        {"name": "X-Content-Type-Options", "value": "nosniff"}
+      ],
+      "headersCompleteness": "complete",
+      "bodyFidelity": "exact",
+      "rawBodyBase64": "ZHJvcGJveC1maXh0dXJlLTEyMw==",
+      "durationMs": 18.0
+    }
+  }],
+  "observations": []
+}

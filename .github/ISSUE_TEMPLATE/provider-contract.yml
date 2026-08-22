@@ -1,0 +1,52 @@
+name: Provider contract request
+description: Propose a new provider delivery, authentication or setup contract
+title: "provider: "
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Provider support in WireLinter is based on documented wire contracts, not vendor names alone. Please link primary provider documentation or an official SDK.
+  - type: input
+    id: provider
+    attributes:
+      label: Provider
+      placeholder: Example Provider
+    validations:
+      required: true
+  - type: input
+    id: surface
+    attributes:
+      label: Integration surface
+      description: Be specific about the delivery/authentication/setup mode.
+      placeholder: HTTPS webhooks with HMAC-SHA256
+    validations:
+      required: true
+  - type: textarea
+    id: docs
+    attributes:
+      label: Primary documentation
+      description: Links to the provider documentation or official SDK that defines the request, authentication and acknowledgement behavior.
+      placeholder: |
+        https://provider.example/docs/webhooks
+        https://github.com/provider/official-sdk
+    validations:
+      required: true
+  - type: textarea
+    id: contract
+    attributes:
+      label: Known wire contract
+      description: Summarize the documented method, signature/token fields, signed message, response requirements and timeout/retry policy if known.
+    validations:
+      required: true
+  - type: textarea
+    id: use-case
+    attributes:
+      label: Why this contract is useful
+      description: A short real-world use case is enough.
+  - type: checkboxes
+    id: source
+    attributes:
+      label: Source check
+      options:
+        - label: I linked primary provider documentation or an official SDK rather than relying only on a third-party article.
+          required: true

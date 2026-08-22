@@ -1,0 +1,12 @@
+schemaVersion: 1
+id: WL-CASHFREE-PAYMENTS-METHOD-001
+kind: cel
+scope: envelope
+severity: error
+stability: preview
+title: Cashfree Payments webhooks must use POST
+explanation: Cashfree delivers payment webhook payloads to the configured endpoint using HTTP POST.
+docsRef: delivery
+assert: envelope.request.method == "POST"
+evidencePointers:
+  - /request/method

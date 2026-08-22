@@ -1,0 +1,37 @@
+packProtocol: "1.2"
+id: celcoin-itp-webhooks
+name: Celcoin ITP Webhooks
+packVersion: 0.1.0
+providerDocsRevision: "2026-08-18"
+minWireLinterVersion: 0.1.0
+capabilities:
+  - passive-lint
+secrets:
+  webhook-secret:
+    env: CELCOIN_ITP_WEBHOOK_SECRET
+    required: false
+    description: Secret used by the Celcoin ITP webhook HMAC signature
+docs:
+  webhooks:
+    url: https://developers.celcoin.com.br/docs/itp-webhooks
+    revision: "2026-08-18"
+    section: Segurança - Validação de Assinatura
+  registration:
+    url: https://developers.celcoin.com.br/docs/webhook-itp
+    revision: "2026-08-18"
+    section: Webhook
+signatures:
+  payload-hmac-sha256: signatures/payload-hmac-sha256.yaml
+rules:
+  - rules/signature.yaml
+  - rules/method.yaml
+  - rules/content-type.yaml
+  - rules/event-id.yaml
+  - rules/timestamp.yaml
+metadata:
+  status: preview
+  maintainer: wirelint
+  vendor: celcoin
+  region: BR
+  surface: itp-webhook
+  securityModel: hmac-sha256

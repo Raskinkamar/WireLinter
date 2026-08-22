@@ -1,0 +1,64 @@
+{
+  "schemaVersion": 1,
+  "traceId": "trace_mercadopago_case_preservation",
+  "provider": "mercadopago-webhooks",
+  "startedAt": "2026-08-17T20:00:00Z",
+  "envelopes": [
+    {
+      "id": "env_mercadopago_case_preservation",
+      "provider": "mercadopago-webhooks",
+      "eventType": "payment",
+      "receivedAt": "2026-08-17T20:00:00Z",
+      "request": {
+        "method": "POST",
+        "url": "http://localhost:4242/webhook?data.id=AbC123&type=payment",
+        "headers": [
+          {
+            "name": "X-Signature",
+            "value": "ts=1781009491,v1=d2a7b55447ec369ae4fbad40e356d117bf938e68f7704dd7a701332d95f228b0"
+          },
+          {
+            "name": "X-Request-Id",
+            "value": "req-demo-001"
+          },
+          {
+            "name": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "headersCompleteness": "complete",
+        "rawQuery": "data.id=AbC123&type=payment",
+        "queryFidelity": "exact",
+        "query": [
+          {
+            "name": "data.id",
+            "value": "AbC123"
+          },
+          {
+            "name": "type",
+            "value": "payment"
+          }
+        ],
+        "bodyFidelity": "exact",
+        "rawBodyBase64": "eyJhY3Rpb24iOiJwYXltZW50LmNyZWF0ZWQiLCJkYXRhIjp7ImlkIjoiQWJDMTIzIn0sInR5cGUiOiJwYXltZW50In0=",
+        "bodySha256": "7ad6ef120efbb509a568f0a65f553e593b4529a87fbc79058b30c326debc05ca",
+        "decodedBody": {
+          "action": "payment.created",
+          "data": {
+            "id": "AbC123"
+          },
+          "type": "payment"
+        }
+      },
+      "response": {
+        "status": 200,
+        "headers": [],
+        "headersCompleteness": "complete",
+        "bodyFidelity": "exact",
+        "rawBodyBase64": "",
+        "durationMs": 35.0
+      }
+    }
+  ],
+  "observations": []
+}

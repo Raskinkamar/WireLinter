@@ -1,0 +1,29 @@
+packProtocol: "1.1"
+id: stripe
+name: Stripe
+packVersion: 0.1.0
+providerDocsRevision: "2026-08-17"
+minWireLinterVersion: 0.1.0
+capabilities:
+  - passive-lint
+secrets:
+  webhook-secret:
+    env: STRIPE_WEBHOOK_SECRET
+    required: false
+    description: Stripe endpoint signing secret (whsec_...)
+docs:
+  webhook-signature-docs:
+    url: https://docs.stripe.com/webhooks/signature
+    revision: "2026-08-17"
+    section: Verify webhook signatures with official libraries
+  stripe-go-validator:
+    url: https://github.com/stripe/stripe-go/blob/master/webhook/client.go
+    revision: "2026-08-17"
+    section: webhook signature parser and validator
+signatures:
+  webhook-v1: signatures/webhook-v1.yaml
+rules:
+  - rules/signature.yaml
+metadata:
+  status: preview
+  maintainer: wirelint

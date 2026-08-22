@@ -1,0 +1,14 @@
+schemaVersion: 1
+id: WL-META-WA-CLOUD-HTTP-001
+kind: cel
+scope: envelope
+severity: error
+stability: preview
+title: WhatsApp Cloud API transport must return 2xx
+explanation: Authentication, validation, rate-limit and upstream failures can surface as non-2xx Graph API responses.
+docsRef: graph-errors
+requires: has(envelope.response)
+assert: envelope.response.status >= 200 && envelope.response.status < 300
+evidencePointers: [/response/status]
+messages:
+  evidence-unavailable: "No Meta response was captured."

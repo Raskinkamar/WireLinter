@@ -1,0 +1,18 @@
+schemaVersion: 1
+id: WL-HOTMART-HOTTOK-001
+kind: secret-match
+scope: envelope
+severity: error
+stability: preview
+title: Hotmart Hottok must match
+explanation: Hotmart sends the account Hottok in X-HOTMART-HOTTOK and recommends validating it before processing webhook data.
+secretMatchRef: hottok-header
+docsRef: hottok-auth
+remediationKey: hotmart-hottok
+messages:
+  secret-match-valid: "X-HOTMART-HOTTOK matches the configured Hotmart Hottok."
+  secret-unavailable: "Set HOTMART_HOTTOK to verify the Hotmart webhook without exposing the credential to pack CEL or reports."
+  missing-secret-input: "X-HOTMART-HOTTOK is missing from a complete header capture."
+  ambiguous-secret-input: "Multiple X-HOTMART-HOTTOK values were observed; the authentication header must be unambiguous."
+  secret-mismatch: "X-HOTMART-HOTTOK does not match the configured Hotmart Hottok."
+  insufficient-header-evidence: "The captured header set is incomplete, so WireLinter cannot prove whether X-HOTMART-HOTTOK was absent."

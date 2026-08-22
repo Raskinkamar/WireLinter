@@ -1,0 +1,18 @@
+schemaVersion: 1
+id: WL-SUPABASE-AUTH-HOOK-SIGNATURE-001
+kind: signature
+scope: envelope
+severity: error
+stability: preview
+title: Supabase Auth HTTP Hook signature must be valid
+explanation: Supabase's HTTP Auth Hook examples use the Standard Webhooks verifier with the generated v1,whsec_ secret; Standard Webhooks signs webhook-id, webhook-timestamp, and the exact raw payload joined by dots.
+signatureRef: standard-webhook-v1
+docsRef: send-email-hook
+remediationKey: supabase-auth-hook-signature
+messages:
+  missing-signature: "A required Standard Webhooks header is missing from a complete Supabase Auth Hook capture."
+  malformed-signature: "webhook-signature does not contain a valid v1 Base64 signature."
+  signature-mismatch: "The Supabase Auth Hook signature does not match webhook-id + webhook-timestamp + exact raw body."
+  secret-unavailable: "Set SUPABASE_AUTH_HOOK_SECRET to the generated v1,whsec_<base64> value to verify authenticity."
+  insufficient-body-fidelity: "Standard Webhooks signs the exact raw payload, so reconstructed or unavailable bytes cannot prove authenticity."
+  insufficient-header-evidence: "The header capture is incomplete, so required Standard Webhooks headers cannot be proven absent."

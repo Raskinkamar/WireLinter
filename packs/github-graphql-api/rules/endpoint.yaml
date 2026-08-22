@@ -1,0 +1,14 @@
+schemaVersion: 1
+id: WL-GH-GQL-ENDPOINT-001
+kind: cel
+scope: envelope
+severity: error
+stability: preview
+title: GitHub GraphQL calls must target the GraphQL endpoint
+explanation: GitHub documents https://api.github.com/graphql as the GraphQL API endpoint.
+docsRef: graphql-calls
+assert: >-
+  envelope.request.url == "https://api.github.com/graphql" ||
+  envelope.request.url.startsWith("https://api.github.com/graphql?")
+evidencePointers:
+  - /request/url

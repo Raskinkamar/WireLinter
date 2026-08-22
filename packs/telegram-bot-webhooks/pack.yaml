@@ -1,0 +1,28 @@
+packProtocol: "1.3"
+id: telegram-bot-webhooks
+name: Telegram Bot API Webhooks
+packVersion: 0.1.0
+providerDocsRevision: "2026-08-17"
+minWireLinterVersion: 0.1.0
+capabilities:
+  - passive-lint
+secrets:
+  secret-token:
+    env: TELEGRAM_WEBHOOK_SECRET_TOKEN
+    required: false
+    description: secret_token supplied to Telegram setWebhook
+docs:
+  bot-api:
+    url: https://core.telegram.org/bots/api
+    revision: "2026-08-17"
+    section: setWebhook
+secretMatches:
+  webhook-secret-token: secret-matches/webhook-secret-token.yaml
+rules:
+  - rules/secret-token.yaml
+  - rules/method.yaml
+  - rules/ack-status.yaml
+metadata:
+  status: preview
+  maintainer: wirelint
+  surface: setwebhook-secret-token-mode

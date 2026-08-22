@@ -1,0 +1,19 @@
+schemaVersion: 1
+id: WL-MUX-SIGNATURE-001
+kind: signature
+scope: envelope
+severity: error
+stability: preview
+title: Mux webhook v1 signature must be valid
+explanation: Mux v1 signs timestamp dot raw-body using HMAC-SHA256 and sends timestamp and signature in Mux-Signature.
+signatureRef: timestamp-body-v1
+docsRef: verification
+remediationKey: mux-webhook-signature
+messages:
+  missing-signature: "Mux-Signature is missing from a complete webhook capture."
+  missing-signature-input: "Mux-Signature must contain both t and v1 fields."
+  malformed-signature: "Mux-Signature contains malformed v1 signature material."
+  signature-mismatch: "Mux v1 does not match timestamp dot exact raw body for the supplied signing secret."
+  secret-unavailable: "Set MUX_WEBHOOK_SECRET to verify authenticity."
+  insufficient-body-fidelity: "Mux signs the raw request body, so reconstructed or unavailable bytes cannot prove authenticity."
+  insufficient-header-evidence: "The header capture is incomplete, so Mux-Signature cannot be proven absent."

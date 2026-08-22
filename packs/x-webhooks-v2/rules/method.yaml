@@ -1,0 +1,13 @@
+schemaVersion: 1
+id: WL-X-METHOD-001
+kind: cel
+scope: envelope
+severity: error
+stability: preview
+title: X webhook event delivery must use POST
+explanation: X uses POST for event delivery and GET for CRC validation.
+docsRef: quickstart
+remediationKey: x-webhook-method
+assert: envelope.request.method == "POST"
+evidencePointers:
+  - /request/method

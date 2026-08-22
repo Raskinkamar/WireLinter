@@ -1,0 +1,18 @@
+schemaVersion: 1
+id: WL-GADMIN-REPORTS-TOKEN-001
+kind: secret-match
+scope: envelope
+severity: error
+stability: preview
+title: Google Admin Reports channel token must match
+explanation: When configured on a Reports watch channel, Google includes the exact application-defined token in X-Goog-Channel-Token and documents it as usable to verify notification origin.
+secretMatchRef: channel-token
+docsRef: push
+remediationKey: google-admin-reports-channel-token
+messages:
+  secret-match-valid: "X-Goog-Channel-Token matches the expected Reports channel token."
+  secret-unavailable: "Set GOOGLE_ADMIN_REPORTS_CHANNEL_TOKEN to verify the channel token."
+  missing-secret-input: "X-Goog-Channel-Token is missing from a complete capture of token-configured channel mode."
+  ambiguous-secret-input: "Multiple X-Goog-Channel-Token values were observed where exactly one is expected."
+  secret-mismatch: "X-Goog-Channel-Token does not match the expected Reports channel token."
+  insufficient-header-evidence: "The header capture is incomplete, so absence of X-Goog-Channel-Token cannot be proven."

@@ -1,0 +1,13 @@
+schemaVersion: 1
+id: WL-GRAPH-VALIDATE-METHOD-001
+kind: cel
+scope: envelope
+severity: error
+stability: preview
+title: Microsoft Graph notification URL validation must use POST
+explanation: Microsoft Graph sends the validationToken to the notification URL using HTTP POST.
+docsRef: validation
+remediationKey: graph-notification-url-validation-method
+assert: envelope.request.method == "POST"
+evidencePointers:
+  - /request/method

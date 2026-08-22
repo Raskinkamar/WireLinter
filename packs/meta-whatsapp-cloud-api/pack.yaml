@@ -1,0 +1,30 @@
+packProtocol: "1.2"
+id: meta-whatsapp-cloud-api
+name: Meta WhatsApp Cloud API Messages
+packVersion: 0.1.0
+providerDocsRevision: "2026-08-18"
+minWireLinterVersion: 0.1.0
+capabilities: [passive-lint]
+docs:
+  messages:
+    url: https://developers.facebook.com/docs/whatsapp/cloud-api/reference/messages/
+    revision: "2026-08-18"
+    section: Messages
+  graph-errors:
+    url: https://developers.facebook.com/docs/graph-api/guides/error-handling/
+    revision: "2026-08-18"
+    section: Error Responses
+rules:
+  - rules/direction.yaml
+  - rules/endpoint.yaml
+  - rules/method.yaml
+  - rules/authorization.yaml
+  - rules/content-type.yaml
+  - rules/request.yaml
+  - rules/http-status.yaml
+  - rules/graph-error.yaml
+metadata:
+  status: preview
+  maintainer: wirelint
+  vendor: meta
+  surface: whatsapp-cloud-api-messages

@@ -1,0 +1,11 @@
+schemaVersion: 1
+id: WL-META-WA-CLOUD-METHOD-001
+kind: cel
+scope: envelope
+severity: error
+stability: preview
+title: WhatsApp message calls must use POST
+explanation: Sending a WhatsApp Cloud API message uses HTTP POST.
+docsRef: messages
+assert: envelope.request.method == "POST"
+evidencePointers: [/request/method]

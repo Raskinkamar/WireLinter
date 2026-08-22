@@ -1,0 +1,18 @@
+schemaVersion: 1
+id: WL-DROPBOX-SIGNATURE-001
+kind: signature
+scope: envelope
+severity: error
+stability: preview
+title: Dropbox notification signature must be valid
+explanation: Dropbox signs the entire notification request body with HMAC-SHA256 using the app secret.
+signatureRef: notification-hmac-sha256
+docsRef: notifications
+remediationKey: dropbox-notification-signature
+messages:
+  missing-signature: "X-Dropbox-Signature is missing from a complete notification header capture."
+  malformed-signature: "X-Dropbox-Signature is malformed; Dropbox sends a hex HMAC-SHA256 digest."
+  signature-mismatch: "X-Dropbox-Signature does not match the exact raw request body for the supplied app secret."
+  secret-unavailable: "Set DROPBOX_APP_SECRET to verify notification authenticity."
+  insufficient-body-fidelity: "Dropbox signs the exact request body, so reconstructed or unavailable bytes cannot prove the signature."
+  insufficient-header-evidence: "The captured header set is incomplete, so absence of X-Dropbox-Signature cannot be proven."

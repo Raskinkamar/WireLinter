@@ -1,0 +1,24 @@
+schemaVersion: 1
+id: event-hmac-sha256
+sourceRefs:
+  - quickstart
+secret:
+  ref: consumer-secret
+  representation: utf8
+bindings:
+  signature-candidates:
+    fromHeader:
+      name: x-twitter-webhooks-signature
+      cardinality: exactly-one
+      trimSpace: true
+  body:
+    fromRawBody:
+      requireFidelity: exact
+message:
+  - binding: body
+candidates:
+  binding: signature-candidates
+  encoding: base64-standard
+  stripPrefix: "sha256="
+mac:
+  algorithm: hmac-sha256

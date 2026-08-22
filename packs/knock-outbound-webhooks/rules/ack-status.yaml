@@ -1,0 +1,16 @@
+schemaVersion: 1
+id: WL-KNOCK-OUTBOUND-ACK-001
+kind: cel
+scope: envelope
+severity: error
+stability: preview
+title: Knock outbound webhook acknowledgement must be 2xx
+explanation: Knock considers the webhook received after the endpoint returns a successful 2xx response.
+docsRef: webhooks
+remediationKey: knock-outbound-webhook-ack-status
+requires: has(envelope.response)
+assert: envelope.response.status >= 200 && envelope.response.status < 300
+evidencePointers:
+  - /response/status
+messages:
+  evidence-unavailable: "No response status was captured, so Knock acknowledgement success cannot be decided."

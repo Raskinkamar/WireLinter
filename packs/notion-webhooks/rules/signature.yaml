@@ -1,0 +1,18 @@
+schemaVersion: 1
+id: WL-NOTION-SIGNATURE-001
+kind: signature
+scope: envelope
+severity: error
+stability: preview
+title: Notion webhook signature must be valid
+explanation: Notion signs webhook request bodies with HMAC-SHA256 using the subscription verification token and sends sha256=<hex digest> in X-Notion-Signature.
+signatureRef: payload-hmac-sha256
+docsRef: webhooks
+remediationKey: notion-webhook-signature
+messages:
+  missing-signature: "X-Notion-Signature is missing from a complete post-verification webhook capture."
+  malformed-signature: "X-Notion-Signature must use sha256=<hex digest>."
+  signature-mismatch: "X-Notion-Signature does not match the exact raw request body for the supplied verification token."
+  secret-unavailable: "Set NOTION_WEBHOOK_VERIFICATION_TOKEN to verify authenticity."
+  insufficient-body-fidelity: "Notion signs the request body, so reconstructed or unavailable bytes cannot prove authenticity."
+  insufficient-header-evidence: "The header capture is incomplete, so X-Notion-Signature cannot be proven absent."

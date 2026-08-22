@@ -1,0 +1,29 @@
+packProtocol: "1.2"
+id: etsy-open-api-v3-webhooks
+name: Etsy Open API v3 Webhooks
+packVersion: 0.1.0
+providerDocsRevision: "2026-08-18"
+minWireLinterVersion: 0.1.0
+capabilities:
+  - passive-lint
+secrets:
+  signing-secret:
+    env: ETSY_WEBHOOK_SIGNING_SECRET
+    required: false
+    description: Etsy Webhook Portal signing secret in whsec_<base64> form
+docs:
+  webhooks:
+    url: https://developers.etsy.com/documentation/essentials/webhooks/
+    revision: "2026-08-18"
+    section: Verifying Webhook Signatures
+signatures:
+  webhook-v1: signatures/webhook-v1.yaml
+rules:
+  - rules/signature.yaml
+  - rules/method.yaml
+metadata:
+  status: preview
+  maintainer: wirelint
+  vendor: etsy
+  surface: open-api-v3-webhook
+  replayWindowSeconds: 300

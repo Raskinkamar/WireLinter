@@ -1,0 +1,21 @@
+schemaVersion: 1
+id: WL-CELCOIN-ITP-TIMESTAMP-001
+kind: cel
+scope: envelope
+severity: warning
+stability: preview
+title: Celcoin ITP webhook timestamp should be present
+explanation: Celcoin documents x-celcoin-timestamp as the webhook dispatch timestamp.
+docsRef: webhooks
+requires: >-
+  envelope.request.headersCompleteness == "complete" ||
+  envelope.request.headers.exists(h, h.name.lowerAscii() == "x-celcoin-timestamp")
+assert: >-
+  envelope.request.headers.exists(
+    h,
+    h.name.lowerAscii() == "x-celcoin-timestamp" && h.value != ""
+  )
+evidencePointers:
+  - /request/headers
+messages:
+  evidence-unavailable: "x-celcoin-timestamp was not observed, but the request header capture is incomplete."

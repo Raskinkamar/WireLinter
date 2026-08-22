@@ -1,0 +1,33 @@
+packProtocol: "1.3"
+id: google-drive-push-channel-token
+name: Google Drive Push Channel Token
+packVersion: 0.1.0
+providerDocsRevision: "2026-08-17"
+minWireLinterVersion: 0.1.0
+capabilities:
+  - passive-lint
+secrets:
+  channel-token:
+    env: GOOGLE_DRIVE_CHANNEL_TOKEN
+    required: false
+    description: Exact token value configured when creating the Google Drive notification channel
+docs:
+  push:
+    url: https://developers.google.com/workspace/drive/api/guides/push
+    revision: "2026-08-17"
+    section: Optional properties and respond to notifications
+secretMatches:
+  channel-token: secret-matches/channel-token.yaml
+rules:
+  - rules/channel-token.yaml
+  - rules/method.yaml
+  - rules/channel-id.yaml
+  - rules/resource-id.yaml
+  - rules/resource-state.yaml
+  - rules/message-number.yaml
+  - rules/ack-status.yaml
+metadata:
+  status: preview
+  maintainer: wirelint
+  surface: push-notification-channel-with-token
+  note: Google documents channel tokens as arbitrary application-defined values usable to verify that notifications are for channels created by the application; they should not contain OAuth tokens

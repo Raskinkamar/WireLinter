@@ -1,0 +1,16 @@
+schemaVersion: 1
+id: WL-OKTA-VERIFY-CHALLENGE-001
+kind: cel
+scope: envelope
+severity: error
+stability: preview
+title: Okta verification request must contain exactly one challenge header
+explanation: Okta sends the one-time verification value in x-okta-verification-challenge.
+docsRef: concepts
+remediationKey: okta-event-hook-verification-challenge
+requires: envelope.request.headersCompleteness == "complete" || envelope.request.headers.exists(h, h.name.lowerAscii() == "x-okta-verification-challenge")
+assert: envelope.request.headers.filter(h, h.name.lowerAscii() == "x-okta-verification-challenge").size() == 1 && envelope.request.headers.exists(h, h.name.lowerAscii() == "x-okta-verification-challenge" && h.value != "")
+evidencePointers:
+  - /request/headers
+messages:
+  evidence-unavailable: "x-okta-verification-challenge was not observed, but the request header capture is incomplete."

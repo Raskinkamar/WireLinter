@@ -1,0 +1,32 @@
+packProtocol: "1.2"
+id: resend-webhooks
+name: Resend Webhooks
+packVersion: 0.1.0
+providerDocsRevision: "2026-08-17"
+minWireLinterVersion: 0.1.0
+capabilities:
+  - passive-lint
+secrets:
+  signing-secret:
+    env: RESEND_WEBHOOK_SECRET
+    required: false
+    description: Resend webhook signing secret with whsec_ prefix
+
+docs:
+  verification:
+    url: https://resend.com/docs/webhooks/verify-webhooks-requests
+    revision: "2026-08-17"
+    section: Verify Webhooks Requests
+  webhooks:
+    url: https://resend.com/docs/webhooks/introduction
+    revision: "2026-08-17"
+    section: Managing Webhooks
+signatures:
+  svix-v1: signatures/svix-v1.yaml
+rules:
+  - rules/signature.yaml
+  - rules/method.yaml
+metadata:
+  status: preview
+  maintainer: wirelint
+  surface: svix-webhook

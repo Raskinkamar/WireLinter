@@ -1,0 +1,13 @@
+schemaVersion: 1
+id: WL-WORKOS-METHOD-001
+kind: cel
+scope: envelope
+severity: error
+stability: preview
+title: WorkOS webhook endpoint must receive POST
+explanation: WorkOS webhook endpoints should accept POST requests carrying the WorkOS-Signature header.
+docsRef: webhooks
+remediationKey: workos-webhook-method
+assert: envelope.request.method == "POST"
+evidencePointers:
+  - /request/method

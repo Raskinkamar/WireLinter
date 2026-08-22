@@ -1,0 +1,16 @@
+schemaVersion: 1
+id: WL-GH-ACK-DURATION-001
+kind: cel
+scope: envelope
+severity: error
+stability: preview
+title: GitHub webhook acknowledgement must complete before timeout
+explanation: GitHub considers a webhook delivery failed if it does not receive a response within 10 seconds.
+docsRef: webhook-troubleshooting-docs
+remediationKey: github-ack-duration
+requires: has(envelope.response)
+assert: double(envelope.response.durationMs) < 10000.0
+evidencePointers:
+  - /response/durationMs
+messages:
+  evidence-unavailable: "No application response timing was captured, so WireLinter cannot decide whether the handler met GitHub's 10-second response deadline."

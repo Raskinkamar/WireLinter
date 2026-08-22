@@ -1,0 +1,18 @@
+schemaVersion: 1
+id: WL-CLICKUP-SIGNATURE-001
+kind: signature
+scope: envelope
+severity: error
+stability: preview
+title: ClickUp webhook signature must be valid
+explanation: ClickUp signs incoming webhook request bodies with HMAC-SHA256 using the webhook secret and sends the hex digest in X-Signature.
+signatureRef: payload-hmac-sha256
+docsRef: signature
+remediationKey: clickup-webhook-signature
+messages:
+  missing-signature: "X-Signature is missing from a complete ClickUp webhook capture."
+  malformed-signature: "ClickUp X-Signature is malformed; signatures are hex digests."
+  signature-mismatch: "ClickUp X-Signature does not match the exact request body for the supplied webhook secret."
+  secret-unavailable: "Set CLICKUP_WEBHOOK_SECRET to verify authenticity."
+  insufficient-body-fidelity: "ClickUp signs the request body, so reconstructed or unavailable body bytes cannot prove authenticity."
+  insufficient-header-evidence: "The header capture is incomplete, so X-Signature cannot be proven absent."

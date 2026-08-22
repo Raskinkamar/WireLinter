@@ -1,0 +1,14 @@
+schemaVersion: 1
+id: WL-META-WA-CLOUD-DIRECTION-001
+kind: cel
+scope: envelope
+severity: error
+stability: preview
+title: WhatsApp Cloud API calls must be outbound
+explanation: This contract describes calls made by the application to Meta Graph API.
+docsRef: messages
+requires: has(envelope.direction)
+assert: envelope.direction == "outbound"
+evidencePointers: [/direction]
+messages:
+  evidence-unavailable: "The capture does not declare traffic direction."

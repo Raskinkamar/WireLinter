@@ -1,0 +1,30 @@
+packProtocol: "1.2"
+id: woocommerce-webhooks
+name: WooCommerce Webhooks
+packVersion: 0.1.0
+providerDocsRevision: "2026-08-17"
+minWireLinterVersion: 0.1.0
+capabilities:
+  - passive-lint
+secrets:
+  webhook-secret:
+    env: WOOCOMMERCE_WEBHOOK_SECRET
+    required: false
+    description: Optional secret configured for the WooCommerce webhook
+docs:
+  webhooks:
+    url: https://developer.woocommerce.com/docs/apis/rest-api/v2/webhooks
+    revision: "2026-08-17"
+    section: Webhooks
+signatures:
+  payload-hmac-sha256: signatures/payload-hmac-sha256.yaml
+rules:
+  - rules/signature.yaml
+  - rules/method.yaml
+  - rules/topic-header.yaml
+  - rules/delivery-id.yaml
+  - rules/ack-status.yaml
+metadata:
+  status: preview
+  maintainer: wirelint
+  surface: rest-api-webhook-with-secret

@@ -1,0 +1,16 @@
+schemaVersion: 1
+id: WL-TYPEFORM-ACK-DURATION-001
+kind: cel
+scope: envelope
+severity: error
+stability: preview
+title: Typeform webhook acknowledgement must complete within 30 seconds
+explanation: Typeform marks a webhook delivery failed if the endpoint does not respond within 30 seconds.
+docsRef: delivery
+remediationKey: typeform-webhook-ack-duration
+requires: has(envelope.response)
+assert: double(envelope.response.durationMs) < 30000.0
+evidencePointers:
+  - /response/durationMs
+messages:
+  evidence-unavailable: "No response timing was captured, so Typeform's 30-second timeout cannot be decided."

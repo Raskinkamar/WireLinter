@@ -1,0 +1,37 @@
+packProtocol: "1.4"
+id: pagbank-orders-webhooks-authenticity-token
+name: PagBank Orders Webhooks Authenticity Token
+packVersion: 0.1.0
+providerDocsRevision: "2026-08-18"
+minWireLinterVersion: 0.1.0
+capabilities:
+  - passive-lint
+secrets:
+  account-token:
+    env: PAGBANK_ACCOUNT_TOKEN
+    required: false
+    description: Token da conta PagBank usado para confirmar a autenticidade da notificação
+docs:
+  authenticity:
+    url: https://developer.pagbank.com.br/reference/confirmar-autenticidade-da-notificacao
+    revision: "2026-08-18"
+    section: Confirmar autenticidade da notificação
+  webhooks:
+    url: https://developer.pagbank.com.br/reference/webhooks
+    revision: "2026-08-18"
+    section: Pedidos & Pagamentos (Order) - Webhooks
+digestMatches:
+  authenticity-token: digest-matches/authenticity-token.yaml
+rules:
+  - rules/authenticity-token.yaml
+  - rules/method.yaml
+  - rules/content-type.yaml
+metadata:
+  status: preview
+  maintainer: wirelint
+  vendor: pagbank
+  region: BR
+  surface: orders-payments-webhook-authenticity-token
+  productScope: orders-and-payments
+  digestConstruction: sha256(account-token + "-" + exact-raw-payload)
+  scopeNote: "This contract is intentionally scoped to the PagBank Orders/Payments webhook documentation that references x-authenticity-token. Other PagBank products may expose different notification-signature contracts and must use separate provider IDs."

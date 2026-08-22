@@ -1,0 +1,34 @@
+packProtocol: "1.2"
+id: paddle-webhooks
+name: Paddle Webhooks
+packVersion: 0.1.0
+providerDocsRevision: "2026-08-17"
+minWireLinterVersion: 0.1.0
+capabilities:
+  - passive-lint
+secrets:
+  endpoint-secret:
+    env: PADDLE_WEBHOOK_SECRET_KEY
+    required: false
+    description: Paddle notification destination endpoint secret key
+docs:
+  signature:
+    url: https://developer.paddle.com/webhooks/about/signature-verification
+    revision: "2026-08-17"
+    section: Verify manually
+  delivery:
+    url: https://developer.paddle.com/webhooks/about/respond-to-webhooks
+    revision: "2026-08-17"
+    section: Handle retries
+signatures:
+  timestamp-body-hmac-sha256: signatures/timestamp-body-hmac-sha256.yaml
+rules:
+  - rules/signature.yaml
+  - rules/method.yaml
+  - rules/ack-status.yaml
+  - rules/ack-duration.yaml
+metadata:
+  status: preview
+  maintainer: wirelint
+  surface: notification-destination-url
+  sdkDefaultTimestampToleranceSeconds: 5

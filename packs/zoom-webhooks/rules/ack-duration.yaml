@@ -1,0 +1,16 @@
+schemaVersion: 1
+id: WL-ZOOM-ACK-DURATION-001
+kind: cel
+scope: envelope
+severity: error
+stability: preview
+title: Zoom webhook acknowledgement must complete within 3 seconds
+explanation: Zoom's current API guidance asks event receivers to return HTTP 200 or 204 within three seconds.
+docsRef: api-reference
+remediationKey: zoom-webhook-ack-duration
+requires: has(envelope.response)
+assert: double(envelope.response.durationMs) < 3000.0
+evidencePointers:
+  - /response/durationMs
+messages:
+  evidence-unavailable: "No response timing was captured, so Zoom's three-second acknowledgement deadline cannot be decided."

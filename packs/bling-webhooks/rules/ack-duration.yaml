@@ -1,0 +1,16 @@
+schemaVersion: 1
+id: WL-BLING-ACK-DURATION-001
+kind: cel
+scope: envelope
+severity: error
+stability: preview
+title: Bling webhook acknowledgement must complete within 5 seconds
+explanation: Bling considers a delivery unsuccessful when a 2xx acknowledgement is not returned within five seconds and may retry it.
+docsRef: webhooks
+remediationKey: bling-webhook-ack-duration
+requires: has(envelope.response)
+assert: double(envelope.response.durationMs) < 5000.0
+evidencePointers:
+  - /response/durationMs
+messages:
+  evidence-unavailable: "No response timing was captured, so Bling's five-second deadline cannot be decided."

@@ -1,0 +1,38 @@
+schemaVersion: 1
+id: request-v0
+sourceRefs:
+  - request-signing
+secret:
+  ref: signing-secret
+  representation: utf8
+bindings:
+  signature-candidate:
+    fromHeader:
+      name: X-Slack-Signature
+      cardinality: exactly-one
+      trimSpace: true
+  timestamp:
+    fromHeader:
+      name: X-Slack-Request-Timestamp
+      cardinality: exactly-one
+      trimSpace: true
+  body:
+    fromRawBody:
+      requireFidelity: exact
+message:
+  - literal: "v0:"
+  - binding: timestamp
+    suffix: ":"
+  - binding: body
+candidates:
+  binding: signature-candidate
+  encoding: hex
+  stripPrefix: "v0="
+mac:
+  algorithm: hmac-sha256
+freshness:
+  timestampBinding: timestamp
+  format: unix-seconds
+  reference: envelope-received-at
+  maxAgeSeconds: 300
+  maxFutureSeconds: 300

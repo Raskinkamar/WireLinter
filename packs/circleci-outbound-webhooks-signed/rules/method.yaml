@@ -1,0 +1,13 @@
+schemaVersion: 1
+id: WL-CIRCLECI-METHOD-001
+kind: cel
+scope: envelope
+severity: error
+stability: preview
+title: CircleCI outbound webhook must use POST
+explanation: CircleCI sends outbound webhook events as HTTP POST requests with JSON bodies.
+docsRef: outbound
+remediationKey: circleci-outbound-method
+assert: envelope.request.method == "POST"
+evidencePointers:
+  - /request/method

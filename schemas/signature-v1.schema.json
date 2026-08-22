@@ -1,0 +1,220 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://wirelint.dev/schemas/signature-v1.schema.json",
+  "title": "WireLinter Trusted Signature Recipe v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schemaVersion", "id", "sourceRefs", "secret", "bindings", "message", "candidates", "mac"],
+  "properties": {
+    "schemaVersion": { "const": 1 },
+    "id": { "$ref": "#/$defs/id" },
+    "sourceRefs": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": { "$ref": "#/$defs/id" }
+    },
+    "secret": { "$ref": "#/$defs/secret" },
+    "parsers": {
+      "type": "object",
+      "propertyNames": { "$ref": "#/$defs/id" },
+      "additionalProperties": { "$ref": "#/$defs/parser" }
+    },
+    "bindings": {
+      "type": "object",
+      "minProperties": 1,
+      "propertyNames": { "$ref": "#/$defs/id" },
+      "additionalProperties": { "$ref": "#/$defs/binding" }
+    },
+    "message": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "$ref": "#/$defs/messageSegment" }
+    },
+    "candidates": { "$ref": "#/$defs/candidates" },
+    "mac": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["algorithm"],
+      "properties": {
+        "algorithm": { "enum": ["hmac-sha1", "hmac-sha256"] }
+      }
+    },
+    "freshness": { "$ref": "#/$defs/freshness" },
+    "metadata": { "type": "object", "additionalProperties": true }
+  },
+  "$defs": {
+    "id": { "type": "string", "pattern": "^[a-z][a-z0-9]*(?:-[a-z0-9]+)*$" },
+    "headerName": { "type": "string", "minLength": 1, "maxLength": 256 },
+    "cardinality": { "enum": ["exactly-one", "zero-or-one", "one-or-more"] },
+    "secret": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["ref", "representation"],
+      "properties": {
+        "ref": { "$ref": "#/$defs/id" },
+        "representation": { "enum": ["utf8", "prefixed-base64"] },
+        "prefix": { "type": "string", "minLength": 1, "maxLength": 64 }
+      },
+      "allOf": [
+        {
+          "if": { "properties": { "representation": { "const": "prefixed-base64" } }, "required": ["representation"] },
+          "then": { "required": ["prefix"] },
+          "else": { "not": { "required": ["prefix"] } }
+        }
+      ]
+    },
+    "parserHeaderSource": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["name", "cardinality"],
+      "properties": {
+        "name": { "$ref": "#/$defs/headerName" },
+        "cardinality": { "const": "exactly-one" },
+        "trimSpace": { "type": "boolean", "default": false }
+      }
+    },
+    "parser": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["sourceHeader", "format"],
+      "properties": {
+        "sourceHeader": { "$ref": "#/$defs/parserHeaderSource" },
+        "format": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["type", "itemDelimiter", "pairDelimiter", "trimSpace"],
+          "properties": {
+            "type": { "const": "delimited-pairs" },
+            "itemDelimiter": { "type": "string", "minLength": 1, "maxLength": 1 },
+            "pairDelimiter": { "type": "string", "minLength": 1, "maxLength": 1 },
+            "trimSpace": { "type": "boolean" }
+          }
+        }
+      }
+    },
+    "rawBodyBinding": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["fromRawBody"],
+      "properties": {
+        "fromRawBody": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["requireFidelity"],
+          "properties": { "requireFidelity": { "const": "exact" } }
+        }
+      }
+    },
+    "headerBinding": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["fromHeader"],
+      "properties": {
+        "fromHeader": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["name", "cardinality"],
+          "properties": {
+            "name": { "$ref": "#/$defs/headerName" },
+            "cardinality": { "$ref": "#/$defs/cardinality" },
+            "trimSpace": { "type": "boolean", "default": false }
+          }
+        }
+      }
+    },
+    "queryBinding": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["fromQuery"],
+      "properties": {
+        "fromQuery": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["name", "cardinality"],
+          "properties": {
+            "name": { "type": "string", "minLength": 1, "maxLength": 256 },
+            "cardinality": { "$ref": "#/$defs/cardinality" },
+            "trimSpace": { "type": "boolean", "default": false }
+          }
+        }
+      }
+    },
+    "fieldBinding": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["fromField"],
+      "properties": {
+        "fromField": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["parser", "key", "cardinality"],
+          "properties": {
+            "parser": { "$ref": "#/$defs/id" },
+            "key": { "type": "string", "minLength": 1, "maxLength": 128 },
+            "cardinality": { "$ref": "#/$defs/cardinality" }
+          }
+        }
+      }
+    },
+    "binding": {
+      "oneOf": [
+        { "$ref": "#/$defs/rawBodyBinding" },
+        { "$ref": "#/$defs/headerBinding" },
+        { "$ref": "#/$defs/queryBinding" },
+        { "$ref": "#/$defs/fieldBinding" }
+      ]
+    },
+    "literalSegment": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["literal"],
+      "properties": {
+        "literal": { "type": "string", "maxLength": 1024 }
+      }
+    },
+    "bindingSegment": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["binding"],
+      "properties": {
+        "binding": { "$ref": "#/$defs/id" },
+        "prefix": { "type": "string", "maxLength": 1024 },
+        "suffix": { "type": "string", "maxLength": 1024 },
+        "omitIfAbsent": { "type": "boolean", "default": false }
+      }
+    },
+    "messageSegment": {
+      "oneOf": [
+        { "$ref": "#/$defs/literalSegment" },
+        { "$ref": "#/$defs/bindingSegment" }
+      ]
+    },
+    "candidates": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["binding", "encoding"],
+      "properties": {
+        "binding": { "$ref": "#/$defs/id" },
+        "encoding": { "enum": ["hex", "base64-standard"] },
+        "stripPrefix": { "type": "string", "minLength": 1, "maxLength": 64 }
+      }
+    },
+    "freshness": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["timestampBinding", "format", "reference"],
+      "properties": {
+        "timestampBinding": { "$ref": "#/$defs/id" },
+        "format": { "const": "unix-seconds" },
+        "reference": { "const": "envelope-received-at" },
+        "maxAgeSeconds": { "type": "integer", "minimum": 0, "maximum": 86400 },
+        "maxFutureSeconds": { "type": "integer", "minimum": 0, "maximum": 86400 }
+      },
+      "anyOf": [
+        { "required": ["maxAgeSeconds"] },
+        { "required": ["maxFutureSeconds"] }
+      ]
+    }
+  }
+}

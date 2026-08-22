@@ -1,0 +1,18 @@
+schemaVersion: 1
+id: WL-CUSTOMERIO-REPORTING-SIGNATURE-001
+kind: signature
+scope: envelope
+severity: error
+stability: preview
+title: Customer.io reporting webhook signature must be valid
+explanation: Customer.io signs v0, the X-CIO-Timestamp value, and the exact raw body joined by colons using HMAC-SHA256.
+signatureRef: v0-timestamp-body
+docsRef: reporting-webhooks
+remediationKey: customerio-reporting-webhook-signature
+messages:
+  missing-signature: "X-CIO-Signature or X-CIO-Timestamp is missing from a complete webhook capture."
+  malformed-signature: "X-CIO-Signature is not a valid hexadecimal HMAC-SHA256 digest."
+  signature-mismatch: "X-CIO-Signature does not match v0, timestamp, and the exact raw body for the supplied signing secret."
+  secret-unavailable: "Set CUSTOMERIO_WEBHOOK_SIGNING_SECRET to verify authenticity."
+  insufficient-body-fidelity: "Customer.io signs the raw body, so reconstructed or unavailable bytes cannot prove authenticity."
+  insufficient-header-evidence: "The header capture is incomplete, so required Customer.io signature headers cannot be proven absent."

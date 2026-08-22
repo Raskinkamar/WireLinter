@@ -1,0 +1,19 @@
+schemaVersion: 1
+id: WL-TWITCH-MESSAGE-TYPE-001
+kind: cel
+scope: envelope
+severity: error
+stability: preview
+title: Twitch EventSub message type header must be present
+explanation: Twitch uses Twitch-Eventsub-Message-Type to distinguish notification, callback verification, and revocation messages.
+docsRef: handling
+remediationKey: twitch-eventsub-message-type
+requires: >-
+  envelope.request.headersCompleteness == "complete" ||
+  envelope.request.headers.exists(h, h.name.lowerAscii() == "twitch-eventsub-message-type" && h.value != "")
+assert: >-
+  envelope.request.headers.exists(h, h.name.lowerAscii() == "twitch-eventsub-message-type" && h.value != "")
+evidencePointers:
+  - /request/headers
+messages:
+  evidence-unavailable: "Twitch-Eventsub-Message-Type was not observed, but the header capture is incomplete."

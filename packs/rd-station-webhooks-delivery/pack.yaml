@@ -1,0 +1,23 @@
+packProtocol: "1.2"
+id: rd-station-webhooks-delivery
+name: RD Station Webhooks Delivery
+packVersion: 0.1.0
+providerDocsRevision: "2026-08-18"
+minWireLinterVersion: 0.1.0
+capabilities:
+  - passive-lint
+docs:
+  webhooks:
+    url: https://developers.rdstation.com/reference/webhooks
+    revision: "2026-08-18"
+    section: Requisitos para funcionamento dos Webhooks e Autenticação
+rules:
+  - rules/method.yaml
+  - rules/ack-status.yaml
+metadata:
+  status: preview
+  maintainer: wirelint
+  vendor: rd-station
+  region: BR
+  surface: marketing-crm-webhook-delivery
+  authPolicyNote: "RD Station CRM can attach an integrator-selected auth_header/auth_key pair. Because the header name is configuration-defined, this delivery contract does not invent a fixed authentication header; a future parameterized secret-match source can cover it generically."

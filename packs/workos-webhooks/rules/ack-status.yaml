@@ -1,0 +1,16 @@
+schemaVersion: 1
+id: WL-WORKOS-ACK-STATUS-001
+kind: cel
+scope: envelope
+severity: error
+stability: preview
+title: WorkOS webhook acknowledgement must be HTTP 200
+explanation: WorkOS recommends responding HTTP 200 OK to signal successful delivery and avoid retries.
+docsRef: webhooks
+remediationKey: workos-ack-status
+requires: has(envelope.response)
+assert: envelope.response.status == 200
+evidencePointers:
+  - /response/status
+messages:
+  evidence-unavailable: "No application response was captured, so WireLinter cannot decide whether WorkOS received HTTP 200."

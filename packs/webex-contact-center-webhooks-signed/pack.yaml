@@ -1,0 +1,29 @@
+packProtocol: "1.2"
+id: webex-contact-center-webhooks-signed
+name: Webex Contact Center Signed Webhooks
+packVersion: 0.1.0
+providerDocsRevision: "2026-08-17"
+minWireLinterVersion: 0.1.0
+capabilities:
+  - passive-lint
+secrets:
+  subscription-secret:
+    env: WEBEX_CC_WEBHOOK_SECRET
+    required: false
+    description: Secret supplied when registering the Webex Contact Center subscription
+docs:
+  using-webhooks:
+    url: https://developer.webex.com/webex-contact-center/docs/using-webhooks
+    revision: "2026-08-17"
+    section: Request Verification
+signatures:
+  raw-body-hmac-sha256: signatures/raw-body-hmac-sha256.yaml
+rules:
+  - rules/signature.yaml
+  - rules/method.yaml
+  - rules/ack-status.yaml
+metadata:
+  status: preview
+  maintainer: wirelint
+  surface: contact-center-webhook-with-secret
+  note: Version 2 replay tolerance is receiver policy; this contract validates the provider-defined HMAC without imposing the sample application's five-minute choice

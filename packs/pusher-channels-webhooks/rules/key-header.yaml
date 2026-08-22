@@ -1,0 +1,19 @@
+schemaVersion: 1
+id: WL-PUSHER-CHANNELS-KEY-001
+kind: cel
+scope: envelope
+severity: error
+stability: preview
+title: Pusher Channels webhook token key must be present
+explanation: Valid Channels webhooks include X-Pusher-Key identifying the app token used for signing.
+docsRef: webhooks
+remediationKey: pusher-channels-key-header
+requires: >-
+  envelope.request.headersCompleteness == "complete" ||
+  envelope.request.headers.exists(h, h.name.lowerAscii() == "x-pusher-key" && h.value != "")
+assert: >-
+  envelope.request.headers.exists(h, h.name.lowerAscii() == "x-pusher-key" && h.value != "")
+evidencePointers:
+  - /request/headers
+messages:
+  evidence-unavailable: "X-Pusher-Key was not observed, but the request header capture is incomplete."

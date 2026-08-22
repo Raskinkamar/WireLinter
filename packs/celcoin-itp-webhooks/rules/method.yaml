@@ -1,0 +1,12 @@
+schemaVersion: 1
+id: WL-CELCOIN-ITP-METHOD-001
+kind: cel
+scope: envelope
+severity: error
+stability: preview
+title: Celcoin ITP webhooks must use POST
+explanation: Celcoin requires the registered ITP webhook endpoint to use HTTP POST over HTTPS.
+docsRef: registration
+assert: envelope.request.method == "POST"
+evidencePointers:
+  - /request/method

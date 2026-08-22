@@ -1,0 +1,12 @@
+schemaVersion: 1
+id: WL-NUVEMSHOP-METHOD-001
+kind: cel
+scope: envelope
+severity: error
+stability: preview
+title: Nuvemshop webhooks must use POST
+explanation: Nuvemshop sends webhook notifications as HTTP POST requests to the registered HTTPS URL.
+docsRef: webhooks
+assert: envelope.request.method == "POST"
+evidencePointers:
+  - /request/method

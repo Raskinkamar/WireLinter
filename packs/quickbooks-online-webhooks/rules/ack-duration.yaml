@@ -1,0 +1,16 @@
+schemaVersion: 1
+id: WL-QBO-ACK-DURATION-001
+kind: cel
+scope: envelope
+severity: error
+stability: preview
+title: QuickBooks Online webhook acknowledgement must complete within 3 seconds
+explanation: QuickBooks Online requires the listener to return HTTP 200 within 3 seconds.
+docsRef: best-practices
+remediationKey: quickbooks-webhook-ack-duration
+requires: has(envelope.response)
+assert: double(envelope.response.durationMs) < 3000.0
+evidencePointers:
+  - /response/durationMs
+messages:
+  evidence-unavailable: "No response timing was captured, so the QuickBooks Online three-second requirement cannot be decided."

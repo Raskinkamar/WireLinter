@@ -1,0 +1,31 @@
+packProtocol: "1.2"
+id: pluggy-webhooks
+name: Pluggy Webhooks
+packVersion: 0.1.0
+providerDocsRevision: "2026-08-18"
+minWireLinterVersion: 0.1.0
+capabilities:
+  - passive-lint
+docs:
+  webhooks:
+    url: https://docs.pluggy.ai/docs/webhooks
+    revision: "2026-08-18"
+    section: Handling notifications
+rules:
+  - rules/method.yaml
+  - rules/content-type.yaml
+  - rules/ack-status.yaml
+  - rules/ack-duration.yaml
+metadata:
+  status: preview
+  maintainer: wirelint
+  vendor: pluggy
+  region: BR
+  surface: webhook-delivery
+  categories:
+    - open-finance
+    - banking
+    - payments
+  deliveryModel: at-least-once
+  maxDocumentedAttempts: 9
+  authPolicyNote: "Pluggy lets integrators configure arbitrary outbound webhook headers, so this contract does not invent a fixed authentication header."

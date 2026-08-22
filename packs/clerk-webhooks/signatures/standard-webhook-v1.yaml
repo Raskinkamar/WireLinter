@@ -1,0 +1,50 @@
+schemaVersion: 1
+id: standard-webhook-v1
+sourceRefs:
+  - verification
+  - signature-details
+secret:
+  ref: signing-secret
+  representation: prefixed-base64
+  prefix: "whsec_"
+parsers:
+  signatures:
+    sourceHeader:
+      name: svix-signature
+      cardinality: exactly-one
+      trimSpace: true
+    format:
+      type: delimited-pairs
+      itemDelimiter: " "
+      pairDelimiter: ","
+      trimSpace: true
+bindings:
+  signature-candidates:
+    fromField:
+      parser: signatures
+      key: v1
+      cardinality: one-or-more
+  message-id:
+    fromHeader:
+      name: svix-id
+      cardinality: exactly-one
+      trimSpace: true
+  timestamp:
+    fromHeader:
+      name: svix-timestamp
+      cardinality: exactly-one
+      trimSpace: true
+  body:
+    fromRawBody:
+      requireFidelity: exact
+message:
+  - binding: message-id
+    suffix: "."
+  - binding: timestamp
+    suffix: "."
+  - binding: body
+candidates:
+  binding: signature-candidates
+  encoding: base64-standard
+mac:
+  algorithm: hmac-sha256

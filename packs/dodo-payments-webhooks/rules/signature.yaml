@@ -1,0 +1,18 @@
+schemaVersion: 1
+id: WL-DODO-PAYMENTS-SIGNATURE-001
+kind: signature
+scope: envelope
+severity: error
+stability: preview
+title: Dodo Payments webhook signature must be valid
+explanation: "Dodo Payments follows Standard Webhooks: webhook-id, webhook-timestamp, and the exact raw payload are joined by dots and verified with HMAC-SHA256 using the webhook signing secret."
+signatureRef: standard-webhook-v1
+docsRef: webhooks
+remediationKey: dodo-payments-webhook-signature
+messages:
+  missing-signature: "A required Dodo Payments Standard Webhooks header is missing from a complete capture."
+  malformed-signature: "webhook-signature does not contain a valid v1 Base64 signature."
+  signature-mismatch: "The Dodo Payments signature does not match webhook-id + webhook-timestamp + exact raw payload."
+  secret-unavailable: "Set DODO_PAYMENTS_WEBHOOK_SECRET to the whsec_ signing secret from the Dodo Payments webhook configuration."
+  insufficient-body-fidelity: "Dodo Payments signs the exact raw payload, so reconstructed or unavailable bytes cannot prove authenticity."
+  insufficient-header-evidence: "The header capture is incomplete, so required Dodo Payments webhook headers cannot be proven absent."

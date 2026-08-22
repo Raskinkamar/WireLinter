@@ -1,0 +1,27 @@
+packProtocol: "1.2"
+id: openai-webhooks-whsec
+name: OpenAI Webhooks whsec Signature
+packVersion: 0.1.0
+providerDocsRevision: "2026-08-17"
+minWireLinterVersion: 0.1.0
+capabilities:
+  - passive-lint
+secrets:
+  webhook-secret:
+    env: OPENAI_WEBHOOK_SECRET
+    required: false
+    description: OpenAI webhook secret using the whsec_ encoded form
+docs:
+  official-sdk:
+    url: https://github.com/openai/openai-python/blob/main/src/openai/resources/webhooks/webhooks.py
+    revision: "2026-08-10"
+    section: Webhooks.verify_signature
+signatures:
+  webhook-v1: signatures/webhook-v1.yaml
+rules:
+  - rules/signature.yaml
+metadata:
+  status: preview
+  maintainer: wirelint
+  surface: whsec-standard-webhook-signature
+  signatureToleranceSeconds: 300

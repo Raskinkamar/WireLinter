@@ -1,0 +1,13 @@
+schemaVersion: 1
+id: WL-ZOOM-METHOD-001
+kind: cel
+scope: envelope
+severity: error
+stability: preview
+title: Zoom webhook event delivery must use POST
+explanation: Zoom event subscriptions send webhook notifications as HTTPS POST requests with JSON payloads.
+docsRef: api-reference
+remediationKey: zoom-webhook-method
+assert: envelope.request.method == "POST"
+evidencePointers:
+  - /request/method

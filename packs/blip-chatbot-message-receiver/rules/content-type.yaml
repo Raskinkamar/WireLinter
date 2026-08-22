@@ -1,0 +1,22 @@
+schemaVersion: 1
+id: WL-BLIP-MESSAGE-RECEIVER-CONTENT-TYPE-001
+kind: cel
+scope: envelope
+severity: error
+stability: preview
+title: Blip chatbot message transport must use JSON
+explanation: Blip's HTTP message receiver sends LIME message envelopes using Content-Type application/json.
+docsRef: receiver
+requires: >-
+  envelope.request.headersCompleteness == "complete" ||
+  envelope.request.headers.exists(h, h.name.lowerAscii() == "content-type")
+assert: >-
+  envelope.request.headers.exists(
+    h,
+    h.name.lowerAscii() == "content-type" &&
+    h.value.lowerAscii().startsWith("application/json")
+  )
+evidencePointers:
+  - /request/headers
+messages:
+  evidence-unavailable: "Content-Type was not observed, but the Blip message receiver header capture is incomplete."

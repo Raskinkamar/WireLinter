@@ -1,0 +1,16 @@
+schemaVersion: 1
+id: WL-KLAVIYO-ACK-STATUS-001
+kind: cel
+scope: envelope
+severity: error
+stability: preview
+title: Klaviyo system webhook acknowledgement must be 200, 201, or 202
+explanation: Klaviyo expects a system webhook endpoint to return HTTP 200, 201, or 202; otherwise the request is considered failed.
+docsRef: system-webhooks
+remediationKey: klaviyo-system-webhook-ack-status
+requires: has(envelope.response)
+assert: envelope.response.status == 200 || envelope.response.status == 201 || envelope.response.status == 202
+evidencePointers:
+  - /response/status
+messages:
+  evidence-unavailable: "No response was captured, so Klaviyo acknowledgement status cannot be decided."

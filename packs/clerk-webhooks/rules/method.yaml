@@ -1,0 +1,13 @@
+schemaVersion: 1
+id: WL-CLERK-METHOD-001
+kind: cel
+scope: envelope
+severity: error
+stability: preview
+title: Clerk webhook delivery must use POST
+explanation: Clerk sends webhook deliveries as HTTP POST requests.
+docsRef: overview
+remediationKey: clerk-webhook-method
+assert: envelope.request.method == "POST"
+evidencePointers:
+  - /request/method

@@ -1,0 +1,16 @@
+schemaVersion: 1
+id: WL-CLICKSIGN-ACK-STATUS-001
+kind: cel
+scope: envelope
+severity: error
+stability: preview
+title: Clicksign webhook acknowledgement must be 2xx
+explanation: Clicksign treats responses outside the 2xx range, including redirects, as failed webhook delivery attempts.
+docsRef: best-practices
+remediationKey: clicksign-webhook-ack-status
+requires: has(envelope.response)
+assert: envelope.response.status >= 200 && envelope.response.status < 300
+evidencePointers:
+  - /response/status
+messages:
+  evidence-unavailable: "No response status was captured, so Clicksign acknowledgement success cannot be decided."

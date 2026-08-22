@@ -1,0 +1,12 @@
+schemaVersion: 1
+id: WL-VINDI-COMMERCE-METHOD-001
+kind: cel
+scope: envelope
+severity: error
+stability: preview
+title: Vindi Commerce webhook notifications must use POST
+explanation: Vindi Commerce documents automatic transaction-status notifications as form-style HTTP POST requests.
+docsRef: webhooks
+assert: envelope.request.method == "POST"
+evidencePointers:
+  - /request/method

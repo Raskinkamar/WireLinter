@@ -1,0 +1,31 @@
+packProtocol: "1.2"
+id: intercom-webhooks
+name: Intercom Webhook Notifications
+packVersion: 0.1.0
+providerDocsRevision: "2026-08-17"
+minWireLinterVersion: 0.1.0
+capabilities:
+  - passive-lint
+secrets:
+  client-secret:
+    env: INTERCOM_CLIENT_SECRET
+    required: false
+    description: Intercom app client_secret used to sign webhook notifications
+docs:
+  webhook-models:
+    url: https://developers.intercom.com/docs/references/webhooks/webhook-models
+    revision: "2026-08-17"
+    section: Signed notifications
+  setup:
+    url: https://developers.intercom.com/docs/webhooks/setting-up-webhooks
+    revision: "2026-08-17"
+    section: Configuring your endpoint URL
+signatures:
+  notification-hmac-sha1: signatures/notification-hmac-sha1.yaml
+rules:
+  - rules/signature.yaml
+  - rules/method.yaml
+metadata:
+  status: preview
+  maintainer: wirelint
+  surface: webhook-notification

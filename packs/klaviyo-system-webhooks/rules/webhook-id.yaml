@@ -1,0 +1,19 @@
+schemaVersion: 1
+id: WL-KLAVIYO-WEBHOOK-ID-001
+kind: cel
+scope: envelope
+severity: error
+stability: preview
+title: Klaviyo webhook identifier header must be present
+explanation: Klaviyo system webhook requests include Klaviyo-Webhook-Id identifying the webhook subscription.
+docsRef: system-webhooks
+remediationKey: klaviyo-system-webhook-id
+requires: >-
+  envelope.request.headersCompleteness == "complete" ||
+  envelope.request.headers.exists(h, h.name.lowerAscii() == "klaviyo-webhook-id" && h.value != "")
+assert: >-
+  envelope.request.headers.exists(h, h.name.lowerAscii() == "klaviyo-webhook-id" && h.value != "")
+evidencePointers:
+  - /request/headers
+messages:
+  evidence-unavailable: "Klaviyo-Webhook-Id was not observed, but the request header capture is incomplete."

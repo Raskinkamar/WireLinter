@@ -1,0 +1,13 @@
+schemaVersion: 1
+id: WL-GDRIVE-METHOD-001
+kind: cel
+scope: envelope
+severity: error
+stability: preview
+title: Google Drive push notification must use POST
+explanation: Google Drive sends notification messages as HTTPS POST requests to the channel address.
+docsRef: push
+remediationKey: google-drive-push-method
+assert: envelope.request.method == "POST"
+evidencePointers:
+  - /request/method

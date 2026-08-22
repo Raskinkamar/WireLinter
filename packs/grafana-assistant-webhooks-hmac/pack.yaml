@@ -1,0 +1,27 @@
+packProtocol: "1.2"
+id: grafana-assistant-webhooks-hmac
+name: Grafana Assistant Automation HMAC Webhooks
+packVersion: 0.1.0
+providerDocsRevision: "2026-08-17"
+minWireLinterVersion: 0.1.0
+capabilities:
+  - passive-lint
+secrets:
+  hmac-secret:
+    env: GRAFANA_ASSISTANT_WEBHOOK_SECRET
+    required: false
+    description: HMAC signing secret configured for the Grafana Assistant webhook notification
+docs:
+  automations:
+    url: https://grafana.com/docs/grafana-cloud/machine-learning/assistant/platform/automations/
+    revision: "2026-08-17"
+    section: Verify webhook signatures
+signatures:
+  timestamp-body-hmac-sha256: signatures/timestamp-body-hmac-sha256.yaml
+rules:
+  - rules/signature.yaml
+metadata:
+  status: preview
+  maintainer: wirelint
+  surface: assistant-automation-hmac-webhook
+  replayWindow: receiver-policy

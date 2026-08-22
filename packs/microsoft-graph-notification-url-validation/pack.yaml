@@ -1,0 +1,24 @@
+packProtocol: "1.2"
+id: microsoft-graph-notification-url-validation
+name: Microsoft Graph Notification URL Validation
+packVersion: 0.1.0
+providerDocsRevision: "2026-08-17"
+minWireLinterVersion: 0.1.0
+capabilities:
+  - passive-lint
+docs:
+  validation:
+    url: https://learn.microsoft.com/en-us/graph/change-notifications-delivery-webhooks
+    revision: "2026-08-17"
+    section: notificationUrl validation
+rules:
+  - rules/method.yaml
+  - rules/validation-token.yaml
+  - rules/ack-status.yaml
+  - rules/ack-duration.yaml
+  - rules/content-type.yaml
+  - rules/echo-token.yaml
+metadata:
+  status: preview
+  maintainer: wirelint
+  surface: notification-url-validation

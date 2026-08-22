@@ -1,0 +1,16 @@
+schemaVersion: 1
+id: WL-FOCUSNFE-ACK-001
+kind: cel
+scope: envelope
+severity: error
+stability: preview
+title: Focus NFe webhook acknowledgement must be 2xx
+explanation: Focus NFe retries the notification when the configured URL is unavailable or returns an HTTP status outside the 2xx family.
+docsRef: webhooks
+remediationKey: focusnfe-webhook-ack-status
+requires: has(envelope.response)
+assert: envelope.response.status >= 200 && envelope.response.status < 300
+evidencePointers:
+  - /response/status
+messages:
+  evidence-unavailable: "No response status was captured, so Focus NFe acknowledgement cannot be decided."

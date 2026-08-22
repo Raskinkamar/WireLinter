@@ -1,0 +1,19 @@
+schemaVersion: 1
+id: WL-GRAFANA-ASST-SIGNATURE-001
+kind: signature
+scope: envelope
+severity: error
+stability: preview
+title: Grafana Assistant webhook HMAC must be valid
+explanation: Grafana Assistant signs timestamp colon exact raw request body with HMAC-SHA256 and sends a lower-case hexadecimal digest in X-Assistant-Signature.
+signatureRef: timestamp-body-hmac-sha256
+docsRef: automations
+remediationKey: grafana-assistant-webhook-signature
+messages:
+  missing-signature: "X-Assistant-Signature is missing from a complete HMAC webhook capture."
+  missing-signature-input: "Grafana Assistant verification requires both signature and signature timestamp headers."
+  malformed-signature: "X-Assistant-Signature is malformed; Grafana Assistant uses a hexadecimal HMAC-SHA256 digest."
+  signature-mismatch: "X-Assistant-Signature does not match HMAC-SHA256 of timestamp colon exact raw body for the supplied HMAC secret."
+  secret-unavailable: "Set GRAFANA_ASSISTANT_WEBHOOK_SECRET to verify authenticity."
+  insufficient-body-fidelity: "Grafana Assistant signs the exact raw request body, so reconstructed or unavailable bytes cannot prove authenticity."
+  insufficient-header-evidence: "The captured header set is incomplete, so required Grafana Assistant signature headers cannot be proven absent."

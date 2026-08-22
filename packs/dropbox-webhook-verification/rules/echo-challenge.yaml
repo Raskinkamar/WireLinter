@@ -1,0 +1,18 @@
+schemaVersion: 1
+id: WL-DROPBOX-VERIFY-ECHO-001
+kind: cel
+scope: envelope
+severity: error
+stability: preview
+title: Dropbox verification response must echo the challenge exactly
+explanation: Dropbox requires the response body to be the exact challenge query value.
+docsRef: webhooks
+remediationKey: dropbox-webhook-verification-echo
+requires: has(envelope.response) && envelope.request.queryFidelity == "exact" && envelope.response.bodyFidelity == "exact"
+assert: envelope.request.query.filter(q, q.name == "challenge").size() == 1 && envelope.response.rawBodyBase64 == bytes(envelope.request.query.filter(q, q.name == "challenge")[0].value)
+evidencePointers:
+  - /request/query
+  - /response/rawBodyBase64
+  - /response/bodyFidelity
+messages:
+  evidence-unavailable: "Exact query or response-body evidence is unavailable, so the Dropbox challenge echo cannot be decided safely."

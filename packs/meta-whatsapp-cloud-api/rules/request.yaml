@@ -1,0 +1,14 @@
+schemaVersion: 1
+id: WL-META-WA-CLOUD-REQUEST-001
+kind: cel
+scope: envelope
+severity: error
+stability: preview
+title: WhatsApp message request must identify product, recipient and message type
+explanation: A send-message request identifies the WhatsApp product, destination, and message type in its JSON envelope.
+docsRef: messages
+requires: has(envelope.request.decodedBody)
+assert: type(envelope.request.decodedBody) == type({}) && has(envelope.request.decodedBody.messaging_product) && envelope.request.decodedBody.messaging_product == "whatsapp" && has(envelope.request.decodedBody.to) && type(envelope.request.decodedBody.to) == string && size(envelope.request.decodedBody.to) > 0 && has(envelope.request.decodedBody.type) && type(envelope.request.decodedBody.type) == string && size(envelope.request.decodedBody.type) > 0
+evidencePointers: [/request/decodedBody]
+messages:
+  evidence-unavailable: "Decoded JSON request evidence is unavailable."

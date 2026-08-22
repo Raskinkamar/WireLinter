@@ -1,0 +1,106 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://wirelint.dev/schemas/report-v1.schema.json",
+  "title": "WireLinter Report v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schemaVersion", "traceId", "provider", "results", "summary"],
+  "properties": {
+    "schemaVersion": { "const": 1 },
+    "traceId": { "$ref": "#/$defs/nonEmptyString" },
+    "provider": { "$ref": "#/$defs/providerId" },
+    "pack": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "version", "protocol"],
+      "properties": {
+        "id": { "$ref": "#/$defs/providerId" },
+        "version": { "$ref": "#/$defs/semver" },
+        "protocol": { "$ref": "#/$defs/protocolVersion" },
+        "contentDigest": { "type": "string", "pattern": "^sha256:[a-f0-9]{64}$" },
+        "providerDocsRevision": { "$ref": "#/$defs/nonEmptyString" }
+      }
+    },
+    "results": { "type": "array", "items": { "$ref": "#/$defs/ruleResult" } },
+    "summary": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["pass", "fail", "open", "notApplicable", "errors", "warnings", "notes"],
+      "properties": {
+        "pass": { "type": "integer", "minimum": 0 },
+        "fail": { "type": "integer", "minimum": 0 },
+        "open": { "type": "integer", "minimum": 0 },
+        "notApplicable": { "type": "integer", "minimum": 0 },
+        "errors": { "type": "integer", "minimum": 0 },
+        "warnings": { "type": "integer", "minimum": 0 },
+        "notes": { "type": "integer", "minimum": 0 }
+      }
+    }
+  },
+  "$defs": {
+    "nonEmptyString": { "type": "string", "minLength": 1 },
+    "providerId": { "type": "string", "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$" },
+    "protocolVersion": { "type": "string", "pattern": "^(0|[1-9][0-9]*)\\.(0|[1-9][0-9]*)$" },
+    "semver": {
+      "type": "string",
+      "pattern": "^(0|[1-9][0-9]*)\\.(0|[1-9][0-9]*)\\.(0|[1-9][0-9]*)(?:-[0-9A-Za-z.-]+)?(?:\\+[0-9A-Za-z.-]+)?$"
+    },
+    "messageId": { "type": "string", "pattern": "^[a-z][a-z0-9]*(?:-[a-z0-9]+)*$" },
+    "evidenceRef": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["traceId", "jsonPointer"],
+      "properties": {
+        "traceId": { "$ref": "#/$defs/nonEmptyString" },
+        "envelopeId": { "$ref": "#/$defs/nonEmptyString" },
+        "observationId": { "$ref": "#/$defs/nonEmptyString" },
+        "jsonPointer": { "type": "string", "pattern": "^(|/(?:[^~/]|~[01])*)*$" },
+        "note": { "$ref": "#/$defs/nonEmptyString" }
+      }
+    },
+    "docsRef": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["url"],
+      "properties": {
+        "url": { "type": "string", "format": "uri" },
+        "revision": { "$ref": "#/$defs/nonEmptyString" },
+        "section": { "$ref": "#/$defs/nonEmptyString" }
+      }
+    },
+    "ruleResult": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["ruleId", "kind", "level", "stability", "provider", "title", "message", "subjectRef"],
+      "properties": {
+        "ruleId": { "type": "string", "pattern": "^WL-[A-Z0-9]+(?:-[A-Z0-9]+)+$" },
+        "messageId": { "$ref": "#/$defs/messageId" },
+        "kind": { "enum": ["pass", "fail", "open", "notApplicable"] },
+        "level": { "enum": ["error", "warning", "note", "none"] },
+        "stability": { "enum": ["stable", "preview", "deprecated"] },
+        "provider": { "$ref": "#/$defs/providerId" },
+        "title": { "$ref": "#/$defs/nonEmptyString" },
+        "message": { "$ref": "#/$defs/nonEmptyString" },
+        "subjectRef": { "$ref": "#/$defs/evidenceRef" },
+        "evidenceRefs": { "type": "array", "minItems": 1, "items": { "$ref": "#/$defs/evidenceRef" } },
+        "docsRef": { "$ref": "#/$defs/docsRef" },
+        "remediationKey": { "$ref": "#/$defs/nonEmptyString" },
+        "metadata": { "type": "object", "additionalProperties": true }
+      },
+      "allOf": [
+        {
+          "if": { "properties": { "kind": { "const": "fail" } }, "required": ["kind"] },
+          "then": {
+            "required": ["evidenceRefs"],
+            "properties": { "level": { "enum": ["error", "warning", "note"] } }
+          },
+          "else": { "properties": { "level": { "const": "none" } } }
+        },
+        {
+          "if": { "properties": { "kind": { "const": "open" } }, "required": ["kind"] },
+          "then": { "required": ["evidenceRefs"] }
+        }
+      ]
+    }
+  }
+}

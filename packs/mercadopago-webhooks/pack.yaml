@@ -1,0 +1,49 @@
+packProtocol: "1.2"
+id: mercadopago-webhooks
+name: Mercado Pago Webhooks
+packVersion: 0.1.0
+providerDocsRevision: "2026-08-17"
+minWireLinterVersion: 0.1.0
+capabilities:
+  - passive-lint
+secrets:
+  webhook-secret:
+    env: MERCADOPAGO_WEBHOOK_SECRET
+    required: false
+    description: Secret signature configured for Mercado Pago Webhooks in Suas integrações
+docs:
+  webhook-docs:
+    url: https://www.mercadopago.com.br/developers/pt/docs/your-integrations/notifications/webhooks
+    revision: "2026-08-17"
+    section: Webhooks
+  webhook-signature-docs:
+    url: https://www.mercadopago.com.br/developers/pt/docs/your-integrations/notifications/webhooks
+    revision: "2026-08-17"
+    section: Validar origem da notificação
+  webhook-ack-docs:
+    url: https://www.mercadopago.com.br/developers/pt/docs/loja-integrada/additional-content/your-integrations/notifications/webhooks
+    revision: "2026-08-17"
+    section: Ações necessárias após receber uma notificação
+  sdk-case-preservation-python:
+    url: https://github.com/mercadopago/sdk-python/releases/tag/3.3.0
+    revision: "2026-06-30"
+    section: "fix(webhook): preserve data.id case in signature manifest"
+signatures:
+  webhook-v1: signatures/webhook-v1.yaml
+rules:
+  - rules/signature.yaml
+  - rules/method.yaml
+  - rules/ack-status.yaml
+  - rules/ack-duration.yaml
+metadata:
+  status: preview
+  maintainer: wirelint
+  vendor: mercadopago
+  region: BR
+  regionalScope: BR-LATAM
+  surface: your-integrations-secret-signed-webhook
+  exclusions:
+    - ipn
+    - qr-code-surfaces-without-secret-signature
+    - subscriptions-configuration
+  dataIdCase: preserve

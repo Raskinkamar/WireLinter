@@ -1,0 +1,13 @@
+schemaVersion: 1
+id: WL-WOO-METHOD-001
+kind: cel
+scope: envelope
+severity: error
+stability: preview
+title: WooCommerce webhook delivery must use POST
+explanation: WooCommerce webhook deliveries use HTTP POST for the JSON payload.
+docsRef: webhooks
+remediationKey: woocommerce-webhook-method
+assert: envelope.request.method == "POST"
+evidencePointers:
+  - /request/method

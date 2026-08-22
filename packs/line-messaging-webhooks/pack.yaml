@@ -1,0 +1,26 @@
+packProtocol: "1.2"
+id: line-messaging-webhooks
+name: LINE Messaging API Webhooks
+packVersion: 0.1.0
+providerDocsRevision: "2026-08-17"
+minWireLinterVersion: 0.1.0
+capabilities:
+  - passive-lint
+secrets:
+  channel-secret:
+    env: LINE_CHANNEL_SECRET
+    required: false
+    description: Channel secret for the LINE Messaging API channel
+docs:
+  verification:
+    url: https://developers.line.biz/en/docs/messaging-api/verify-webhook-signature/
+    revision: "2026-08-17"
+    section: Signature verification procedure
+signatures:
+  raw-body-hmac-sha256: signatures/raw-body-hmac-sha256.yaml
+rules:
+  - rules/signature.yaml
+metadata:
+  status: preview
+  maintainer: wirelint
+  surface: messaging-api-webhook

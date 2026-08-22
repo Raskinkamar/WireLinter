@@ -1,0 +1,12 @@
+schemaVersion: 1
+id: WL-VINDI-SERVICE-METHOD-001
+kind: cel
+scope: envelope
+severity: error
+stability: preview
+title: Vindi Service webhooks must use POST
+explanation: Vindi Service states that all webhook requests are sent with HTTP POST.
+docsRef: delivery
+assert: envelope.request.method == "POST"
+evidencePointers:
+  - /request/method

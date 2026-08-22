@@ -1,0 +1,13 @@
+schemaVersion: 1
+id: WL-SLACK-METHOD-001
+kind: cel
+scope: envelope
+severity: error
+stability: preview
+title: Slack Events API delivery must use POST
+explanation: Slack sends Events API deliveries to the configured request URL with HTTP POST.
+docsRef: events-api
+remediationKey: slack-events-method
+assert: envelope.request.method == "POST"
+evidencePointers:
+  - /request/method

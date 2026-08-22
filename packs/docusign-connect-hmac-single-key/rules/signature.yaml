@@ -1,0 +1,18 @@
+schemaVersion: 1
+id: WL-DOCUSIGN-SIGNATURE-001
+kind: signature
+scope: envelope
+severity: error
+stability: preview
+title: Docusign Connect single-key HMAC signature must be valid
+explanation: Current Docusign Connect HMAC uses SHA-256 over the entire raw HTTP POST body and Base64 encodes the result in X-Docusign-Signature-1 for the first configured key.
+signatureRef: connect-hmac-sha256
+docsRef: hmac-validation
+remediationKey: docusign-connect-hmac-signature
+messages:
+  missing-signature: "X-Docusign-Signature-1 is missing from a complete capture of Docusign Connect single-key HMAC mode."
+  malformed-signature: "X-Docusign-Signature-1 is not valid Base64 HMAC signature material."
+  signature-mismatch: "X-Docusign-Signature-1 does not match HMAC-SHA256 of the entire exact raw request body for the supplied HMAC key."
+  secret-unavailable: "Set DOCUSIGN_CONNECT_HMAC_SECRET to verify Docusign Connect authenticity."
+  insufficient-body-fidelity: "Docusign signs the entire raw request body, so reconstructed or unavailable body bytes cannot prove authenticity."
+  insufficient-header-evidence: "The header capture is incomplete, so X-Docusign-Signature-1 cannot be proven absent."

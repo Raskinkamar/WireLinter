@@ -1,0 +1,12 @@
+schemaVersion: 1
+id: WL-CUSTOMERIO-REPORTING-METHOD-001
+kind: cel
+scope: envelope
+severity: error
+stability: preview
+title: Customer.io reporting webhooks must use POST
+explanation: Customer.io sends reporting webhook payloads to the configured endpoint as HTTP POST requests.
+docsRef: reporting-webhooks
+assert: envelope.request.method == "POST"
+evidencePointers:
+  - /request/method

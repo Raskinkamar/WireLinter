@@ -1,0 +1,13 @@
+schemaVersion: 1
+id: WL-HEROKU-METHOD-001
+kind: cel
+scope: envelope
+severity: error
+stability: preview
+title: Heroku app webhook delivery must use POST
+explanation: Heroku sends matched app webhook event notifications to the configured endpoint using HTTP POST.
+docsRef: app-webhooks
+remediationKey: heroku-app-webhook-method
+assert: envelope.request.method == "POST"
+evidencePointers:
+  - /request/method

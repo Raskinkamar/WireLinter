@@ -1,0 +1,36 @@
+{
+  "schemaVersion": 1,
+  "traceId": "trace_meta_whatsapp_cloud_valid",
+  "provider": "meta-whatsapp-cloud-api",
+  "startedAt": "2026-08-18T12:00:00Z",
+  "envelopes": [{
+    "id": "env_meta_cloud",
+    "provider": "meta-whatsapp-cloud-api",
+    "direction": "outbound",
+    "receivedAt": "2026-08-18T12:00:00Z",
+    "request": {
+      "method": "POST",
+      "url": "https://graph.facebook.com/v23.0/123456789/messages",
+      "headers": [
+        {"name": "Authorization", "value": "Bearer <redacted>", "redacted": true},
+        {"name": "Content-Type", "value": "application/json"}
+      ],
+      "headersCompleteness": "complete",
+      "rawQuery": "",
+      "queryFidelity": "exact",
+      "bodyFidelity": "exact",
+      "rawBodyBase64": "eyJtZXNzYWdpbmdfcHJvZHVjdCI6IndoYXRzYXBwIiwidG8iOiI1NTExOTk5OTk5OTk5IiwidHlwZSI6InRleHQiLCJ0ZXh0Ijp7ImJvZHkiOiJIZWxsbyJ9fQ==",
+      "decodedBody": {"messaging_product": "whatsapp", "to": "5511999999999", "type": "text", "text": {"body": "Hello"}}
+    },
+    "response": {
+      "status": 200,
+      "headers": [{"name": "Content-Type", "value": "application/json"}],
+      "headersCompleteness": "complete",
+      "bodyFidelity": "exact",
+      "rawBodyBase64": "eyJtZXNzYWdpbmdfcHJvZHVjdCI6IndoYXRzYXBwIiwiY29udGFjdHMiOlt7ImlucHV0IjoiNTUxMTk5OTk5OTk5OSIsIndhX2lkIjoiNTUxMTk5OTk5OTk5OSJ9XSwibWVzc2FnZXMiOlt7ImlkIjoid2FtaWQuZGVtbyJ9XX0=",
+      "decodedBody": {"messaging_product": "whatsapp", "messages": [{"id": "wamid.demo"}]},
+      "durationMs": 80
+    }
+  }],
+  "observations": []
+}

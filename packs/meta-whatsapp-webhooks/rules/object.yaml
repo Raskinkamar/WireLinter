@@ -1,0 +1,14 @@
+schemaVersion: 1
+id: WL-META-WA-WEBHOOK-OBJECT-001
+kind: cel
+scope: envelope
+severity: error
+stability: preview
+title: WhatsApp webhook payload must identify the business account object
+explanation: WhatsApp Cloud API webhook payloads identify their object as whatsapp_business_account.
+docsRef: webhooks
+requires: has(envelope.request.decodedBody)
+assert: type(envelope.request.decodedBody) == type({}) && has(envelope.request.decodedBody.object) && envelope.request.decodedBody.object == "whatsapp_business_account"
+evidencePointers: [/request/decodedBody]
+messages:
+  evidence-unavailable: "Decoded JSON request evidence is unavailable."

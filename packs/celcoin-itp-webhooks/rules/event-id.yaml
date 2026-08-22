@@ -1,0 +1,21 @@
+schemaVersion: 1
+id: WL-CELCOIN-ITP-EVENT-ID-001
+kind: cel
+scope: envelope
+severity: error
+stability: preview
+title: Celcoin ITP webhook event ID must be present
+explanation: Celcoin includes x-celcoin-event-id as the unique identifier of the webhook event so receivers can deduplicate deliveries.
+docsRef: webhooks
+requires: >-
+  envelope.request.headersCompleteness == "complete" ||
+  envelope.request.headers.exists(h, h.name.lowerAscii() == "x-celcoin-event-id")
+assert: >-
+  envelope.request.headers.exists(
+    h,
+    h.name.lowerAscii() == "x-celcoin-event-id" && h.value != ""
+  )
+evidencePointers:
+  - /request/headers
+messages:
+  evidence-unavailable: "x-celcoin-event-id was not observed, but the request header capture is incomplete."

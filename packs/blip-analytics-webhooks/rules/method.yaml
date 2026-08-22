@@ -1,0 +1,12 @@
+schemaVersion: 1
+id: WL-BLIP-ANALYTICS-METHOD-001
+kind: cel
+scope: envelope
+severity: error
+stability: preview
+title: Blip analytics webhooks must use POST
+explanation: Blip requires analytics webhook endpoints to receive HTTPS requests using HTTP POST.
+docsRef: webhooks
+assert: envelope.request.method == "POST"
+evidencePointers:
+  - /request/method

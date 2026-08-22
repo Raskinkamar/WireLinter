@@ -1,0 +1,30 @@
+packProtocol: "1.2"
+id: pusher-beams-webhooks
+name: Pusher Beams Webhooks
+packVersion: 0.1.0
+providerDocsRevision: "2026-08-17"
+minWireLinterVersion: 0.1.0
+capabilities:
+  - passive-lint
+secrets:
+  webhook-secret:
+    env: PUSHER_BEAMS_WEBHOOK_SECRET
+    required: false
+    description: Secret configured for the Pusher Beams webhook
+docs:
+  webhooks:
+    url: https://pusher.com/docs/beams/concepts/webhooks/
+    revision: "2026-08-17"
+    section: Verification
+signatures:
+  payload-hmac-sha1: signatures/payload-hmac-sha1.yaml
+rules:
+  - rules/signature.yaml
+  - rules/event-header.yaml
+  - rules/request-id.yaml
+  - rules/ack-status.yaml
+  - rules/ack-duration.yaml
+metadata:
+  status: preview
+  maintainer: wirelint
+  surface: beams-webhook

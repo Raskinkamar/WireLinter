@@ -1,0 +1,12 @@
+schemaVersion: 1
+id: WL-PIPEFY-AUDIT-EXPORT-METHOD-001
+kind: cel
+scope: envelope
+severity: error
+stability: preview
+title: Pipefy audit export webhook must use POST
+explanation: Pipefy sends the audit-log export completion push notification to the configured webhook endpoint using HTTP POST.
+docsRef: export
+assert: envelope.request.method == "POST"
+evidencePointers:
+  - /request/method

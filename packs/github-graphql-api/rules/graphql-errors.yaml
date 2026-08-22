@@ -1,0 +1,18 @@
+schemaVersion: 1
+id: WL-GH-GQL-ERRORS-001
+kind: cel
+scope: envelope
+severity: error
+stability: preview
+title: GitHub GraphQL response must not contain GraphQL errors
+explanation: GraphQL can return an HTTP success while the response body still reports request or execution errors, so the errors member must be inspected separately from HTTP status.
+docsRef: graphql-response
+requires: has(envelope.response) && has(envelope.response.decodedBody)
+assert: >-
+  !has(envelope.response.decodedBody.errors) ||
+  (type(envelope.response.decodedBody.errors) == type([]) &&
+   size(envelope.response.decodedBody.errors) == 0)
+evidencePointers:
+  - /response/decodedBody
+messages:
+  evidence-unavailable: "Decoded provider response JSON is unavailable, so GraphQL errors cannot be inspected."

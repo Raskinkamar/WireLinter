@@ -1,0 +1,27 @@
+packProtocol: "1.2"
+id: cloudflare-stream-webhooks
+name: Cloudflare Stream Webhooks
+packVersion: 0.1.0
+providerDocsRevision: "2026-08-17"
+minWireLinterVersion: 0.1.0
+capabilities:
+  - passive-lint
+secrets:
+  signing-secret:
+    env: CLOUDFLARE_STREAM_WEBHOOK_SECRET
+    required: false
+    description: Signing secret returned for the Cloudflare Stream webhook notification URL
+docs:
+  webhooks:
+    url: https://developers.cloudflare.com/stream/manage-video-library/using-webhooks/
+    revision: "2026-08-17"
+    section: Verify webhook authenticity
+signatures:
+  timestamp-body-v1: signatures/timestamp-body-v1.yaml
+rules:
+  - rules/signature.yaml
+metadata:
+  status: preview
+  maintainer: wirelint
+  surface: stream-notification-webhook
+  replayWindow: receiver-policy

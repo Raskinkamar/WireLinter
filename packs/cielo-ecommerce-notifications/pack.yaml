@@ -1,0 +1,29 @@
+packProtocol: "1.2"
+id: cielo-ecommerce-notifications
+name: Cielo E-commerce Notifications
+packVersion: 0.1.0
+providerDocsRevision: "2026-08-18"
+minWireLinterVersion: 0.1.0
+capabilities:
+  - passive-lint
+docs:
+  notifications:
+    url: https://docs.cielo.com.br/ecommerce-cielo/docs/webhook
+    revision: "2026-08-18"
+    section: Post de Notificação
+  configuration:
+    url: https://docs.cielo.com.br/ecommerce-cielo/docs/como-configurar-url-de-notifica%C3%A7%C3%A3o
+    revision: "2026-08-18"
+    section: Como configurar URL de notificação
+rules:
+  - rules/method.yaml
+  - rules/content-type.yaml
+  - rules/ack-status.yaml
+metadata:
+  status: preview
+  maintainer: wirelint
+  vendor: cielo
+  region: BR
+  surface: ecommerce-post-notification
+  retryAttemptsAfterFailure: 3
+  authPolicyNote: "Cielo lets the merchant configure up to three static KEY/VALUE headers returned with notifications. Because the names and values are merchant-defined, this delivery contract does not invent a fixed authentication header."

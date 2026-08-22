@@ -1,0 +1,15 @@
+schemaVersion: 1
+id: WL-TRANSFEERA-ACK-STATUS-001
+kind: cel
+scope: envelope
+severity: error
+stability: preview
+title: Transfeera payment event receiver must return 2xx
+explanation: Transfeera treats any 2xx response as successful delivery; otherwise it retries the event up to two more times.
+docsRef: events
+requires: envelope.response != null
+assert: envelope.response.status >= 200 && envelope.response.status < 300
+evidencePointers:
+  - /response/status
+messages:
+  evidence-unavailable: "No receiver response was captured, so Transfeera acknowledgement status cannot be checked."

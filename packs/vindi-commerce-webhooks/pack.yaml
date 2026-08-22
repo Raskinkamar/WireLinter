@@ -1,0 +1,24 @@
+packProtocol: "1.2"
+id: vindi-commerce-webhooks
+name: Vindi Commerce Webhooks
+packVersion: 0.1.0
+providerDocsRevision: "2026-08-18"
+minWireLinterVersion: 0.1.0
+capabilities:
+  - passive-lint
+docs:
+  webhooks:
+    url: https://developers.vindi.com.br/docs/webhooks
+    revision: "2026-08-18"
+    section: Webhooks - Notificações Automáticas
+rules:
+  - rules/method.yaml
+  - rules/ack-status.yaml
+metadata:
+  status: preview
+  maintainer: wirelint
+  vendor: vindi-commerce
+  region: BR
+  surface: payment-status-webhook
+  payloadModel: form-post
+  retryPolicy: every-12-hours-for-3-days

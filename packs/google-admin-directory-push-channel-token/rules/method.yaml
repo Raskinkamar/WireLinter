@@ -1,0 +1,13 @@
+schemaVersion: 1
+id: WL-GADMIN-DIR-METHOD-001
+kind: cel
+scope: envelope
+severity: error
+stability: preview
+title: Google Admin Directory push notification must use POST
+explanation: The Admin SDK Directory API sends channel notifications as HTTPS POST requests.
+docsRef: push
+remediationKey: google-admin-directory-push-method
+assert: envelope.request.method == "POST"
+evidencePointers:
+  - /request/method

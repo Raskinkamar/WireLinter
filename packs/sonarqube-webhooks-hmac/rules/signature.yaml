@@ -1,0 +1,18 @@
+schemaVersion: 1
+id: WL-SONARQUBE-SIGNATURE-001
+kind: signature
+scope: envelope
+severity: error
+stability: preview
+title: SonarQube webhook HMAC must be valid
+explanation: When a webhook secret is configured, SonarQube computes a lower-case HMAC-SHA256 hex digest of the request body and sends it in X-Sonar-Webhook-HMAC-SHA256.
+signatureRef: payload-hmac-sha256
+docsRef: webhooks
+remediationKey: sonarqube-webhook-hmac
+messages:
+  missing-signature: "X-Sonar-Webhook-HMAC-SHA256 is missing from a complete capture of HMAC-protected webhook mode."
+  malformed-signature: "X-Sonar-Webhook-HMAC-SHA256 is malformed; SonarQube uses a hexadecimal HMAC-SHA256 digest."
+  signature-mismatch: "X-Sonar-Webhook-HMAC-SHA256 does not match HMAC-SHA256 of the exact raw request body for the supplied webhook secret."
+  secret-unavailable: "Set SONARQUBE_WEBHOOK_SECRET to verify HMAC-protected webhook authenticity."
+  insufficient-body-fidelity: "SonarQube signs the request body, so reconstructed or unavailable body bytes cannot prove authenticity."
+  insufficient-header-evidence: "The captured header set is incomplete, so X-Sonar-Webhook-HMAC-SHA256 cannot be proven absent."

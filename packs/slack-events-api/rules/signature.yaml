@@ -1,0 +1,22 @@
+schemaVersion: 1
+id: WL-SLACK-SIGNATURE-001
+kind: signature
+scope: envelope
+severity: error
+stability: preview
+title: Slack request signature must be valid
+explanation: Slack signs requests with HMAC-SHA256 over the version, request timestamp, and exact raw request body.
+signatureRef: request-v0
+docsRef: request-signing
+remediationKey: slack-request-signature
+messages:
+  missing-signature: "X-Slack-Signature is missing from a complete header capture. Verify signed Slack requests before processing them."
+  malformed-signature: "X-Slack-Signature is malformed; Slack v0 signatures use the v0=<hex digest> form."
+  missing-signature-input: "A required Slack signing input is missing from the captured request."
+  ambiguous-signature-input: "A Slack signing input appeared more than once where exactly one value is required."
+  signature-mismatch: "X-Slack-Signature does not match HMAC-SHA256 of v0:<timestamp>:<raw body> for the supplied signing secret."
+  secret-unavailable: "Set SLACK_SIGNING_SECRET to verify authenticity; delivery checks can still run without it."
+  insufficient-body-fidelity: "Slack signs the exact raw request body. Reconstructed or unavailable body bytes cannot prove the signature."
+  insufficient-header-evidence: "The captured header set is incomplete, so WireLinter cannot safely decide whether Slack signing headers were absent."
+  timestamp-stale: "X-Slack-Request-Timestamp is more than five minutes older than the captured receive time and should be treated as a replay risk."
+  timestamp-future: "X-Slack-Request-Timestamp is more than five minutes ahead of the captured receive time."

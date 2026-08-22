@@ -1,0 +1,29 @@
+packProtocol: "1.2"
+id: blip-analytics-webhooks
+name: Blip Analytics Webhooks
+packVersion: 0.1.0
+providerDocsRevision: "2026-08-18"
+minWireLinterVersion: 0.1.0
+capabilities:
+  - passive-lint
+docs:
+  webhooks:
+    url: https://help.blip.ai/hc/pt-br/articles/4474381206423-Enviando-dados-para-an%C3%A1lise-atrav%C3%A9s-de-Webhooks
+    revision: "2026-08-18"
+    section: Pré-requisitos, OAuth 2.0 e Cabeçalhos customizados
+  formats:
+    url: https://help.blip.ai/hc/pt-br/articles/29187147295767-Formato-dos-envios-no-webhook
+    revision: "2026-08-18"
+    section: Formato dos envios no webhook
+rules:
+  - rules/method.yaml
+  - rules/content-type.yaml
+metadata:
+  status: preview
+  maintainer: wirelint
+  vendor: blip
+  region: BR-global
+  surface: analytics-webhook
+  authModel: configurable-oauth2-client-credentials-or-custom-headers
+  authPolicyNote: "Blip lets each webhook URL use OAuth 2.0 client_credentials or arbitrary custom headers. Because credentials and header names are configuration-defined or dynamically issued, this delivery contract does not invent a static authentication field."
+  failureProtection: repeated-failures-can-block-integration-for-4h

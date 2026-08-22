@@ -1,0 +1,29 @@
+packProtocol: "1.2"
+id: blip-chatbot-message-receiver
+name: Blip Chatbot Message Receiver
+packVersion: 0.1.0
+providerDocsRevision: "2026-08-18"
+minWireLinterVersion: 0.1.0
+capabilities:
+  - passive-lint
+docs:
+  receiver:
+    url: https://docs.blip.ai/
+    revision: "2026-08-18"
+    section: HTTP message receiver
+  format:
+    url: https://help.blip.ai/hc/pt-br/articles/29187147295767-Formato-dos-envios-no-webhook
+    revision: "2026-08-18"
+    section: Mensagens
+rules:
+  - rules/method.yaml
+  - rules/content-type.yaml
+  - rules/message-envelope.yaml
+metadata:
+  status: preview
+  maintainer: wirelint
+  vendor: blip
+  region: BR-global
+  surface: chatbot-http-message-receiver
+  protocol: LIME
+  integrationType: inbound-messaging

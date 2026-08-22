@@ -1,0 +1,14 @@
+schemaVersion: 1
+id: WL-META-WA-CLOUD-CONTENT-TYPE-001
+kind: cel
+scope: envelope
+severity: error
+stability: preview
+title: WhatsApp message calls must send JSON
+explanation: The messages endpoint receives a JSON request body.
+docsRef: messages
+requires: envelope.request.headersCompleteness == "complete" || envelope.request.headers.exists(h, h.name.lowerAscii() == "content-type")
+assert: envelope.request.headers.exists(h, h.name.lowerAscii() == "content-type" && h.value.lowerAscii().startsWith("application/json"))
+evidencePointers: [/request/headers]
+messages:
+  evidence-unavailable: "Content-Type was not observed in the incomplete header capture."

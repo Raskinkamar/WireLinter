@@ -1,0 +1,24 @@
+packProtocol: "1.2"
+id: plugnotas-webhooks-post
+name: PlugNotas Webhooks POST
+packVersion: 0.1.0
+providerDocsRevision: "2026-08-18"
+minWireLinterVersion: 0.1.0
+capabilities:
+  - passive-lint
+docs:
+  webhooks:
+    url: https://docs.plugnotas.com.br/
+    revision: "2026-08-18"
+    section: Webhook
+rules:
+  - rules/method.yaml
+  - rules/ack-status.yaml
+metadata:
+  status: preview
+  maintainer: wirelint
+  vendor: tecnospeed-plugnotas
+  region: BR
+  surface: fiscal-webhook-post
+  retryWindowApproxHours: 6
+  scopeNote: "PlugNotas lets the webhook method be configured. This contract is explicitly scoped to the documented POST configuration rather than assuming every registered callback uses POST."

@@ -1,0 +1,11 @@
+schemaVersion: 1
+id: WL-META-WA-CLOUD-ENDPOINT-001
+kind: cel
+scope: envelope
+severity: error
+stability: preview
+title: WhatsApp message calls must target a versioned messages endpoint
+explanation: WhatsApp Cloud API sends messages through a versioned Graph API /{phone-number-id}/messages endpoint.
+docsRef: messages
+assert: envelope.request.url.matches('^https://graph\\.facebook\\.com/v[0-9]+\\.[0-9]+/[^/?]+/messages(?:\\?.*)?$')
+evidencePointers: [/request/url]

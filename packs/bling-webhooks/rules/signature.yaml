@@ -1,0 +1,18 @@
+schemaVersion: 1
+id: WL-BLING-SIGNATURE-001
+kind: signature
+scope: envelope
+severity: error
+stability: preview
+title: Bling webhook signature must be valid
+explanation: "Bling authenticates webhook messages with X-Bling-Signature-256 using an HMAC over the JSON payload with the application's client secret; the hexadecimal digest is prefixed with sha256=."
+signatureRef: payload-hmac-sha256
+docsRef: webhooks
+remediationKey: bling-webhook-signature
+messages:
+  missing-signature: "X-Bling-Signature-256 is missing from a complete webhook capture."
+  malformed-signature: "X-Bling-Signature-256 must use sha256=<hex HMAC-SHA256 digest>."
+  signature-mismatch: "X-Bling-Signature-256 does not match the exact captured payload for the supplied Bling client secret."
+  secret-unavailable: "Set BLING_CLIENT_SECRET to verify webhook authenticity."
+  insufficient-body-fidelity: "Bling signs the webhook payload, so reconstructed or unavailable body bytes cannot prove authenticity."
+  insufficient-header-evidence: "The header capture is incomplete, so X-Bling-Signature-256 cannot be proven absent."

@@ -1,0 +1,31 @@
+packProtocol: "1.2"
+id: heroku-app-webhooks-hmac
+name: Heroku App Webhooks HMAC
+packVersion: 0.1.0
+providerDocsRevision: "2026-08-17"
+minWireLinterVersion: 0.1.0
+capabilities:
+  - passive-lint
+secrets:
+  webhook-secret:
+    env: HEROKU_WEBHOOK_SECRET
+    required: false
+    description: Secret configured on the Heroku app webhook subscription
+docs:
+  app-webhooks:
+    url: https://devcenter.heroku.com/articles/app-webhooks
+    revision: "2026-08-17"
+    section: Securing webhook requests
+  api-reference:
+    url: https://devcenter.heroku.com/articles/app-webhooks-schema
+    revision: "2026-08-17"
+    section: Webhook Create
+signatures:
+  raw-body-hmac-sha256: signatures/raw-body-hmac-sha256.yaml
+rules:
+  - rules/signature.yaml
+  - rules/method.yaml
+metadata:
+  status: preview
+  maintainer: wirelint
+  surface: app-webhook-shared-secret-signing

@@ -1,0 +1,22 @@
+schemaVersion: 1
+id: shopify-hmac
+sourceRefs:
+  - webhook-signature-docs
+secret:
+  ref: webhook-secret
+  representation: utf8
+bindings:
+  signature-candidates:
+    fromHeader:
+      name: X-Shopify-Hmac-Sha256
+      cardinality: exactly-one
+  body:
+    fromRawBody:
+      requireFidelity: exact
+message:
+  - binding: body
+candidates:
+  binding: signature-candidates
+  encoding: base64-standard
+mac:
+  algorithm: hmac-sha256

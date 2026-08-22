@@ -1,0 +1,25 @@
+schemaVersion: 1
+id: WL-GH-EVENT-001
+kind: cel
+scope: envelope
+severity: error
+stability: preview
+title: GitHub event type header must be present
+explanation: GitHub sends X-GitHub-Event to identify the event that triggered a webhook delivery; a complete capture without it cannot be dispatched reliably by event type.
+docsRef: webhook-delivery-docs
+remediationKey: github-event-header
+requires: >-
+  envelope.request.headersCompleteness == "complete" ||
+  envelope.request.headers.exists(
+    h,
+    h.name.lowerAscii() == "x-github-event" && h.value != ""
+  )
+assert: >-
+  envelope.request.headers.exists(
+    h,
+    h.name.lowerAscii() == "x-github-event" && h.value != ""
+  )
+evidencePointers:
+  - /request/headers
+messages:
+  evidence-unavailable: "X-GitHub-Event was not observed, but the request header capture is incomplete, so its absence cannot be proven."

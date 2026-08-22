@@ -1,0 +1,16 @@
+schemaVersion: 1
+id: WL-STORYBLOK-ACK-STATUS-001
+kind: cel
+scope: envelope
+severity: error
+stability: preview
+title: Storyblok webhook acknowledgement must be 2xx
+explanation: Storyblok requires a successful 2xx response from the receiving webhook endpoint.
+docsRef: signed-webhooks
+remediationKey: storyblok-webhook-ack-status
+requires: has(envelope.response)
+assert: envelope.response.status >= 200 && envelope.response.status < 300
+evidencePointers:
+  - /response/status
+messages:
+  evidence-unavailable: "No response was captured, so Storyblok acknowledgement status cannot be decided."

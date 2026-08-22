@@ -1,0 +1,16 @@
+schemaVersion: 1
+id: WL-VTEX-ORDER-HOOK-ACK-001
+kind: cel
+scope: envelope
+severity: error
+stability: preview
+title: VTEX Order Hook acknowledgement must be HTTP 200
+explanation: VTEX requires the configured endpoint to return HTTP 200 for each Order Hook notification; failed notifications enter the retry schedule.
+docsRef: hook
+remediationKey: vtex-order-hook-ack-status
+requires: has(envelope.response)
+assert: envelope.response.status == 200
+evidencePointers:
+  - /response/status
+messages:
+  evidence-unavailable: "No response status was captured, so VTEX Order Hook acknowledgement cannot be decided."

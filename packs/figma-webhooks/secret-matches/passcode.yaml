@@ -1,0 +1,14 @@
+schemaVersion: 1
+id: passcode
+sourceRefs:
+  - security
+secret:
+  ref: webhook-passcode
+  representation: utf8
+candidate:
+  fromDecodedBody:
+    path:
+      - passcode
+comparison: constant-time-exact
+metadata:
+  transport: decoded-json-body

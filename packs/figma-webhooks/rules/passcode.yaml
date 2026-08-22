@@ -1,0 +1,18 @@
+schemaVersion: 1
+id: WL-FIGMA-WEBHOOKS-AUTH-001
+kind: secret-match
+scope: envelope
+severity: error
+stability: preview
+title: Figma webhook passcode must match
+explanation: Figma sends the passcode configured for the webhook in each event payload so receivers can verify the request before acting on it.
+secretMatchRef: passcode
+docsRef: security
+remediationKey: figma-webhook-passcode
+messages:
+  secret-match-valid: "The webhook payload passcode matches the configured Figma webhook passcode."
+  secret-unavailable: "Set FIGMA_WEBHOOK_PASSCODE to verify the Figma webhook passcode without exposing it to CEL or reports."
+  missing-secret-input: "The Figma webhook payload does not contain the configured passcode field."
+  malformed-secret-input: "The Figma webhook passcode field exists but is not a string."
+  secret-mismatch: "The webhook payload passcode does not match the configured Figma webhook passcode."
+  insufficient-body-evidence: "A decoded webhook body is unavailable, so the Figma passcode cannot be verified safely."

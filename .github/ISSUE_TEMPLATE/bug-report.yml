@@ -1,0 +1,55 @@
+name: Bug report
+description: Report incorrect CLI, listener, engine or provider-contract behavior
+title: "bug: "
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for taking the time to report a problem. Do not paste real webhook secrets, signing keys, access tokens or customer payloads into this issue.
+  - type: input
+    id: version
+    attributes:
+      label: WireLinter version
+      description: Output of `wirelint version`, or the commit SHA if built from source.
+      placeholder: dev / vX.Y.Z / commit SHA
+    validations:
+      required: true
+  - type: input
+    id: provider
+    attributes:
+      label: Provider contract
+      description: Leave blank if the problem is not provider-specific.
+      placeholder: github
+  - type: textarea
+    id: command
+    attributes:
+      label: Command
+      description: The command you ran. Redact secrets and private paths if needed.
+      render: shell
+    validations:
+      required: true
+  - type: textarea
+    id: observed
+    attributes:
+      label: What happened?
+      description: Include the relevant output and exit code.
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: What did you expect?
+    validations:
+      required: true
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: Minimal reproduction
+      description: Describe the smallest safe reproduction. Attach a sanitized Trace only if it contains no confidential data.
+  - type: checkboxes
+    id: sensitive
+    attributes:
+      label: Sensitive data check
+      options:
+        - label: I removed real secrets, tokens and customer data from this report.
+          required: true

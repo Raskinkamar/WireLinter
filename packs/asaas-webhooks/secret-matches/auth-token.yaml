@@ -1,0 +1,15 @@
+schemaVersion: 1
+id: auth-token
+sourceRefs:
+  - webhook-auth-token
+secret:
+  ref: webhook-token
+  representation: utf8
+candidate:
+  fromHeader:
+    name: asaas-access-token
+    cardinality: exactly-one
+comparison: constant-time-exact
+metadata:
+  transport: header
+  bearer: false

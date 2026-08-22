@@ -1,0 +1,20 @@
+schemaVersion: 1
+id: WL-CLERK-SIGNATURE-001
+kind: signature
+scope: envelope
+severity: error
+stability: preview
+title: Clerk webhook signature must be valid
+explanation: Clerk uses Svix and Standard Webhooks-style signed requests with svix-id, svix-timestamp, svix-signature, and the exact raw body.
+signatureRef: standard-webhook-v1
+docsRef: verification
+remediationKey: clerk-webhook-signature
+messages:
+  missing-signature: "svix-signature is missing from a complete header capture. Verify Clerk webhook signatures before processing deliveries."
+  malformed-signature: "svix-signature is malformed; expected one or more v1,<base64> signatures."
+  missing-signature-input: "A required Clerk/Svix signing input is missing from the request."
+  ambiguous-signature-input: "A Clerk/Svix signing input appeared more than once where exactly one value is required."
+  signature-mismatch: "No v1 signature matches HMAC-SHA256 of svix-id.svix-timestamp.<raw body> for the supplied signing secret."
+  secret-unavailable: "Set CLERK_WEBHOOK_SIGNING_SECRET to verify Clerk webhook authenticity."
+  insufficient-body-fidelity: "Clerk/Svix signs the exact raw body. Reconstructed or unavailable body bytes cannot prove the signature."
+  insufficient-header-evidence: "The captured header set is incomplete, so WireLinter cannot safely decide whether Clerk/Svix signing headers were absent."

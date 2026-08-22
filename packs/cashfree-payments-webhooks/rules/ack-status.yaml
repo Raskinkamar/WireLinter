@@ -1,0 +1,16 @@
+schemaVersion: 1
+id: WL-CASHFREE-PAYMENTS-ACK-001
+kind: cel
+scope: envelope
+severity: error
+stability: preview
+title: Cashfree Payments webhook acknowledgement must be HTTP 200
+explanation: Cashfree's webhook guidance requires the new webhook endpoint to return HTTP 200 before it is enabled for delivery.
+docsRef: delivery
+remediationKey: cashfree-webhook-ack-status
+requires: has(envelope.response)
+assert: envelope.response.status == 200
+evidencePointers:
+  - /response/status
+messages:
+  evidence-unavailable: "No response status was captured, so Cashfree acknowledgement success cannot be decided."

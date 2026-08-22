@@ -1,0 +1,19 @@
+schemaVersion: 1
+id: WL-CIRCLECI-EVENT-001
+kind: cel
+scope: envelope
+severity: error
+stability: preview
+title: CircleCI event type header must be present
+explanation: CircleCI outbound webhook requests carry circleci-event-type identifying the event.
+docsRef: outbound
+remediationKey: circleci-event-header
+requires: >-
+  envelope.request.headersCompleteness == "complete" ||
+  envelope.request.headers.exists(h, h.name.lowerAscii() == "circleci-event-type" && h.value != "")
+assert: >-
+  envelope.request.headers.exists(h, h.name.lowerAscii() == "circleci-event-type" && h.value != "")
+evidencePointers:
+  - /request/headers
+messages:
+  evidence-unavailable: "circleci-event-type was not observed, but the header capture is incomplete."

@@ -1,0 +1,16 @@
+schemaVersion: 1
+id: WL-BLING-ACK-STATUS-001
+kind: cel
+scope: envelope
+severity: error
+stability: preview
+title: Bling webhook acknowledgement must be 2xx
+explanation: Bling considers a webhook successfully delivered only when the receiver returns an HTTP 2xx response.
+docsRef: webhooks
+remediationKey: bling-webhook-ack-status
+requires: has(envelope.response)
+assert: envelope.response.status >= 200 && envelope.response.status < 300
+evidencePointers:
+  - /response/status
+messages:
+  evidence-unavailable: "No response status was captured, so Bling acknowledgement success cannot be decided."

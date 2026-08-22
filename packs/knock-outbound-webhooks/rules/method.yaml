@@ -1,0 +1,12 @@
+schemaVersion: 1
+id: WL-KNOCK-OUTBOUND-METHOD-001
+kind: cel
+scope: envelope
+severity: error
+stability: preview
+title: Knock outbound webhooks must use POST
+explanation: Knock sends outbound webhook events as HTTP POST requests to the configured endpoint.
+docsRef: webhooks
+assert: envelope.request.method == "POST"
+evidencePointers:
+  - /request/method

@@ -1,0 +1,22 @@
+packProtocol: "1.2"
+id: monday-webhook-url-verification
+name: monday.com Webhook URL Verification
+packVersion: 0.1.0
+providerDocsRevision: "2026-08-18"
+minWireLinterVersion: 0.1.0
+capabilities:
+  - passive-lint
+docs:
+  webhooks:
+    url: https://developer.monday.com/api-reference/reference/webhooks
+    revision: "2026-08-18"
+    section: URL Verification
+rules:
+  - rules/method.yaml
+  - rules/challenge.yaml
+metadata:
+  status: preview
+  maintainer: wirelint
+  vendor: monday
+  surface: webhook-url-verification
+  scopeNote: "This setup contract validates monday.com's challenge/response URL verification only; normal webhook delivery authentication is a separate surface."

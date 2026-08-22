@@ -1,0 +1,13 @@
+schemaVersion: 1
+id: WL-LEMON-METHOD-001
+kind: cel
+scope: envelope
+severity: error
+stability: preview
+title: Lemon Squeezy webhook delivery must use POST
+explanation: Lemon Squeezy sends webhook events to the configured callback URL using HTTP POST.
+docsRef: overview
+remediationKey: lemonsqueezy-webhook-method
+assert: envelope.request.method == "POST"
+evidencePointers:
+  - /request/method

@@ -1,0 +1,15 @@
+schemaVersion: 1
+id: WL-BOX-V2-SIGNATURE-VERSION-001
+kind: cel
+scope: envelope
+severity: error
+stability: preview
+title: Box V2 webhook signature version must be 1
+explanation: Box documents BOX-SIGNATURE-VERSION as always having the value 1 for V2 webhook signatures.
+docsRef: verification
+requires: envelope.request.headersCompleteness == "complete" || envelope.request.headers.exists(h, h.name.lowerAscii() == "box-signature-version")
+assert: envelope.request.headers.filter(h, h.name.lowerAscii() == "box-signature-version").size() == 1 && envelope.request.headers.exists(h, h.name.lowerAscii() == "box-signature-version" && h.value == "1")
+evidencePointers:
+  - /request/headers
+messages:
+  evidence-unavailable: "BOX-SIGNATURE-VERSION was not observed, but the header capture is incomplete."

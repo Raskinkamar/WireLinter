@@ -1,0 +1,16 @@
+schemaVersion: 1
+id: WL-AS-WEBHOOKS-ACK-DURATION-001
+kind: cel
+scope: envelope
+severity: error
+stability: preview
+title: Asaas webhook acknowledgement must complete before timeout
+explanation: Asaas waits up to 10 seconds for the webhook response; exceeding that deadline is treated as a failed attempt and can trigger retries.
+docsRef: webhook-faq
+remediationKey: asaas-ack-duration
+requires: has(envelope.response)
+assert: double(envelope.response.durationMs) < 10000.0
+evidencePointers:
+  - /response/durationMs
+messages:
+  evidence-unavailable: "No application response timing was captured, so WireLinter cannot determine whether the endpoint met Asaas's 10-second response deadline."

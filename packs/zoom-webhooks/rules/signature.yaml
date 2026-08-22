@@ -1,0 +1,19 @@
+schemaVersion: 1
+id: WL-ZOOM-SIGNATURE-001
+kind: signature
+scope: envelope
+severity: error
+stability: preview
+title: Zoom webhook event signature must be valid
+explanation: Zoom signs v0 colon request-timestamp colon exact request body using HMAC-SHA256 and sends v0=<hex digest> in x-zm-signature.
+signatureRef: event-v0-hmac-sha256
+docsRef: verification
+remediationKey: zoom-webhook-signature
+messages:
+  missing-signature: "x-zm-signature is missing from a complete Zoom webhook event capture."
+  missing-signature-input: "Zoom webhook verification requires both x-zm-signature and x-zm-request-timestamp."
+  malformed-signature: "Zoom x-zm-signature must use the v0=<hex digest> form."
+  signature-mismatch: "Zoom x-zm-signature does not match HMAC-SHA256 of v0, request timestamp, and exact raw body for the supplied secret token."
+  secret-unavailable: "Set ZOOM_WEBHOOK_SECRET_TOKEN to verify webhook authenticity."
+  insufficient-body-fidelity: "Zoom signs the request body, so reconstructed or unavailable body bytes cannot prove authenticity."
+  insufficient-header-evidence: "The captured header set is incomplete, so required Zoom signature headers cannot be proven absent."

@@ -1,0 +1,20 @@
+schemaVersion: 1
+id: WL-SH-HTTPS-SIGNATURE-001
+kind: signature
+scope: envelope
+severity: error
+stability: preview
+title: Shopify HTTPS webhook signature must be valid
+explanation: Shopify HTTPS webhook authenticity must be verified against the exact raw request body using the app client secret and X-Shopify-Hmac-SHA256.
+signatureRef: webhook-hmac-sha256
+docsRef: webhook-verification
+remediationKey: shopify-https-webhook-signature
+messages:
+  missing-signature: "X-Shopify-Hmac-SHA256 is missing from a complete header capture. Verify HTTPS deliveries using the app client secret before processing them."
+  malformed-signature: "X-Shopify-Hmac-SHA256 is not valid base64 HMAC evidence."
+  missing-signature-input: "X-Shopify-Hmac-SHA256 is missing the digest required for verification."
+  ambiguous-signature-input: "More than one X-Shopify-Hmac-SHA256 value was observed where one delivery signature is expected."
+  signature-mismatch: "X-Shopify-Hmac-SHA256 does not match base64(HMAC-SHA256(exact raw request body, client secret))."
+  secret-unavailable: "Set SHOPIFY_CLIENT_SECRET to verify HTTPS webhook authenticity; non-cryptographic delivery checks can still run without it."
+  insufficient-body-fidelity: "Shopify signs the exact raw request body. This capture contains reconstructed or unavailable body bytes, so signature verification is not trustworthy."
+  insufficient-header-evidence: "The captured header set is incomplete, so WireLinter cannot prove whether X-Shopify-Hmac-SHA256 was absent."

@@ -1,0 +1,19 @@
+schemaVersion: 1
+id: WL-META-WA-WEBHOOK-SIGNATURE-001
+kind: signature
+scope: envelope
+severity: error
+stability: preview
+title: Meta WhatsApp webhook signature must be valid
+explanation: Meta signs the exact webhook payload with the app secret and sends the digest in X-Hub-Signature-256.
+signatureRef: payload-hmac-sha256
+docsRef: webhooks
+messages:
+  missing-signature: "X-Hub-Signature-256 is missing from a complete header capture."
+  malformed-signature: "X-Hub-Signature-256 must use sha256=<hex digest>."
+  missing-signature-input: "The signature digest is missing."
+  ambiguous-signature-input: "Multiple X-Hub-Signature-256 values were observed."
+  signature-mismatch: "X-Hub-Signature-256 does not match HMAC-SHA256 of the exact payload."
+  secret-unavailable: "Set META_APP_SECRET to verify webhook authenticity."
+  insufficient-body-fidelity: "Exact raw request bytes are required for signature verification."
+  insufficient-header-evidence: "The header capture is incomplete, so signature absence cannot be proven."

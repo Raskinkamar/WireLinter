@@ -1,0 +1,18 @@
+schemaVersion: 1
+id: WL-PUSHER-CHANNELS-SIGNATURE-001
+kind: signature
+scope: envelope
+severity: error
+stability: preview
+title: Pusher Channels webhook signature must be valid
+explanation: Pusher Channels signs the webhook POST body with HMAC-SHA256 using the token secret and sends the hexadecimal digest in X-Pusher-Signature.
+signatureRef: payload-hmac-sha256
+docsRef: webhooks
+remediationKey: pusher-channels-webhook-signature
+messages:
+  missing-signature: "X-Pusher-Signature is missing from a complete Pusher Channels webhook capture."
+  malformed-signature: "X-Pusher-Signature is malformed; Pusher Channels uses a hexadecimal HMAC-SHA256 digest."
+  signature-mismatch: "X-Pusher-Signature does not match HMAC-SHA256 of the exact raw webhook body for the supplied token secret."
+  secret-unavailable: "Set PUSHER_CHANNELS_WEBHOOK_SECRET to verify authenticity."
+  insufficient-body-fidelity: "Pusher Channels signs the webhook body, so reconstructed or unavailable body bytes cannot prove authenticity."
+  insufficient-header-evidence: "The captured header set is incomplete, so X-Pusher-Signature cannot be proven absent."

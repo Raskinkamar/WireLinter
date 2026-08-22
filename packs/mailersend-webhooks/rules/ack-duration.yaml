@@ -1,0 +1,16 @@
+schemaVersion: 1
+id: WL-MAILERSEND-ACK-DURATION-001
+kind: cel
+scope: envelope
+severity: error
+stability: preview
+title: MailerSend webhook acknowledgement must complete within 3 seconds
+explanation: MailerSend treats the delivery as failed when the endpoint does not respond within 3 seconds.
+docsRef: webhooks
+remediationKey: mailersend-webhook-ack-duration
+requires: has(envelope.response)
+assert: double(envelope.response.durationMs) < 3000.0
+evidencePointers:
+  - /response/durationMs
+messages:
+  evidence-unavailable: "No response timing was captured, so MailerSend's three-second timeout cannot be decided."

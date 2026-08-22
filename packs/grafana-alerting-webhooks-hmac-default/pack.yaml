@@ -1,0 +1,28 @@
+packProtocol: "1.2"
+id: grafana-alerting-webhooks-hmac-default
+name: Grafana Alerting HMAC Webhooks Default Mode
+packVersion: 0.1.0
+providerDocsRevision: "2026-08-17"
+minWireLinterVersion: 0.1.0
+capabilities:
+  - passive-lint
+secrets:
+  hmac-secret:
+    env: GRAFANA_ALERTING_WEBHOOK_SECRET
+    required: false
+    description: Shared HMAC secret configured on the Grafana Alerting webhook contact point
+docs:
+  notifier:
+    url: https://grafana.com/docs/grafana/latest/alerting/configure-notifications/manage-contact-points/integrations/webhook-notifier/
+    revision: "2026-08-17"
+    section: HMAC signature
+signatures:
+  raw-body-hmac-sha256: signatures/raw-body-hmac-sha256.yaml
+rules:
+  - rules/signature.yaml
+  - rules/method.yaml
+metadata:
+  status: preview
+  maintainer: wirelint
+  surface: alerting-hmac-default-header-without-timestamp
+  note: Grafana allows custom signature and timestamp headers; this contract intentionally covers the default X-Grafana-Alerting-Signature header with no timestamp header configured

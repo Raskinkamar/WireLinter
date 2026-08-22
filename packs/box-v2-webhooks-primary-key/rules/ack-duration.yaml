@@ -1,0 +1,16 @@
+schemaVersion: 1
+id: WL-BOX-V2-ACK-DURATION-001
+kind: cel
+scope: envelope
+severity: error
+stability: preview
+title: Box V2 webhook acknowledgement must complete within 30 seconds
+explanation: Box requires the notification URL to return a successful response within 30 seconds of receiving the webhook payload.
+docsRef: delivery
+remediationKey: box-v2-webhook-ack-duration
+requires: has(envelope.response)
+assert: double(envelope.response.durationMs) < 30000.0
+evidencePointers:
+  - /response/durationMs
+messages:
+  evidence-unavailable: "No response timing was captured, so Box's 30-second deadline cannot be decided."

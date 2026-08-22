@@ -1,0 +1,16 @@
+schemaVersion: 1
+id: WL-DROPBOX-VERIFY-NOSNIFF-001
+kind: cel
+scope: envelope
+severity: error
+stability: preview
+title: Dropbox verification response must disable content sniffing
+explanation: "Dropbox instructs webhook endpoints to set X-Content-Type-Options: nosniff on verification responses."
+docsRef: webhooks
+remediationKey: dropbox-webhook-verification-nosniff
+requires: has(envelope.response) && (envelope.response.headersCompleteness == "complete" || envelope.response.headers.exists(h, h.name.lowerAscii() == "x-content-type-options"))
+assert: envelope.response.headers.filter(h, h.name.lowerAscii() == "x-content-type-options").size() == 1 && envelope.response.headers.exists(h, h.name.lowerAscii() == "x-content-type-options" && h.value.lowerAscii() == "nosniff")
+evidencePointers:
+  - /response/headers
+messages:
+  evidence-unavailable: "X-Content-Type-Options was not observed, but the response header capture is incomplete."

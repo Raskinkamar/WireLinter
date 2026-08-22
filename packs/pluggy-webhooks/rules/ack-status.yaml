@@ -1,0 +1,15 @@
+schemaVersion: 1
+id: WL-PLUGGY-ACK-STATUS-001
+kind: cel
+scope: envelope
+severity: error
+stability: preview
+title: Pluggy webhook receiver must return 2xx
+explanation: Pluggy considers a webhook delivered only when the receiver returns a 2xx status.
+docsRef: webhooks
+requires: envelope.response != null
+assert: envelope.response.status >= 200 && envelope.response.status < 300
+evidencePointers:
+  - /response/status
+messages:
+  evidence-unavailable: "No receiver response was captured, so Pluggy acknowledgement status cannot be checked."

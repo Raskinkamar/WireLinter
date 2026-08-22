@@ -1,0 +1,13 @@
+schemaVersion: 1
+id: WL-AS-WEBHOOKS-METHOD-001
+kind: cel
+scope: envelope
+severity: error
+stability: preview
+title: Asaas webhook delivery must use POST
+explanation: Asaas sends webhook events to the configured endpoint using HTTP POST.
+docsRef: webhook-overview
+remediationKey: asaas-webhook-method
+assert: envelope.request.method == "POST"
+evidencePointers:
+  - /request/method

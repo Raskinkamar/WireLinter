@@ -1,0 +1,19 @@
+schemaVersion: 1
+id: WL-KLAVIYO-TIMESTAMP-001
+kind: cel
+scope: envelope
+severity: error
+stability: preview
+title: Klaviyo timestamp header must be present
+explanation: Klaviyo includes Klaviyo-Timestamp and incorporates it into system-webhook HMAC verification.
+docsRef: system-webhooks
+remediationKey: klaviyo-system-webhook-timestamp
+requires: >-
+  envelope.request.headersCompleteness == "complete" ||
+  envelope.request.headers.exists(h, h.name.lowerAscii() == "klaviyo-timestamp" && h.value != "")
+assert: >-
+  envelope.request.headers.exists(h, h.name.lowerAscii() == "klaviyo-timestamp" && h.value != "")
+evidencePointers:
+  - /request/headers
+messages:
+  evidence-unavailable: "Klaviyo-Timestamp was not observed, but the request header capture is incomplete."

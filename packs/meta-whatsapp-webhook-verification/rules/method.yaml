@@ -1,0 +1,11 @@
+schemaVersion: 1
+id: WL-META-WA-VERIFY-METHOD-001
+kind: cel
+scope: envelope
+severity: error
+stability: preview
+title: Meta webhook verification must use GET
+explanation: Meta verifies a callback URL with a GET request carrying hub.mode, hub.verify_token and hub.challenge.
+docsRef: verification
+assert: envelope.request.method == "GET"
+evidencePointers: [/request/method]

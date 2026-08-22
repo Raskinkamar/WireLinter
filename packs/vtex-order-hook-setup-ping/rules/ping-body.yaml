@@ -1,0 +1,15 @@
+schemaVersion: 1
+id: WL-VTEX-ORDER-HOOK-PING-BODY-001
+kind: cel
+scope: envelope
+severity: error
+stability: preview
+title: VTEX Order Hook setup ping must identify hookConfig ping
+explanation: VTEX documents the setup probe body as a JSON object whose hookConfig field equals ping.
+docsRef: hook
+requires: has(envelope.request.decodedBody)
+assert: has(envelope.request.decodedBody.hookConfig) && envelope.request.decodedBody.hookConfig == "ping"
+evidencePointers:
+  - /request/decodedBody
+messages:
+  evidence-unavailable: "Decoded request JSON is unavailable, so the VTEX Order Hook setup ping body cannot be decided."

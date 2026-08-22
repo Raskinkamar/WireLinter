@@ -1,0 +1,164 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  test:
+    name: Go ${{ matrix.go-version }}
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        go-version: ["1.25.x", "1.26.x"]
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-go@v7
+        with:
+          go-version: ${{ matrix.go-version }}
+          cache: false
+      - run: go mod download
+      - run: go test ./...
+      - run: go vet ./...
+      - name: Build CLI
+        run: go build -trimpath -o /tmp/wirelint ./cmd/wirelint
+      - name: Smoke bundled providers
+        shell: bash
+        run: |
+          set -euo pipefail
+          cd /tmp
+          while IFS= read -r provider; do
+            [[ -n "$provider" ]] || continue
+            ./wirelint validate-pack --provider "$provider"
+          done < <(./wirelint providers)
+          ASAAS_WEBHOOK_TOKEN='asaas_wirelint_demo_X7mQ9vK2pR8sT4uW6yZ3nC5fH1j' \
+            ./wirelint lint --provider asaas-webhooks "$GITHUB_WORKSPACE/examples/traces/asaas-webhooks-valid.json"
+          GITHUB_WEBHOOK_SECRET="It's a Secret to Everybody" \
+            ./wirelint lint --provider github "$GITHUB_WORKSPACE/examples/traces/github-valid.json"
+          MERCADOPAGO_WEBHOOK_SECRET='mp_wirelint_demo_secret' \
+            ./wirelint lint --provider mercadopago-webhooks "$GITHUB_WORKSPACE/examples/traces/mercadopago-webhooks-valid.json"
+          META_WEBHOOK_VERIFY_TOKEN='meta_verify_demo' \
+            ./wirelint lint --provider meta-whatsapp-webhook-verification "$GITHUB_WORKSPACE/examples/traces/meta-whatsapp-webhook-verification-valid.json"
+          META_APP_SECRET='meta_wirelint_demo_secret' \
+            ./wirelint lint --provider meta-whatsapp-webhooks "$GITHUB_WORKSPACE/examples/traces/meta-whatsapp-webhooks-valid.json"
+          ./wirelint lint --provider meta-whatsapp-cloud-api "$GITHUB_WORKSPACE/examples/traces/meta-whatsapp-cloud-api-valid.json"
+          SHOPIFY_CLIENT_SECRET='shpss_wirelint_demo' \
+            ./wirelint lint --provider shopify-https "$GITHUB_WORKSPACE/examples/traces/shopify-https-valid.json"
+          STRIPE_WEBHOOK_SECRET='whsec_wirelint_demo' \
+            ./wirelint lint --provider stripe "$GITHUB_WORKSPACE/examples/traces/stripe-valid.json"
+      - name: Verify module files
+        shell: bash
+        run: |
+          set -euo pipefail
+          go mod tidy
+          git diff --exit-code -- go.mod go.sum
+
+  race:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-go@v7
+        with:
+          go-version: "1.26.x"
+          cache: false
+      - run: go mod download
+      - run: go test -race ./...
+
+  packaging:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-go@v7
+        with:
+          go-version: "1.26.x"
+          cache: false
+      - run: go mod download
+      - name: Build archives twice
+        shell: bash
+        run: |
+          set -euo pipefail
+          a="$RUNNER_TEMP/wirelint-dist-a"
+          b="$RUNNER_TEMP/wirelint-dist-b"
+          bash scripts/release/build.sh 0.1.0-ci.1 "$a"
+          bash scripts/release/build.sh 0.1.0-ci.1 "$b"
+          diff -u "$a/SHA256SUMS" "$b/SHA256SUMS"
+      - name: Smoke packaged Linux binary
+        shell: bash
+        run: |
+          set -euo pipefail
+          dist="$RUNNER_TEMP/wirelint-dist-a"
+          smoke="$(mktemp -d)"
+          trap 'rm -rf "$smoke"' EXIT
+          tar -xzf "$dist/wirelint_0.1.0-ci.1_linux_amd64.tar.gz" -C "$smoke"
+          [[ "$("$smoke/wirelint" version)" == "0.1.0-ci.1" ]]
+          while IFS= read -r provider; do
+            [[ -n "$provider" ]] || continue
+            "$smoke/wirelint" validate-pack --provider "$provider"
+          done < <("$smoke/wirelint" providers)
+          ASAAS_WEBHOOK_TOKEN='asaas_wirelint_demo_X7mQ9vK2pR8sT4uW6yZ3nC5fH1j' \
+            "$smoke/wirelint" lint --provider asaas-webhooks examples/traces/asaas-webhooks-valid.json
+          GITHUB_WEBHOOK_SECRET="It's a Secret to Everybody" \
+            "$smoke/wirelint" lint --provider github examples/traces/github-valid.json
+          MERCADOPAGO_WEBHOOK_SECRET='mp_wirelint_demo_secret' \
+            "$smoke/wirelint" lint --provider mercadopago-webhooks examples/traces/mercadopago-webhooks-valid.json
+          META_WEBHOOK_VERIFY_TOKEN='meta_verify_demo' \
+            "$smoke/wirelint" lint --provider meta-whatsapp-webhook-verification examples/traces/meta-whatsapp-webhook-verification-valid.json
+          META_APP_SECRET='meta_wirelint_demo_secret' \
+            "$smoke/wirelint" lint --provider meta-whatsapp-webhooks examples/traces/meta-whatsapp-webhooks-valid.json
+          "$smoke/wirelint" lint --provider meta-whatsapp-cloud-api examples/traces/meta-whatsapp-cloud-api-valid.json
+          SHOPIFY_CLIENT_SECRET='shpss_wirelint_demo' \
+            "$smoke/wirelint" lint --provider shopify-https examples/traces/shopify-https-valid.json
+          STRIPE_WEBHOOK_SECRET='whsec_wirelint_demo' \
+            "$smoke/wirelint" lint --provider stripe examples/traces/stripe-valid.json
+      - name: Test release installers
+        shell: bash
+        run: |
+          set -euo pipefail
+          dist="$RUNNER_TEMP/wirelint-dist-a"
+          python3 -m http.server 8765 --directory "$dist" >"$RUNNER_TEMP/wirelint-install-server.log" 2>&1 &
+          server_pid=$!
+          trap 'kill "$server_pid" 2>/dev/null || true' EXIT
+          for _ in {1..20}; do
+            curl -fsS http://127.0.0.1:8765/SHA256SUMS >/dev/null && break
+            sleep 0.25
+          done
+          curl -fsS http://127.0.0.1:8765/SHA256SUMS >/dev/null
+
+          unix_root="$(mktemp -d)"
+          stale_root="$(mktemp -d)"
+          mkdir -p "$stale_root/bin"
+          cat >"$stale_root/bin/wirelint" <<'EOF'
+          #!/bin/sh
+          if [ "${1:-}" = version ]; then
+            echo 9.9.9-stale
+          else
+            echo stale-wirelint
+          fi
+          EOF
+          chmod +x "$stale_root/bin/wirelint"
+
+          installer_output="$(
+            PATH="$stale_root/bin:$PATH" \
+            WIRELINT_VERSION="0.1.0-ci.1" \
+            WIRELINT_RELEASE_BASE_URL="http://127.0.0.1:8765" \
+            WIRELINT_INSTALL_DIR="$unix_root/bin" \
+              sh scripts/install.sh
+          )"
+          printf '%s\n' "$installer_output"
+          grep -F '0.1.0-ci.1' <<<"$installer_output"
+          ! grep -F '9.9.9-stale' <<<"$installer_output"
+          grep -F "current PATH resolves wirelint to $stale_root/bin/wirelint" <<<"$installer_output"
+          [[ "$("$unix_root/bin/wirelint" version)" == "0.1.0-ci.1" ]]
+          "$unix_root/bin/wirelint" demo
+
+          windows_root="$(mktemp -d)"
+          WIRELINT_VERSION="0.1.0-ci.1" \
+          WIRELINT_RELEASE_BASE_URL="http://127.0.0.1:8765" \
+          WIRELINT_INSTALL_DIR="$windows_root/bin" \
+          WIRELINT_SKIP_RUN="1" \
+            pwsh -NoProfile -File scripts/install.ps1
+          [[ -f "$windows_root/bin/wirelint.exe" ]]

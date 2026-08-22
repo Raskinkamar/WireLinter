@@ -1,0 +1,16 @@
+schemaVersion: 1
+id: WL-CIELO-NOTIFICATION-ACK-001
+kind: cel
+scope: envelope
+severity: error
+stability: preview
+title: Cielo notification acknowledgement must be HTTP 200
+explanation: Cielo requires the merchant endpoint to return HTTP 200 OK; failed deliveries receive three additional attempts.
+docsRef: notifications
+remediationKey: cielo-notification-ack-status
+requires: has(envelope.response)
+assert: envelope.response.status == 200
+evidencePointers:
+  - /response/status
+messages:
+  evidence-unavailable: "No response status was captured, so Cielo notification acknowledgement cannot be decided."

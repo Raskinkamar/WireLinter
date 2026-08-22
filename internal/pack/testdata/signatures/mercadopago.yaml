@@ -1,0 +1,60 @@
+schemaVersion: 1
+id: mercadopago-v1
+sourceRefs:
+  - webhook-signature-docs
+  - sdk-case-preservation-2026-06
+secret:
+  ref: webhook-secret
+  representation: utf8
+parsers:
+  signature-fields:
+    sourceHeader:
+      name: x-signature
+      cardinality: exactly-one
+      trimSpace: true
+    format:
+      type: delimited-pairs
+      itemDelimiter: ","
+      pairDelimiter: "="
+      trimSpace: true
+bindings:
+  timestamp:
+    fromField:
+      parser: signature-fields
+      key: ts
+      cardinality: exactly-one
+  signature-candidates:
+    fromField:
+      parser: signature-fields
+      key: v1
+      cardinality: one-or-more
+  data-id:
+    fromQuery:
+      name: data.id
+      cardinality: zero-or-one
+      trimSpace: true
+  request-id:
+    fromHeader:
+      name: x-request-id
+      cardinality: zero-or-one
+      trimSpace: true
+message:
+  - binding: data-id
+    prefix: "id:"
+    suffix: ";"
+    omitIfAbsent: true
+  - binding: request-id
+    prefix: "request-id:"
+    suffix: ";"
+    omitIfAbsent: true
+  - binding: timestamp
+    prefix: "ts:"
+    suffix: ";"
+candidates:
+  binding: signature-candidates
+  encoding: hex
+mac:
+  algorithm: hmac-sha256
+metadata:
+  dataIdCase: preserve
+  compatibilityNote: "Current official Mercado Pago SDKs preserve original data.id casing despite older/public documentation describing lowercasing."

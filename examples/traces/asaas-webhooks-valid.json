@@ -1,0 +1,52 @@
+{
+  "schemaVersion": 1,
+  "traceId": "trace_asaas_webhooks_valid",
+  "provider": "asaas-webhooks",
+  "startedAt": "2026-08-17T21:00:00Z",
+  "envelopes": [
+    {
+      "id": "env_asaas_webhooks_valid",
+      "provider": "asaas-webhooks",
+      "eventType": "PAYMENT_RECEIVED",
+      "deliveryId": "evt_demo_01",
+      "receivedAt": "2026-08-17T21:00:00Z",
+      "request": {
+        "method": "POST",
+        "url": "http://localhost:4242/webhooks/asaas",
+        "headers": [
+          {
+            "name": "asaas-access-token",
+            "value": "asaas_wirelint_demo_X7mQ9vK2pR8sT4uW6yZ3nC5fH1j"
+          },
+          {
+            "name": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "headersCompleteness": "complete",
+        "rawQuery": "",
+        "queryFidelity": "exact",
+        "query": [],
+        "bodyFidelity": "exact",
+        "rawBodyBase64": "eyJpZCI6ImV2dF9kZW1vXzAxIiwiZXZlbnQiOiJQQVlNRU5UX1JFQ0VJVkVEIiwicGF5bWVudCI6eyJpZCI6InBheV9kZW1vXzAxIn19",
+        "bodySha256": "2cb9d85c16c61a68c8f8c633413532b9b0726960e7e5a1448251db03619247f7",
+        "decodedBody": {
+          "id": "evt_demo_01",
+          "event": "PAYMENT_RECEIVED",
+          "payment": {
+            "id": "pay_demo_01"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "headers": [],
+        "headersCompleteness": "complete",
+        "bodyFidelity": "exact",
+        "rawBodyBase64": "",
+        "durationMs": 25.0
+      }
+    }
+  ],
+  "observations": []
+}

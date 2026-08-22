@@ -1,0 +1,18 @@
+schemaVersion: 1
+id: WL-VERCEL-SIGNATURE-001
+kind: signature
+scope: envelope
+severity: error
+stability: preview
+title: Vercel webhook signature must be valid
+explanation: Vercel signs the raw webhook request body with HMAC-SHA1 using the webhook secret and sends the hex digest in x-vercel-signature.
+signatureRef: payload-hmac-sha1
+docsRef: webhook-api
+remediationKey: vercel-webhook-signature
+messages:
+  missing-signature: "x-vercel-signature is missing from a complete Vercel webhook capture."
+  malformed-signature: "x-vercel-signature is malformed; Vercel sends a hex HMAC-SHA1 digest."
+  signature-mismatch: "x-vercel-signature does not match HMAC-SHA1 of the exact raw request body for the supplied Vercel secret."
+  secret-unavailable: "Set VERCEL_WEBHOOK_SECRET to verify authenticity."
+  insufficient-body-fidelity: "Vercel signs the raw request body, so reconstructed or unavailable body bytes cannot prove authenticity."
+  insufficient-header-evidence: "The captured header set is incomplete, so x-vercel-signature cannot be proven absent."

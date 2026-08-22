@@ -1,0 +1,12 @@
+schemaVersion: 1
+id: WL-CIELO-NOTIFICATION-METHOD-001
+kind: cel
+scope: envelope
+severity: error
+stability: preview
+title: Cielo Post de Notificação must use POST
+explanation: Cielo's E-commerce webhook surface is explicitly the Post de Notificação sent to the configured payment-status URL.
+docsRef: notifications
+assert: envelope.request.method == "POST"
+evidencePointers:
+  - /request/method

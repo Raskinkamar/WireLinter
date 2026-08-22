@@ -1,0 +1,18 @@
+schemaVersion: 1
+id: WL-GRAPH-VALIDATE-ECHO-001
+kind: cel
+scope: envelope
+severity: error
+stability: preview
+title: Microsoft Graph validation response must echo the decoded validationToken
+explanation: Microsoft Graph requires the URL-decoded validationToken to be returned in the response body as plain text.
+docsRef: validation
+remediationKey: graph-notification-url-validation-echo
+requires: has(envelope.response) && envelope.request.queryFidelity == "exact" && envelope.response.bodyFidelity == "exact"
+assert: envelope.request.query.filter(q, q.name == "validationToken").size() == 1 && envelope.response.rawBodyBase64 == bytes(envelope.request.query.filter(q, q.name == "validationToken")[0].value)
+evidencePointers:
+  - /request/query
+  - /response/rawBodyBase64
+  - /response/bodyFidelity
+messages:
+  evidence-unavailable: "Exact decoded query or response-body evidence is unavailable, so the Microsoft Graph validation token echo cannot be decided safely."

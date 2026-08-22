@@ -1,0 +1,27 @@
+packProtocol: "1.2"
+id: twitch-eventsub-webhooks
+name: Twitch EventSub Webhook Callbacks
+packVersion: 0.1.0
+providerDocsRevision: "2026-08-17"
+minWireLinterVersion: 0.1.0
+capabilities:
+  - passive-lint
+secrets:
+  eventsub-secret:
+    env: TWITCH_EVENTSUB_WEBHOOK_SECRET
+    required: false
+    description: Secret configured for the Twitch EventSub webhook transport
+docs:
+  handling:
+    url: https://dev.twitch.tv/docs/eventsub/handling-webhook-events/
+    revision: "2026-08-17"
+    section: Verifying the event message
+signatures:
+  eventsub-hmac-sha256: signatures/eventsub-hmac-sha256.yaml
+rules:
+  - rules/signature.yaml
+  - rules/message-type-header.yaml
+metadata:
+  status: preview
+  maintainer: wirelint
+  surface: eventsub-webhook-transport

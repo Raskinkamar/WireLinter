@@ -1,0 +1,16 @@
+schemaVersion: 1
+id: WL-SH-HTTPS-ACK-DURATION-001
+kind: cel
+scope: envelope
+severity: error
+stability: preview
+title: Shopify HTTPS webhook response must complete before timeout
+explanation: Shopify applies a five-second timeout to the entire HTTPS webhook request; a response at or beyond that deadline is a failed delivery.
+docsRef: webhook-troubleshooting
+remediationKey: shopify-https-ack-duration
+requires: has(envelope.response)
+assert: double(envelope.response.durationMs) < 5000.0
+evidencePointers:
+  - /response/durationMs
+messages:
+  evidence-unavailable: "No application response timing was captured, so WireLinter cannot decide whether the handler met Shopify's five-second request deadline."

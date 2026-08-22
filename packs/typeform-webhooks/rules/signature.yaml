@@ -1,0 +1,18 @@
+schemaVersion: 1
+id: WL-TYPEFORM-SIGNATURE-001
+kind: signature
+scope: envelope
+severity: error
+stability: preview
+title: Typeform webhook signature must be valid
+explanation: Typeform signs the entire raw webhook payload with HMAC-SHA256, Base64 encodes the digest, and prefixes it with sha256= in Typeform-Signature.
+signatureRef: payload-hmac-sha256
+docsRef: security
+remediationKey: typeform-webhook-signature
+messages:
+  missing-signature: "Typeform-Signature is missing from a complete signed-webhook capture."
+  malformed-signature: "Typeform-Signature must use sha256=<base64 digest>."
+  signature-mismatch: "Typeform-Signature does not match the exact raw payload for the supplied webhook secret."
+  secret-unavailable: "Set TYPEFORM_WEBHOOK_SECRET to verify authenticity."
+  insufficient-body-fidelity: "Typeform signs the entire received payload, so reconstructed or unavailable body bytes cannot prove authenticity."
+  insufficient-header-evidence: "The header capture is incomplete, so Typeform-Signature cannot be proven absent."

@@ -1,0 +1,12 @@
+schemaVersion: 1
+id: WL-RD-STATION-METHOD-001
+kind: cel
+scope: envelope
+severity: error
+stability: preview
+title: RD Station webhooks must use POST
+explanation: RD Station documents webhook delivery requests using HTTP POST.
+docsRef: webhooks
+assert: envelope.request.method == "POST"
+evidencePointers:
+  - /request/method

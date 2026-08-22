@@ -1,0 +1,12 @@
+schemaVersion: 1
+id: WL-MAILERSEND-METHOD-001
+kind: cel
+scope: envelope
+severity: error
+stability: preview
+title: MailerSend webhooks must use POST
+explanation: MailerSend sends webhook requests to the configured endpoint as HTTP POST deliveries.
+docsRef: webhooks
+assert: envelope.request.method == "POST"
+evidencePointers:
+  - /request/method

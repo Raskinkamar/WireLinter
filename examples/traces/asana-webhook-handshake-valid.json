@@ -1,0 +1,33 @@
+{
+  "schemaVersion": 1,
+  "traceId": "trace_asana_webhook_handshake_valid",
+  "provider": "asana-webhook-handshake",
+  "startedAt": "2026-08-18T03:00:00Z",
+  "envelopes": [
+    {
+      "id": "env_asana_handshake_valid",
+      "provider": "asana-webhook-handshake",
+      "receivedAt": "2026-08-18T03:00:00Z",
+      "request": {
+        "method": "POST",
+        "url": "http://localhost:4242/webhooks/asana",
+        "headers": [{"name": "X-Hook-Secret", "value": "fixture-hook-value"}],
+        "headersCompleteness": "complete",
+        "rawQuery": "",
+        "queryFidelity": "exact",
+        "query": [],
+        "bodyFidelity": "exact",
+        "rawBodyBase64": ""
+      },
+      "response": {
+        "status": 200,
+        "headers": [{"name": "X-Hook-Secret", "value": "fixture-hook-value"}],
+        "headersCompleteness": "complete",
+        "bodyFidelity": "exact",
+        "rawBodyBase64": "",
+        "durationMs": 12.0
+      }
+    }
+  ],
+  "observations": []
+}

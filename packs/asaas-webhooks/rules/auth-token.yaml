@@ -1,0 +1,18 @@
+schemaVersion: 1
+id: WL-AS-WEBHOOKS-AUTH-001
+kind: secret-match
+scope: envelope
+severity: error
+stability: preview
+title: Asaas webhook authentication token must match
+explanation: Current Asaas Webhooks use the configured authToken in the asaas-access-token header and the receiver must validate it before processing the event.
+secretMatchRef: auth-token
+docsRef: webhook-auth-token
+remediationKey: asaas-webhook-auth-token
+messages:
+  secret-match-valid: "asaas-access-token matches the configured Asaas webhook authToken."
+  secret-unavailable: "Set ASAAS_WEBHOOK_TOKEN to verify asaas-access-token; delivery checks can still run without exposing the token to the pack."
+  missing-secret-input: "asaas-access-token is missing from a complete header capture. Current Asaas webhook configurations require an authToken."
+  ambiguous-secret-input: "Multiple asaas-access-token values were observed; the authentication header must have exactly one value."
+  secret-mismatch: "asaas-access-token does not match the configured Asaas webhook authToken."
+  insufficient-header-evidence: "The captured header set is incomplete, so WireLinter cannot prove whether asaas-access-token was absent."

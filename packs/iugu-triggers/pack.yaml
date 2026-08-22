@@ -1,0 +1,27 @@
+packProtocol: "1.2"
+id: iugu-triggers
+name: iugu Gatilhos
+packVersion: 0.1.0
+providerDocsRevision: "2026-08-18"
+minWireLinterVersion: 0.1.0
+capabilities:
+  - passive-lint
+docs:
+  triggers:
+    url: https://dev.iugu.com/docs/gatilhos
+    revision: "2026-08-18"
+    section: Cabeçalho Content-Type
+  create-trigger:
+    url: https://dev.iugu.com/reference/criar-gatilho
+    revision: "2026-08-18"
+    section: Criar Gatilho
+rules:
+  - rules/content-type.yaml
+metadata:
+  status: preview
+  maintainer: wirelint
+  vendor: iugu
+  region: BR
+  surface: trigger-webhook-delivery
+  payloadModel: application-x-www-form-urlencoded
+  authPolicyNote: "iugu supports configuring an authorization key for Basic Authentication when creating a trigger, but the public docs do not specify the exact outbound header encoding. This contract therefore does not invent an authentication comparison."

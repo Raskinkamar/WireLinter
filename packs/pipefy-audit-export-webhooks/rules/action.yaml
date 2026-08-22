@@ -1,0 +1,15 @@
+schemaVersion: 1
+id: WL-PIPEFY-AUDIT-EXPORT-ACTION-001
+kind: cel
+scope: envelope
+severity: error
+stability: preview
+title: Pipefy audit export webhook action must be audit_log.export_finished
+explanation: Pipefy identifies this webhook surface with the audit_log.export_finished action.
+docsRef: webhooks
+requires: has(envelope.request.decodedBody)
+assert: has(envelope.request.decodedBody.data) && has(envelope.request.decodedBody.data.action) && envelope.request.decodedBody.data.action == "audit_log.export_finished"
+evidencePointers:
+  - /request/decodedBody
+messages:
+  evidence-unavailable: "Decoded request JSON is unavailable, so the Pipefy audit export action cannot be decided."

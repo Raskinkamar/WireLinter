@@ -1,0 +1,19 @@
+schemaVersion: 1
+id: WL-CIRCLECI-SIGNATURE-001
+kind: signature
+scope: envelope
+severity: error
+stability: preview
+title: CircleCI outbound webhook v1 signature must be valid
+explanation: CircleCI v1 is the HMAC-SHA256 hex digest of the exact request body using the configured secret token.
+signatureRef: outbound-v1
+docsRef: outbound
+remediationKey: circleci-outbound-signature
+messages:
+  missing-signature: "circleci-signature is missing from a complete capture of the signed webhook mode."
+  missing-signature-input: "circleci-signature does not contain the v1 signature required by this contract."
+  malformed-signature: "CircleCI v1 signature material is malformed."
+  signature-mismatch: "CircleCI v1 does not match HMAC-SHA256 of the exact raw body for the supplied secret token."
+  secret-unavailable: "Set CIRCLECI_WEBHOOK_SECRET to verify the signed outbound webhook."
+  insufficient-body-fidelity: "CircleCI signs the request body, so reconstructed or unavailable bytes cannot prove authenticity."
+  insufficient-header-evidence: "The header capture is incomplete, so circleci-signature cannot be proven absent."

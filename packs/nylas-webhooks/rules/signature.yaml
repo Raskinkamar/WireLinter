@@ -1,0 +1,18 @@
+schemaVersion: 1
+id: WL-NYLAS-SIGNATURE-001
+kind: signature
+scope: envelope
+severity: error
+stability: preview
+title: Nylas webhook signature must be valid
+explanation: Nylas signs the exact raw request bytes with HMAC-SHA256 using the destination webhook_secret and sends a 64-character hexadecimal digest in x-nylas-signature.
+signatureRef: raw-body-hmac-sha256
+docsRef: verification
+remediationKey: nylas-webhook-signature
+messages:
+  missing-signature: "x-nylas-signature is missing from a complete Nylas webhook notification capture."
+  malformed-signature: "x-nylas-signature is malformed; Nylas sends a hexadecimal HMAC-SHA256 digest."
+  signature-mismatch: "x-nylas-signature does not match HMAC-SHA256 of the exact raw request bytes for the supplied webhook_secret."
+  secret-unavailable: "Set NYLAS_WEBHOOK_SECRET to verify notification authenticity."
+  insufficient-body-fidelity: "Nylas signs the exact request bytes, so reconstructed or unavailable body evidence cannot prove authenticity."
+  insufficient-header-evidence: "The captured header set is incomplete, so x-nylas-signature cannot be proven absent."

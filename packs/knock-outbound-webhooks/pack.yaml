@@ -1,0 +1,31 @@
+packProtocol: "1.2"
+id: knock-outbound-webhooks
+name: Knock Outbound Webhooks
+packVersion: 0.1.0
+providerDocsRevision: "2026-08-18"
+minWireLinterVersion: 0.1.0
+capabilities:
+  - passive-lint
+secrets:
+  webhook-secret:
+    env: KNOCK_WEBHOOK_SECRET
+    required: false
+    description: Shared secret key shown on the Knock webhook page
+docs:
+  webhooks:
+    url: https://docs.knock.app/developer-tools/outbound-webhooks/overview
+    revision: "2026-08-18"
+    section: Verifying the signature
+signatures:
+  timestamp-body-hmac-sha256: signatures/timestamp-body-hmac-sha256.yaml
+rules:
+  - rules/signature.yaml
+  - rules/method.yaml
+  - rules/ack-status.yaml
+metadata:
+  status: preview
+  maintainer: wirelint
+  vendor: knock
+  surface: outbound-webhook
+  timestampUnit: milliseconds
+  freshnessNote: "Knock recommends a five-minute tolerance, but the current generic freshness primitive accepts Unix seconds only; this pack does not misinterpret the millisecond timestamp."

@@ -1,0 +1,19 @@
+schemaVersion: 1
+id: WL-GH-GQL-RATE-LIMIT-001
+kind: cel
+scope: envelope
+severity: warning
+stability: preview
+title: GitHub GraphQL primary rate limit should have capacity remaining
+explanation: GitHub documents that an exhausted GraphQL primary rate limit can still return HTTP 200 while x-ratelimit-remaining is zero and the body reports an error.
+docsRef: graphql-rate-limits
+when: >-
+  has(envelope.response) &&
+  envelope.response.headers.exists(h, h.name.lowerAscii() == "x-ratelimit-remaining")
+assert: >-
+  !envelope.response.headers.exists(
+    h,
+    h.name.lowerAscii() == "x-ratelimit-remaining" && h.value == "0"
+  )
+evidencePointers:
+  - /response/headers

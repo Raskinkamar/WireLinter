@@ -1,0 +1,13 @@
+schemaVersion: 1
+id: WL-INTERCOM-METHOD-001
+kind: cel
+scope: envelope
+severity: error
+stability: preview
+title: Intercom webhook notification delivery must use POST
+explanation: Intercom sends subscribed webhook topic notifications as HTTP POST requests to the configured HTTPS endpoint.
+docsRef: setup
+remediationKey: intercom-webhook-method
+assert: envelope.request.method == "POST"
+evidencePointers:
+  - /request/method

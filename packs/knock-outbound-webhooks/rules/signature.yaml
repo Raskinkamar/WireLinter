@@ -1,0 +1,18 @@
+schemaVersion: 1
+id: WL-KNOCK-OUTBOUND-SIGNATURE-001
+kind: signature
+scope: envelope
+severity: error
+stability: preview
+title: Knock outbound webhook signature must be valid
+explanation: Knock signs the millisecond timestamp, a dot, and the exact raw JSON payload with HMAC-SHA256 and Base64-encodes the result in x-knock-signature.
+signatureRef: timestamp-body-hmac-sha256
+docsRef: webhooks
+remediationKey: knock-outbound-webhook-signature
+messages:
+  missing-signature: "x-knock-signature is missing from a complete webhook capture."
+  malformed-signature: "x-knock-signature must contain exactly one t timestamp and one Base64 s signature."
+  signature-mismatch: "x-knock-signature does not match timestamp + '.' + exact raw body for the supplied Knock secret."
+  secret-unavailable: "Set KNOCK_WEBHOOK_SECRET to verify authenticity."
+  insufficient-body-fidelity: "Knock signs the exact payload, so reconstructed or unavailable body bytes cannot prove authenticity."
+  insufficient-header-evidence: "The header capture is incomplete, so x-knock-signature cannot be proven absent."

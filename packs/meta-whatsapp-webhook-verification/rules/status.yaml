@@ -1,0 +1,14 @@
+schemaVersion: 1
+id: WL-META-WA-VERIFY-STATUS-001
+kind: cel
+scope: envelope
+severity: error
+stability: preview
+title: Meta webhook verification must return HTTP 200
+explanation: The callback URL accepts a valid verification request with an HTTP 200 response.
+docsRef: verification
+requires: has(envelope.response)
+assert: envelope.response.status == 200
+evidencePointers: [/response/status]
+messages:
+  evidence-unavailable: "No callback response was captured."

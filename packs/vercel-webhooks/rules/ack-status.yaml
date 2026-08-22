@@ -1,0 +1,16 @@
+schemaVersion: 1
+id: WL-VERCEL-ACK-STATUS-001
+kind: cel
+scope: envelope
+severity: error
+stability: preview
+title: Vercel webhook acknowledgement must be 2xx
+explanation: Vercel considers a webhook successfully delivered when the receiver returns a 2xx HTTP response.
+docsRef: webhook-api
+remediationKey: vercel-webhook-ack-status
+requires: has(envelope.response)
+assert: envelope.response.status >= 200 && envelope.response.status < 300
+evidencePointers:
+  - /response/status
+messages:
+  evidence-unavailable: "No application response was captured, so WireLinter cannot decide whether Vercel received a successful 2xx acknowledgement."

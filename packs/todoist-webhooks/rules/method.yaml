@@ -1,0 +1,13 @@
+schemaVersion: 1
+id: WL-TODOIST-METHOD-001
+kind: cel
+scope: envelope
+severity: error
+stability: preview
+title: Todoist webhook delivery must use POST
+explanation: Todoist delivers subscribed events as HTTP POST payloads.
+docsRef: webhooks
+remediationKey: todoist-webhook-method
+assert: envelope.request.method == "POST"
+evidencePointers:
+  - /request/method

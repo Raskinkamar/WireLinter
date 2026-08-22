@@ -1,0 +1,35 @@
+packProtocol: "1.2"
+id: webex-messaging-webhooks-hmac-sha1
+name: Webex Messaging Webhooks HMAC-SHA1
+packVersion: 0.1.0
+providerDocsRevision: "2026-08-17"
+minWireLinterVersion: 0.1.0
+capabilities:
+  - passive-lint
+secrets:
+  webhook-secret:
+    env: WEBEX_WEBHOOK_SECRET
+    required: false
+    description: Secret supplied when creating the Webex webhook
+docs:
+  webhooks:
+    url: https://developer.webex.com/messaging/docs/api/guides/webhooks
+    revision: "2026-08-17"
+    section: Authenticating Requests
+  secret-example:
+    url: https://developer.webex.com/blog/using-a-webhook-secret
+    revision: "2026-08-17"
+    section: X-Spark-Signature validation example
+  changelog:
+    url: https://developer.webex.com/docs/api/changelog
+    revision: "2026-08-17"
+    section: January 13 2025
+signatures:
+  raw-json-hmac-sha1: signatures/raw-json-hmac-sha1.yaml
+rules:
+  - rules/signature.yaml
+metadata:
+  status: preview
+  maintainer: wirelint
+  surface: messaging-x-spark-signature-hmac-sha1
+  note: Webex also offers newer algorithms through X-Webex-Signature; this contract intentionally covers the documented X-Spark-Signature HMAC-SHA1 surface only

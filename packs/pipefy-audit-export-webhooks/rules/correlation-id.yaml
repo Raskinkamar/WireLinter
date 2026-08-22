@@ -1,0 +1,15 @@
+schemaVersion: 1
+id: WL-PIPEFY-AUDIT-EXPORT-CORRELATION-001
+kind: cel
+scope: envelope
+severity: error
+stability: preview
+title: Pipefy audit export webhook must include correlation_id
+explanation: Pipefy sends correlation_id in audit_log.export_finished so the integration can retrieve the finished export and its signed download URL.
+docsRef: export
+requires: has(envelope.request.decodedBody)
+assert: has(envelope.request.decodedBody.data) && has(envelope.request.decodedBody.data.correlation_id) && envelope.request.decodedBody.data.correlation_id != ""
+evidencePointers:
+  - /request/decodedBody
+messages:
+  evidence-unavailable: "Decoded request JSON is unavailable, so the Pipefy export correlation ID cannot be decided."

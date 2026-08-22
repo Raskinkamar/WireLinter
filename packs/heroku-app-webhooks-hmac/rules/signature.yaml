@@ -1,0 +1,18 @@
+schemaVersion: 1
+id: WL-HEROKU-SIGNATURE-001
+kind: signature
+scope: envelope
+severity: error
+stability: preview
+title: Heroku app webhook HMAC must be valid
+explanation: Heroku signs the exact request body with HMAC-SHA256 using the subscription secret and sends the Base64 digest in Heroku-Webhook-Hmac-SHA256.
+signatureRef: raw-body-hmac-sha256
+docsRef: app-webhooks
+remediationKey: heroku-app-webhook-hmac
+messages:
+  missing-signature: "Heroku-Webhook-Hmac-SHA256 is missing from a complete capture of HMAC-signed app-webhook mode."
+  malformed-signature: "Heroku-Webhook-Hmac-SHA256 is not valid Base64 HMAC-SHA256 signature material."
+  signature-mismatch: "Heroku-Webhook-Hmac-SHA256 does not match HMAC-SHA256 of the exact raw request body for the supplied subscription secret."
+  secret-unavailable: "Set HEROKU_WEBHOOK_SECRET to verify authenticity."
+  insufficient-body-fidelity: "Heroku signs the raw request body, so reconstructed or unavailable body bytes cannot prove authenticity."
+  insufficient-header-evidence: "The captured header set is incomplete, so Heroku-Webhook-Hmac-SHA256 cannot be proven absent."

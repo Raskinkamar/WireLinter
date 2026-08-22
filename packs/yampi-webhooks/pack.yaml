@@ -1,0 +1,34 @@
+packProtocol: "1.2"
+id: yampi-webhooks
+name: Yampi Webhooks
+packVersion: 0.1.0
+providerDocsRevision: "2026-08-18"
+minWireLinterVersion: 0.1.0
+capabilities:
+  - passive-lint
+secrets:
+  webhook-secret:
+    env: YAMPI_WEBHOOK_SECRET
+    required: false
+    description: Secret key returned when the Yampi webhook is created
+docs:
+  webhooks:
+    url: https://docs.yampi.com.br/api-reference/introduction-webhook
+    revision: "2026-08-18"
+    section: Segurança
+signatures:
+  payload-hmac-sha256: signatures/payload-hmac-sha256.yaml
+rules:
+  - rules/signature.yaml
+  - rules/method.yaml
+  - rules/ack-status.yaml
+  - rules/ack-duration.yaml
+metadata:
+  status: preview
+  maintainer: wirelint
+  vendor: yampi
+  region: BR
+  surface: ecommerce-webhook
+  categories:
+    - ecommerce
+    - payments

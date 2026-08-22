@@ -1,0 +1,25 @@
+packProtocol: "1.2"
+id: vtex-order-hook-delivery
+name: VTEX Order Hook Delivery
+packVersion: 0.1.0
+providerDocsRevision: "2026-08-18"
+minWireLinterVersion: 0.1.0
+capabilities:
+  - passive-lint
+docs:
+  hook:
+    url: https://developers.vtex.com/docs/guides/orders-feed
+    revision: "2026-08-18"
+    section: Hook notifications
+rules:
+  - rules/method.yaml
+  - rules/ack-status.yaml
+  - rules/ack-duration.yaml
+metadata:
+  status: preview
+  maintainer: wirelint
+  vendor: vtex
+  region: BR-LATAM
+  surface: order-hook-delivery
+  authPolicyNote: "VTEX Order Hook configuration supports integrator-supplied headers and a key for the destination endpoint. Because those credentials are configuration-defined, this contract does not invent a fixed authentication header."
+  retryModel: geometric-progression

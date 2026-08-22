@@ -1,0 +1,39 @@
+packProtocol: "1.2"
+id: dodo-payments-webhooks
+name: Dodo Payments Webhooks
+packVersion: 0.1.0
+providerDocsRevision: "2026-08-18"
+minWireLinterVersion: 0.1.0
+capabilities:
+  - passive-lint
+secrets:
+  webhook-secret:
+    env: DODO_PAYMENTS_WEBHOOK_SECRET
+    required: false
+    description: Dodo Payments webhook signing secret in whsec_<base64> form
+docs:
+  webhooks:
+    url: https://docs.dodopayments.com/developer-resources/webhooks
+    revision: "2026-08-18"
+    section: Verifying Signatures
+  secret-format:
+    url: https://docs.dodopayments.com/developer-resources/convex-component
+    revision: "2026-08-12"
+    section: Webhook Handler
+  standard-webhooks:
+    url: https://github.com/standard-webhooks/standard-webhooks/blob/main/spec/standard-webhooks.md
+    revision: "2026-08-18"
+    section: Webhook signatures
+signatures:
+  standard-webhook-v1: signatures/standard-webhook-v1.yaml
+rules:
+  - rules/signature.yaml
+  - rules/method.yaml
+  - rules/ack-status.yaml
+  - rules/ack-duration.yaml
+metadata:
+  status: preview
+  maintainer: wirelint
+  vendor: dodo-payments
+  surface: standard-webhook
+  deliveryModel: retries-with-exponential-backoff

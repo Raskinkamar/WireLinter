@@ -1,0 +1,13 @@
+schemaVersion: 1
+id: WL-TELEGRAM-METHOD-001
+kind: cel
+scope: envelope
+severity: error
+stability: preview
+title: Telegram webhook update delivery must use POST
+explanation: Telegram Bot API sends webhook updates as HTTPS POST requests containing a JSON-serialized Update.
+docsRef: bot-api
+remediationKey: telegram-webhook-method
+assert: envelope.request.method == "POST"
+evidencePointers:
+  - /request/method

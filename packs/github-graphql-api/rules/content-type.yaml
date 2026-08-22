@@ -1,0 +1,22 @@
+schemaVersion: 1
+id: WL-GH-GQL-CONTENT-TYPE-001
+kind: cel
+scope: envelope
+severity: error
+stability: preview
+title: GitHub GraphQL request bodies must be JSON
+explanation: GitHub GraphQL calls send the query and optional variables as a JSON request body.
+docsRef: graphql-calls
+requires: >-
+  envelope.request.headersCompleteness == "complete" ||
+  envelope.request.headers.exists(h, h.name.lowerAscii() == "content-type")
+assert: >-
+  envelope.request.headers.exists(
+    h,
+    h.name.lowerAscii() == "content-type" &&
+    h.value.lowerAscii().startsWith("application/json")
+  )
+evidencePointers:
+  - /request/headers
+messages:
+  evidence-unavailable: "Content-Type was not observed, but the request header capture is incomplete, so its absence cannot be proven."

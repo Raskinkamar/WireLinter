@@ -1,0 +1,16 @@
+schemaVersion: 1
+id: WL-TYPEFORM-ACK-STATUS-001
+kind: cel
+scope: envelope
+severity: error
+stability: preview
+title: Typeform webhook acknowledgement must be 2xx
+explanation: Typeform expects the webhook receiver to return a 2xx HTTP response to confirm receipt.
+docsRef: delivery
+remediationKey: typeform-webhook-ack-status
+requires: has(envelope.response)
+assert: envelope.response.status >= 200 && envelope.response.status < 300
+evidencePointers:
+  - /response/status
+messages:
+  evidence-unavailable: "No response was captured, so Typeform acknowledgement status cannot be decided."

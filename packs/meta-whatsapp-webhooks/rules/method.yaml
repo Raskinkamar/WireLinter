@@ -1,0 +1,11 @@
+schemaVersion: 1
+id: WL-META-WA-WEBHOOK-METHOD-001
+kind: cel
+scope: envelope
+severity: error
+stability: preview
+title: Meta WhatsApp webhook delivery must use POST
+explanation: Meta delivers webhook notification payloads with HTTP POST.
+docsRef: webhooks
+assert: envelope.request.method == "POST"
+evidencePointers: [/request/method]

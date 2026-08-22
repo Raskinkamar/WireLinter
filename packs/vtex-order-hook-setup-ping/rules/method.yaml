@@ -1,0 +1,12 @@
+schemaVersion: 1
+id: WL-VTEX-ORDER-HOOK-PING-METHOD-001
+kind: cel
+scope: envelope
+severity: error
+stability: preview
+title: VTEX Order Hook setup ping must use POST
+explanation: VTEX validates a hook endpoint by sending a POST request when the hook configuration is saved.
+docsRef: hook
+assert: envelope.request.method == "POST"
+evidencePointers:
+  - /request/method

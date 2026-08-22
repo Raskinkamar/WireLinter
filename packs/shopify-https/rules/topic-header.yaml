@@ -1,0 +1,25 @@
+schemaVersion: 1
+id: WL-SH-HTTPS-TOPIC-001
+kind: cel
+scope: envelope
+severity: error
+stability: preview
+title: Shopify webhook topic header must be present
+explanation: Shopify HTTPS deliveries include X-Shopify-Topic to identify the webhook topic; a complete capture without it cannot be dispatched reliably by topic.
+docsRef: webhook-delivery
+remediationKey: shopify-topic-header
+requires: >-
+  envelope.request.headersCompleteness == "complete" ||
+  envelope.request.headers.exists(
+    h,
+    h.name.lowerAscii() == "x-shopify-topic" && h.value != ""
+  )
+assert: >-
+  envelope.request.headers.exists(
+    h,
+    h.name.lowerAscii() == "x-shopify-topic" && h.value != ""
+  )
+evidencePointers:
+  - /request/headers
+messages:
+  evidence-unavailable: "X-Shopify-Topic was not observed, but the request header capture is incomplete, so its absence cannot be proven."

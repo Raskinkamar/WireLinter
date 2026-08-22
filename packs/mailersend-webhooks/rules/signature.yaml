@@ -1,0 +1,18 @@
+schemaVersion: 1
+id: WL-MAILERSEND-SIGNATURE-001
+kind: signature
+scope: envelope
+severity: error
+stability: preview
+title: MailerSend webhook signature must be valid
+explanation: MailerSend signs the raw webhook request content with HMAC-SHA256 and sends the hexadecimal digest in the Signature header.
+signatureRef: payload-hmac-sha256
+docsRef: webhooks
+remediationKey: mailersend-webhook-signature
+messages:
+  missing-signature: "Signature is missing from a complete MailerSend webhook capture."
+  malformed-signature: "Signature is not a valid hexadecimal HMAC-SHA256 digest."
+  signature-mismatch: "Signature does not match the exact raw request content for the supplied MailerSend signing secret."
+  secret-unavailable: "Set MAILERSEND_WEBHOOK_SECRET to verify authenticity."
+  insufficient-body-fidelity: "MailerSend signs the raw request content, so reconstructed or unavailable bytes cannot prove authenticity."
+  insufficient-header-evidence: "The header capture is incomplete, so Signature cannot be proven absent."

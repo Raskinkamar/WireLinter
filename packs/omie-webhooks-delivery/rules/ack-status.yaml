@@ -1,0 +1,16 @@
+schemaVersion: 1
+id: WL-OMIE-WEBHOOK-ACK-001
+kind: cel
+scope: envelope
+severity: error
+stability: preview
+title: Omie webhook acknowledgement must be 2xx
+explanation: Omie recommends that webhook endpoints accept and store the event and return an HTTP 2xx response as quickly as possible.
+docsRef: webhooks
+remediationKey: omie-webhook-ack-status
+requires: has(envelope.response)
+assert: envelope.response.status >= 200 && envelope.response.status < 300
+evidencePointers:
+  - /response/status
+messages:
+  evidence-unavailable: "No response status was captured, so Omie webhook acknowledgement cannot be decided."

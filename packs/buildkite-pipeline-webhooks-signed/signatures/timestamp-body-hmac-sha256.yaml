@@ -1,0 +1,41 @@
+schemaVersion: 1
+id: timestamp-body-hmac-sha256
+sourceRefs:
+  - pipelines
+secret:
+  ref: webhook-token
+  representation: utf8
+parsers:
+  signature-fields:
+    sourceHeader:
+      name: X-Buildkite-Signature
+      cardinality: exactly-one
+      trimSpace: true
+    format:
+      type: delimited-pairs
+      itemDelimiter: ","
+      pairDelimiter: "="
+      trimSpace: true
+bindings:
+  timestamp:
+    fromField:
+      parser: signature-fields
+      key: timestamp
+      cardinality: exactly-one
+  signature-candidates:
+    fromField:
+      parser: signature-fields
+      key: signature
+      cardinality: exactly-one
+  body:
+    fromRawBody:
+      requireFidelity: exact
+message:
+  - binding: timestamp
+    suffix: "."
+  - binding: body
+candidates:
+  binding: signature-candidates
+  encoding: hex
+mac:
+  algorithm: hmac-sha256

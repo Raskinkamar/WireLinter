@@ -1,0 +1,13 @@
+schemaVersion: 1
+id: WL-OKTA-VERIFY-METHOD-001
+kind: cel
+scope: envelope
+severity: error
+stability: preview
+title: Okta event hook verification must use GET
+explanation: Okta sends one one-time GET request to verify an event hook endpoint; ongoing event deliveries use POST.
+docsRef: concepts
+remediationKey: okta-event-hook-verification-method
+assert: envelope.request.method == "GET"
+evidencePointers:
+  - /request/method

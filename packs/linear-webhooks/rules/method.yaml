@@ -1,0 +1,13 @@
+schemaVersion: 1
+id: WL-LINEAR-METHOD-001
+kind: cel
+scope: envelope
+severity: error
+stability: preview
+title: Linear webhook delivery must use POST
+explanation: Linear webhook pushes are HTTP POST requests.
+docsRef: webhooks
+remediationKey: linear-webhook-method
+assert: envelope.request.method == "POST"
+evidencePointers:
+  - /request/method

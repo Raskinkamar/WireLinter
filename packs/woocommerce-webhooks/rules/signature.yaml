@@ -1,0 +1,18 @@
+schemaVersion: 1
+id: WL-WOO-SIGNATURE-001
+kind: signature
+scope: envelope
+severity: error
+stability: preview
+title: WooCommerce webhook signature must be valid
+explanation: When a webhook secret is configured, WooCommerce signs the request payload with HMAC-SHA256 and sends the Base64 digest in X-WC-Webhook-Signature.
+signatureRef: payload-hmac-sha256
+docsRef: webhooks
+remediationKey: woocommerce-webhook-signature
+messages:
+  missing-signature: "X-WC-Webhook-Signature is missing from a complete capture of a WooCommerce webhook configured with a secret."
+  malformed-signature: "X-WC-Webhook-Signature is not valid Base64 HMAC-SHA256 signature material."
+  signature-mismatch: "X-WC-Webhook-Signature does not match HMAC-SHA256 of the exact raw payload for the supplied webhook secret."
+  secret-unavailable: "Set WOOCOMMERCE_WEBHOOK_SECRET to verify authenticity."
+  insufficient-body-fidelity: "WooCommerce signs the payload, so reconstructed or unavailable body bytes cannot prove authenticity."
+  insufficient-header-evidence: "The captured header set is incomplete, so X-WC-Webhook-Signature cannot be proven absent."

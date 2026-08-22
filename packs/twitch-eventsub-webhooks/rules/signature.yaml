@@ -1,0 +1,19 @@
+schemaVersion: 1
+id: WL-TWITCH-SIGNATURE-001
+kind: signature
+scope: envelope
+severity: error
+stability: preview
+title: Twitch EventSub webhook signature must be valid
+explanation: Twitch signs message-id, message-timestamp, and the exact raw request body with HMAC-SHA256 using the EventSub secret.
+signatureRef: eventsub-hmac-sha256
+docsRef: handling
+remediationKey: twitch-eventsub-signature
+messages:
+  missing-signature: "Twitch-Eventsub-Message-Signature is missing from a complete EventSub webhook capture."
+  missing-signature-input: "Twitch verification requires message signature, message ID, and message timestamp headers."
+  malformed-signature: "Twitch EventSub signature must use sha256=<hex digest>."
+  signature-mismatch: "The Twitch EventSub signature does not match message ID, timestamp, and exact raw body for the supplied secret."
+  secret-unavailable: "Set TWITCH_EVENTSUB_WEBHOOK_SECRET to verify EventSub authenticity."
+  insufficient-body-fidelity: "Twitch signs the raw request body, so reconstructed or unavailable bytes cannot prove authenticity."
+  insufficient-header-evidence: "The header capture is incomplete, so required EventSub signature headers cannot be proven absent."

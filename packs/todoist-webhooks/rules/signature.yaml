@@ -1,0 +1,18 @@
+schemaVersion: 1
+id: WL-TODOIST-SIGNATURE-001
+kind: signature
+scope: envelope
+severity: error
+stability: preview
+title: Todoist webhook signature must be valid
+explanation: Todoist signs the whole request payload with HMAC-SHA256 using the app client_secret and sends a Base64 digest in X-Todoist-Hmac-SHA256.
+signatureRef: payload-hmac-sha256
+docsRef: webhooks
+remediationKey: todoist-webhook-signature
+messages:
+  missing-signature: "X-Todoist-Hmac-SHA256 is missing from a complete webhook capture."
+  malformed-signature: "X-Todoist-Hmac-SHA256 is not valid Base64 signature material."
+  signature-mismatch: "Todoist signature does not match the exact raw payload for the supplied client secret."
+  secret-unavailable: "Set TODOIST_CLIENT_SECRET to verify authenticity."
+  insufficient-body-fidelity: "Todoist signs the whole request payload, so reconstructed or unavailable body bytes cannot prove authenticity."
+  insufficient-header-evidence: "The header capture is incomplete, so X-Todoist-Hmac-SHA256 cannot be proven absent."

@@ -1,0 +1,16 @@
+schemaVersion: 1
+id: WL-DROPBOX-VERIFY-ACK-001
+kind: cel
+scope: envelope
+severity: error
+stability: preview
+title: Dropbox webhook verification response must succeed
+explanation: Dropbox accepts the webhook URI only when the verification request is answered correctly.
+docsRef: webhooks
+remediationKey: dropbox-webhook-verification-status
+requires: has(envelope.response)
+assert: envelope.response.status >= 200 && envelope.response.status < 300
+evidencePointers:
+  - /response/status
+messages:
+  evidence-unavailable: "No response was captured, so the Dropbox verification response status cannot be decided."

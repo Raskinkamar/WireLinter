@@ -1,0 +1,19 @@
+schemaVersion: 1
+id: WL-MP-WEBHOOKS-SIGNATURE-001
+kind: signature
+scope: envelope
+severity: error
+stability: preview
+title: Mercado Pago webhook signature must be valid
+explanation: Secret-signed Mercado Pago Webhooks must validate x-signature using the notification secret, x-request-id, data.id when present, and the ts field from x-signature.
+signatureRef: webhook-v1
+docsRef: webhook-signature-docs
+remediationKey: mercadopago-webhook-signature
+messages:
+  missing-signature: "x-signature is missing from a complete header capture. Secret-signed Mercado Pago Webhooks must validate the notification signature before processing it."
+  malformed-signature: "x-signature is malformed; Mercado Pago sends comma-delimited ts and v1 fields."
+  missing-signature-input: "x-signature is missing a timestamp or v1 digest required for verification."
+  ambiguous-signature-input: "The signature inputs are ambiguous because multiple values were observed where the Mercado Pago signature manifest expects a single value."
+  signature-mismatch: "x-signature does not match HMAC-SHA256 of the Mercado Pago signature manifest for the supplied secret. Preserve the original data.id casing when building the manifest."
+  secret-unavailable: "Set MERCADOPAGO_WEBHOOK_SECRET to verify authenticity; non-cryptographic delivery checks can still run without it."
+  insufficient-header-evidence: "The captured header set is incomplete, so WireLinter cannot prove whether the Mercado Pago signature inputs were absent."

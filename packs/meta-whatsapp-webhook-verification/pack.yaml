@@ -1,0 +1,30 @@
+packProtocol: "1.3"
+id: meta-whatsapp-webhook-verification
+name: Meta WhatsApp Webhook Verification
+packVersion: 0.1.0
+providerDocsRevision: "2026-08-18"
+minWireLinterVersion: 0.1.0
+capabilities: [passive-lint]
+secrets:
+  verification-token:
+    env: META_WEBHOOK_VERIFY_TOKEN
+    required: false
+    description: Verify token configured for the Meta webhook subscription
+docs:
+  verification:
+    url: https://developers.facebook.com/docs/graph-api/webhooks/getting-started/
+    revision: "2026-08-18"
+    section: Configure a Webhook Product
+secretMatches:
+  verification-token: secret-matches/verification-token.yaml
+rules:
+  - rules/method.yaml
+  - rules/mode.yaml
+  - rules/verification-token.yaml
+  - rules/challenge.yaml
+  - rules/status.yaml
+metadata:
+  status: preview
+  maintainer: wirelint
+  vendor: meta
+  surface: whatsapp-webhook-verification

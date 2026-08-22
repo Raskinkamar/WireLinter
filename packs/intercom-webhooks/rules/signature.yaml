@@ -1,0 +1,18 @@
+schemaVersion: 1
+id: WL-INTERCOM-SIGNATURE-001
+kind: signature
+scope: envelope
+severity: error
+stability: preview
+title: Intercom webhook notification signature must be valid
+explanation: Intercom signs the JSON request body with HMAC-SHA1 using the app client_secret and sends sha1=<hex digest> in X-Hub-Signature.
+signatureRef: notification-hmac-sha1
+docsRef: webhook-models
+remediationKey: intercom-webhook-signature
+messages:
+  missing-signature: "X-Hub-Signature is missing from a complete Intercom webhook notification capture."
+  malformed-signature: "Intercom X-Hub-Signature must use sha1=<hex digest>."
+  signature-mismatch: "Intercom X-Hub-Signature does not match HMAC-SHA1 of the exact raw JSON request body for the supplied client secret."
+  secret-unavailable: "Set INTERCOM_CLIENT_SECRET to verify notification authenticity."
+  insufficient-body-fidelity: "Intercom signs the request body, so reconstructed or unavailable bytes cannot prove authenticity."
+  insufficient-header-evidence: "The captured header set is incomplete, so X-Hub-Signature cannot be proven absent."

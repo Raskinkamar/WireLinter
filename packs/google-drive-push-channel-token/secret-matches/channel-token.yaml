@@ -1,0 +1,15 @@
+schemaVersion: 1
+id: channel-token
+sourceRefs:
+  - push
+secret:
+  ref: channel-token
+  representation: utf8
+candidate:
+  fromHeader:
+    name: X-Goog-Channel-Token
+    cardinality: exactly-one
+comparison: constant-time-exact
+metadata:
+  transport: header
+  bearer: false

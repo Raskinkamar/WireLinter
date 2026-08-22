@@ -1,0 +1,23 @@
+packProtocol: "1.2"
+id: tray-webhooks
+name: Tray Webhooks
+packVersion: 0.1.0
+providerDocsRevision: "2026-08-18"
+minWireLinterVersion: 0.1.0
+capabilities:
+  - passive-lint
+docs:
+  webhooks:
+    url: https://developers.tray.com.br/
+    revision: "2026-08-18"
+    section: Sistema de Notificação Webhook
+rules:
+  - rules/method.yaml
+  - rules/content-type.yaml
+metadata:
+  status: preview
+  maintainer: wirelint
+  vendor: tray
+  region: BR
+  surface: ecommerce-webhook
+  payloadModel: application-x-www-form-urlencoded

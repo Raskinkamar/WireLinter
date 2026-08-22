@@ -1,0 +1,29 @@
+packProtocol: "1.2"
+id: workos-webhooks
+name: WorkOS Webhooks
+packVersion: 0.1.0
+providerDocsRevision: "2026-08-17"
+minWireLinterVersion: 0.1.0
+capabilities:
+  - passive-lint
+secrets:
+  webhook-secret:
+    env: WORKOS_WEBHOOK_SECRET
+    required: false
+    description: Secret generated for the WorkOS webhook endpoint
+
+docs:
+  webhooks:
+    url: https://workos.com/docs/events/data-syncing/webhooks
+    revision: "2026-08-17"
+    section: Sync data with webhooks
+signatures:
+  webhook-v1: signatures/webhook-v1.yaml
+rules:
+  - rules/signature.yaml
+  - rules/method.yaml
+  - rules/ack-status.yaml
+metadata:
+  status: preview
+  maintainer: wirelint
+  surface: https-webhook

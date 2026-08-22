@@ -1,0 +1,31 @@
+packProtocol: "1.2"
+id: meta-whatsapp-webhooks
+name: Meta WhatsApp Webhooks
+packVersion: 0.1.0
+providerDocsRevision: "2026-08-18"
+minWireLinterVersion: 0.1.0
+capabilities: [passive-lint]
+secrets:
+  app-secret:
+    env: META_APP_SECRET
+    required: false
+    description: Meta app secret used to authenticate webhook payloads
+docs:
+  webhooks:
+    url: https://developers.facebook.com/docs/graph-api/webhooks/getting-started/
+    revision: "2026-08-18"
+    section: Validate Payloads
+signatures:
+  payload-hmac-sha256: signatures/payload-hmac-sha256.yaml
+rules:
+  - rules/direction.yaml
+  - rules/method.yaml
+  - rules/content-type.yaml
+  - rules/signature.yaml
+  - rules/object.yaml
+  - rules/status.yaml
+metadata:
+  status: preview
+  maintainer: wirelint
+  vendor: meta
+  surface: whatsapp-webhook-delivery

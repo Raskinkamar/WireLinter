@@ -1,0 +1,18 @@
+schemaVersion: 1
+id: WL-STORYBLOK-SIGNATURE-001
+kind: signature
+scope: envelope
+severity: error
+stability: preview
+title: Storyblok webhook signature must be valid
+explanation: Storyblok signed webhooks use HMAC-SHA1 over the exact raw request body and send the hexadecimal digest in webhook-signature.
+signatureRef: payload-hmac-sha1
+docsRef: signature-tutorial
+remediationKey: storyblok-webhook-signature
+messages:
+  missing-signature: "webhook-signature is missing from a complete capture of Storyblok signed-webhook mode."
+  malformed-signature: "Storyblok webhook-signature is malformed; the documented signature is a hexadecimal HMAC-SHA1 digest."
+  signature-mismatch: "webhook-signature does not match HMAC-SHA1 of the exact raw request body for the supplied Storyblok webhook secret."
+  secret-unavailable: "Set STORYBLOK_WEBHOOK_SECRET to verify authenticity."
+  insufficient-body-fidelity: "Storyblok signs the raw request body, so reconstructed or unavailable body bytes cannot prove authenticity."
+  insufficient-header-evidence: "The captured header set is incomplete, so webhook-signature cannot be proven absent."

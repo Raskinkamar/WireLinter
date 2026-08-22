@@ -1,0 +1,16 @@
+schemaVersion: 1
+id: WL-GH-ACK-STATUS-001
+kind: cel
+scope: envelope
+severity: error
+stability: preview
+title: GitHub webhook acknowledgement must be 2xx
+explanation: GitHub expects the webhook endpoint to acknowledge a successfully received delivery with a 2xx HTTP response.
+docsRef: webhook-troubleshooting-docs
+remediationKey: github-ack-status
+requires: has(envelope.response)
+assert: envelope.response.status >= 200 && envelope.response.status < 300
+evidencePointers:
+  - /response/status
+messages:
+  evidence-unavailable: "No application response was captured, so WireLinter cannot decide whether GitHub received a successful 2xx acknowledgement."

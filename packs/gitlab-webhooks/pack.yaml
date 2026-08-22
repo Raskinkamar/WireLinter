@@ -1,0 +1,32 @@
+packProtocol: "1.2"
+id: gitlab-webhooks
+name: GitLab Webhooks
+packVersion: 0.1.0
+providerDocsRevision: "2026-08-17"
+minWireLinterVersion: 0.1.0
+capabilities:
+  - passive-lint
+secrets:
+  signing-token:
+    env: GITLAB_WEBHOOK_SIGNING_TOKEN
+    required: false
+    description: GitLab webhook signing token generated with the whsec_ prefix
+
+docs:
+  webhooks:
+    url: https://docs.gitlab.com/user/project/integrations/webhooks/
+    revision: "2026-08-17"
+    section: Signing tokens
+  webhook-events:
+    url: https://docs.gitlab.com/user/project/integrations/webhook_events/
+    revision: "2026-08-17"
+    section: Webhook events
+signatures:
+  standard-webhook-v1: signatures/standard-webhook-v1.yaml
+rules:
+  - rules/signature.yaml
+  - rules/method.yaml
+metadata:
+  status: preview
+  maintainer: wirelint
+  surface: standard-webhook-https

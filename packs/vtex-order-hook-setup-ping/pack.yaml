@@ -1,0 +1,24 @@
+packProtocol: "1.2"
+id: vtex-order-hook-setup-ping
+name: VTEX Order Hook Setup Ping
+packVersion: 0.1.0
+providerDocsRevision: "2026-08-18"
+minWireLinterVersion: 0.1.0
+capabilities:
+  - passive-lint
+docs:
+  hook:
+    url: https://developers.vtex.com/docs/guides/orders-feed
+    revision: "2026-08-18"
+    section: Hook
+rules:
+  - rules/method.yaml
+  - rules/ping-body.yaml
+  - rules/ack-status.yaml
+metadata:
+  status: preview
+  maintainer: wirelint
+  vendor: vtex
+  region: BR-LATAM
+  surface: order-hook-setup-ping
+  scopeNote: "This setup contract validates the ping VTEX sends while saving an Order Hook configuration. Normal order notifications are covered by vtex-order-hook-delivery."

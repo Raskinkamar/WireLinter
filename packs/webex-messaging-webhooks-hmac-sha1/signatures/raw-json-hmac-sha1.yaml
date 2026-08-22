@@ -1,0 +1,24 @@
+schemaVersion: 1
+id: raw-json-hmac-sha1
+sourceRefs:
+  - webhooks
+  - secret-example
+secret:
+  ref: webhook-secret
+  representation: utf8
+bindings:
+  signature-candidates:
+    fromHeader:
+      name: X-Spark-Signature
+      cardinality: exactly-one
+      trimSpace: true
+  body:
+    fromRawBody:
+      requireFidelity: exact
+message:
+  - binding: body
+candidates:
+  binding: signature-candidates
+  encoding: hex
+mac:
+  algorithm: hmac-sha1

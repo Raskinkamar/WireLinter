@@ -1,0 +1,12 @@
+schemaVersion: 1
+id: WL-RAZORPAY-METHOD-001
+kind: cel
+scope: envelope
+severity: error
+stability: preview
+title: Razorpay webhooks must use POST
+explanation: Razorpay delivers webhook event payloads to the configured endpoint using HTTP POST.
+docsRef: verification
+assert: envelope.request.method == "POST"
+evidencePointers:
+  - /request/method

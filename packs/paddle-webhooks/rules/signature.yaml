@@ -1,0 +1,19 @@
+schemaVersion: 1
+id: WL-PADDLE-SIGNATURE-001
+kind: signature
+scope: envelope
+severity: error
+stability: preview
+title: Paddle webhook signature must be valid
+explanation: Paddle signs timestamp colon raw-body using HMAC-SHA256 with the notification destination secret and sends ts and one or more h1 signatures in Paddle-Signature.
+signatureRef: timestamp-body-hmac-sha256
+docsRef: signature
+remediationKey: paddle-webhook-signature
+messages:
+  missing-signature: "Paddle-Signature is missing from a complete webhook capture."
+  missing-signature-input: "Paddle-Signature must contain a ts timestamp and at least one h1 signature."
+  malformed-signature: "Paddle-Signature contains malformed signature material."
+  signature-mismatch: "No Paddle h1 candidate matches HMAC-SHA256 of timestamp colon exact raw body for the supplied endpoint secret."
+  secret-unavailable: "Set PADDLE_WEBHOOK_SECRET_KEY to verify authenticity."
+  insufficient-body-fidelity: "Paddle signs the raw request body, so reconstructed or unavailable body bytes cannot prove authenticity."
+  insufficient-header-evidence: "The header capture is incomplete, so Paddle-Signature cannot be proven absent."

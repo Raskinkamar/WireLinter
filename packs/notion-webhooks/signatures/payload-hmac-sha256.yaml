@@ -1,0 +1,24 @@
+schemaVersion: 1
+id: payload-hmac-sha256
+sourceRefs:
+  - webhooks
+secret:
+  ref: verification-token
+  representation: utf8
+bindings:
+  signature-candidates:
+    fromHeader:
+      name: X-Notion-Signature
+      cardinality: exactly-one
+      trimSpace: true
+  body:
+    fromRawBody:
+      requireFidelity: exact
+message:
+  - binding: body
+candidates:
+  binding: signature-candidates
+  encoding: hex
+  stripPrefix: "sha256="
+mac:
+  algorithm: hmac-sha256

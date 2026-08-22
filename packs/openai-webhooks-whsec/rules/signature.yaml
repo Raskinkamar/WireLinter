@@ -1,0 +1,21 @@
+schemaVersion: 1
+id: WL-OPENAI-SIGNATURE-001
+kind: signature
+scope: envelope
+severity: error
+stability: preview
+title: OpenAI webhook signature must be valid and fresh
+explanation: The official OpenAI SDK verifies HMAC-SHA256 over webhook-id, timestamp, and raw payload, accepting v1 Base64 signatures within a five-minute tolerance.
+signatureRef: webhook-v1
+docsRef: official-sdk
+remediationKey: openai-webhook-signature
+messages:
+  missing-signature: "webhook-signature is missing from a complete OpenAI webhook capture."
+  missing-signature-input: "OpenAI verification requires webhook-signature, webhook-id, and webhook-timestamp."
+  malformed-signature: "webhook-signature or webhook-timestamp is malformed for OpenAI v1 verification."
+  signature-mismatch: "The OpenAI v1 signature does not match webhook-id, timestamp, and exact raw body for the supplied secret."
+  timestamp-stale: "The signed OpenAI webhook timestamp is older than the official SDK's default five-minute tolerance."
+  timestamp-future: "The signed OpenAI webhook timestamp is too far in the future for the official SDK's default tolerance."
+  secret-unavailable: "Set OPENAI_WEBHOOK_SECRET to verify authenticity."
+  insufficient-body-fidelity: "OpenAI signs the exact payload, so reconstructed or unavailable body bytes cannot prove authenticity."
+  insufficient-header-evidence: "The header capture is incomplete, so required OpenAI signature headers cannot be proven absent."

@@ -1,0 +1,52 @@
+{
+  "schemaVersion": 1,
+  "traceId": "trace_github_official_vector",
+  "provider": "github",
+  "startedAt": "2026-08-17T18:00:00Z",
+  "envelopes": [
+    {
+      "id": "env_github_official_vector",
+      "provider": "github",
+      "eventType": "push",
+      "deliveryId": "72d3162e-cc78-11e3-81ab-4c9367dc0958",
+      "receivedAt": "2026-08-17T18:00:00Z",
+      "request": {
+        "method": "POST",
+        "url": "http://localhost:4242/webhook",
+        "headers": [
+          {
+            "name": "X-Hub-Signature-256",
+            "value": "sha256=757107ea0eb2509fc211221cce984b8a37570b6d7586c22c46f4379c8b043e17"
+          },
+          {
+            "name": "x-github-delivery",
+            "value": "72d3162e-cc78-11e3-81ab-4c9367dc0958"
+          },
+          {
+            "name": "X-GITHUB-EVENT",
+            "value": "push"
+          },
+          {
+            "name": "User-Agent",
+            "value": "GitHub-Hookshot/test-vector"
+          }
+        ],
+        "headersCompleteness": "complete",
+        "rawQuery": "",
+        "queryFidelity": "exact",
+        "query": [],
+        "bodyFidelity": "exact",
+        "rawBodyBase64": "SGVsbG8sIFdvcmxkIQ=="
+      },
+      "response": {
+        "status": 202,
+        "headers": [],
+        "headersCompleteness": "complete",
+        "bodyFidelity": "exact",
+        "rawBodyBase64": "",
+        "durationMs": 25.0
+      }
+    }
+  ],
+  "observations": []
+}

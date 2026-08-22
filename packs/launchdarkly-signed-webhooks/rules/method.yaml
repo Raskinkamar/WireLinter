@@ -1,0 +1,13 @@
+schemaVersion: 1
+id: WL-LD-METHOD-001
+kind: cel
+scope: envelope
+severity: error
+stability: preview
+title: LaunchDarkly webhook delivery must use POST
+explanation: LaunchDarkly sends webhook activity as HTTP POST payloads to the configured URL.
+docsRef: webhooks
+remediationKey: launchdarkly-webhook-method
+assert: envelope.request.method == "POST"
+evidencePointers:
+  - /request/method

@@ -1,0 +1,29 @@
+packProtocol: "1.2"
+id: todoist-webhooks
+name: Todoist Webhooks
+packVersion: 0.1.0
+providerDocsRevision: "2026-08-17"
+minWireLinterVersion: 0.1.0
+capabilities:
+  - passive-lint
+secrets:
+  client-secret:
+    env: TODOIST_CLIENT_SECRET
+    required: false
+    description: Todoist app client_secret used to sign webhook payloads
+docs:
+  webhooks:
+    url: https://developer.todoist.com/api/v1/
+    revision: "2026-08-17"
+    section: Webhooks Request Format
+signatures:
+  payload-hmac-sha256: signatures/payload-hmac-sha256.yaml
+rules:
+  - rules/signature.yaml
+  - rules/method.yaml
+  - rules/delivery-id.yaml
+  - rules/ack-status.yaml
+metadata:
+  status: preview
+  maintainer: wirelint
+  surface: app-webhook-event

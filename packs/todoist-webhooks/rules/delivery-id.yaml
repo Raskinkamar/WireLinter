@@ -1,0 +1,19 @@
+schemaVersion: 1
+id: WL-TODOIST-DELIVERY-001
+kind: cel
+scope: envelope
+severity: error
+stability: preview
+title: Todoist delivery identifier must be present
+explanation: Todoist assigns each webhook event notification a unique X-Todoist-Delivery-ID and reuses it for retries of that notification.
+docsRef: webhooks
+remediationKey: todoist-delivery-id
+requires: >-
+  envelope.request.headersCompleteness == "complete" ||
+  envelope.request.headers.exists(h, h.name.lowerAscii() == "x-todoist-delivery-id" && h.value != "")
+assert: >-
+  envelope.request.headers.exists(h, h.name.lowerAscii() == "x-todoist-delivery-id" && h.value != "")
+evidencePointers:
+  - /request/headers
+messages:
+  evidence-unavailable: "X-Todoist-Delivery-ID was not observed, but the header capture is incomplete."

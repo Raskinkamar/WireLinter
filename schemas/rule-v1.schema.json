@@ -1,0 +1,58 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://wirelint.dev/schemas/rule-v1.schema.json",
+  "title": "WireLinter Rule v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schemaVersion", "id", "kind", "scope", "severity", "stability", "title", "explanation", "docsRef"],
+  "properties": {
+    "schemaVersion": { "const": 1 },
+    "id": { "type": "string", "pattern": "^WL-[A-Z0-9]+(?:-[A-Z0-9]+)+$" },
+    "kind": { "enum": ["cel", "json-schema", "signature", "secret-match", "digest-match"] },
+    "scope": { "enum": ["envelope", "trace"] },
+    "severity": { "enum": ["error", "warning", "info"] },
+    "stability": { "enum": ["stable", "preview", "deprecated"] },
+    "title": { "$ref": "#/$defs/nonEmptyString" },
+    "explanation": { "$ref": "#/$defs/nonEmptyString" },
+    "when": { "type": "string", "minLength": 1 },
+    "requires": { "type": "string", "minLength": 1 },
+    "assert": { "type": "string", "minLength": 1 },
+    "targetPointer": { "type": "string", "pattern": "^(|/(?:[^~/]|~[01])*)*$" },
+    "schemaRef": { "$ref": "#/$defs/id" },
+    "signatureRef": { "$ref": "#/$defs/id" },
+    "secretMatchRef": { "$ref": "#/$defs/id" },
+    "digestMatchRef": { "$ref": "#/$defs/id" },
+    "docsRef": { "$ref": "#/$defs/id" },
+    "remediationKey": { "$ref": "#/$defs/id" },
+    "messages": { "type": "object", "propertyNames": { "$ref": "#/$defs/messageId" }, "additionalProperties": { "$ref": "#/$defs/nonEmptyString" } },
+    "evidencePointers": { "type": "array", "minItems": 1, "uniqueItems": true, "items": { "type": "string", "pattern": "^(|/(?:[^~/]|~[01])*)*$" } },
+    "metadata": { "type": "object", "additionalProperties": true }
+  },
+  "allOf": [
+    {
+      "if": { "properties": { "kind": { "const": "cel" } }, "required": ["kind"] },
+      "then": { "required": ["assert", "evidencePointers"], "not": { "anyOf": [ { "required": ["targetPointer"] }, { "required": ["schemaRef"] }, { "required": ["signatureRef"] }, { "required": ["secretMatchRef"] }, { "required": ["digestMatchRef"] } ] } }
+    },
+    {
+      "if": { "properties": { "kind": { "const": "json-schema" } }, "required": ["kind"] },
+      "then": { "required": ["targetPointer", "schemaRef"], "not": { "anyOf": [ { "required": ["requires"] }, { "required": ["assert"] }, { "required": ["signatureRef"] }, { "required": ["secretMatchRef"] }, { "required": ["digestMatchRef"] } ] } }
+    },
+    {
+      "if": { "properties": { "kind": { "const": "signature" } }, "required": ["kind"] },
+      "then": { "required": ["signatureRef"], "properties": { "scope": { "const": "envelope" } }, "not": { "anyOf": [ { "required": ["requires"] }, { "required": ["assert"] }, { "required": ["targetPointer"] }, { "required": ["schemaRef"] }, { "required": ["secretMatchRef"] }, { "required": ["digestMatchRef"] }, { "required": ["evidencePointers"] } ] } }
+    },
+    {
+      "if": { "properties": { "kind": { "const": "secret-match" } }, "required": ["kind"] },
+      "then": { "required": ["secretMatchRef"], "properties": { "scope": { "const": "envelope" } }, "not": { "anyOf": [ { "required": ["requires"] }, { "required": ["assert"] }, { "required": ["targetPointer"] }, { "required": ["schemaRef"] }, { "required": ["signatureRef"] }, { "required": ["digestMatchRef"] }, { "required": ["evidencePointers"] } ] } }
+    },
+    {
+      "if": { "properties": { "kind": { "const": "digest-match" } }, "required": ["kind"] },
+      "then": { "required": ["digestMatchRef"], "properties": { "scope": { "const": "envelope" } }, "not": { "anyOf": [ { "required": ["requires"] }, { "required": ["assert"] }, { "required": ["targetPointer"] }, { "required": ["schemaRef"] }, { "required": ["signatureRef"] }, { "required": ["secretMatchRef"] }, { "required": ["evidencePointers"] } ] } }
+    }
+  ],
+  "$defs": {
+    "nonEmptyString": { "type": "string", "minLength": 1 },
+    "id": { "type": "string", "pattern": "^[a-z][a-z0-9]*(?:[-_][a-z0-9]+)*$" },
+    "messageId": { "type": "string", "pattern": "^[a-z][a-z0-9]*(?:-[a-z0-9]+)*$" }
+  }
+}

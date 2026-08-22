@@ -1,0 +1,22 @@
+schemaVersion: 1
+id: WL-CELCOIN-ITP-CONTENT-TYPE-001
+kind: cel
+scope: envelope
+severity: error
+stability: preview
+title: Celcoin ITP webhook payload must be JSON
+explanation: Celcoin documents Content-Type application/json among the ITP webhook headers.
+docsRef: webhooks
+requires: >-
+  envelope.request.headersCompleteness == "complete" ||
+  envelope.request.headers.exists(h, h.name.lowerAscii() == "content-type")
+assert: >-
+  envelope.request.headers.exists(
+    h,
+    h.name.lowerAscii() == "content-type" &&
+    h.value.lowerAscii().startsWith("application/json")
+  )
+evidencePointers:
+  - /request/headers
+messages:
+  evidence-unavailable: "Content-Type was not observed, but the Celcoin ITP request header capture is incomplete."

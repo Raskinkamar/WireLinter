@@ -1,0 +1,35 @@
+packProtocol: "1.3"
+id: zoop-authorized-webhooks
+name: Zoop Authorized Webhooks
+packVersion: 0.1.0
+providerDocsRevision: "2026-08-18"
+minWireLinterVersion: 0.1.0
+capabilities:
+  - passive-lint
+secrets:
+  authorization:
+    env: ZOOP_WEBHOOK_AUTHORIZATION
+    required: false
+    description: Authorization value configured when creating the Zoop webhook
+docs:
+  authorization:
+    url: https://docs.zoop.co/v2.5-banking/docs/webhook-com-autoriza%C3%A7%C3%A3o
+    revision: "2026-08-18"
+    section: Webhook com autorização
+  registration:
+    url: https://docs.zoop.co/reference/post_v1-marketplaces-marketplace-id-webhooks
+    revision: "2026-08-18"
+    section: Criar webhook por marketplace
+secretMatches:
+  authorization: secret-matches/authorization.yaml
+rules:
+  - rules/authorization.yaml
+  - rules/method.yaml
+  - rules/content-type.yaml
+metadata:
+  status: preview
+  maintainer: wirelint
+  vendor: zoop
+  region: BR
+  surface: authorized-marketplace-webhook
+  authModel: integrator-defined-authorization-header

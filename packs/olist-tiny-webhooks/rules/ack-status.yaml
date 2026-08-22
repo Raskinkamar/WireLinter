@@ -1,0 +1,16 @@
+schemaVersion: 1
+id: WL-OLIST-TINY-ACK-001
+kind: cel
+scope: envelope
+severity: error
+stability: preview
+title: Olist Tiny webhook acknowledgement must be HTTP 200
+explanation: Olist API 2.0 webhook documentation consistently requires HTTP 200 to confirm receipt; failed acknowledgements are retried according to the selected webhook surface.
+docsRef: sales-webhooks
+remediationKey: olist-tiny-webhook-ack-status
+requires: has(envelope.response)
+assert: envelope.response.status == 200
+evidencePointers:
+  - /response/status
+messages:
+  evidence-unavailable: "No response status was captured, so Olist Tiny webhook acknowledgement cannot be decided."

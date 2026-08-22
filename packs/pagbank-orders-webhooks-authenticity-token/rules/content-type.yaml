@@ -1,0 +1,22 @@
+schemaVersion: 1
+id: WL-PAGBANK-ORDERS-CONTENT-TYPE-001
+kind: cel
+scope: envelope
+severity: error
+stability: preview
+title: PagBank Orders authenticity-token notification should be JSON
+explanation: PagBank's authenticity-token reference shows the signed notification with Content-Type application/json and requires hashing the exact received payload.
+docsRef: authenticity
+requires: >-
+  envelope.request.headersCompleteness == "complete" ||
+  envelope.request.headers.exists(h, h.name.lowerAscii() == "content-type")
+assert: >-
+  envelope.request.headers.exists(
+    h,
+    h.name.lowerAscii() == "content-type" &&
+    h.value.lowerAscii().startsWith("application/json")
+  )
+evidencePointers:
+  - /request/headers
+messages:
+  evidence-unavailable: "Content-Type was not observed, but the PagBank Orders webhook header capture is incomplete."

@@ -1,0 +1,13 @@
+schemaVersion: 1
+id: WL-TYPEFORM-METHOD-001
+kind: cel
+scope: envelope
+severity: error
+stability: preview
+title: Typeform webhook delivery must use POST
+explanation: Typeform delivers response notifications to webhook endpoints using HTTP POST.
+docsRef: delivery
+remediationKey: typeform-webhook-method
+assert: envelope.request.method == "POST"
+evidencePointers:
+  - /request/method

@@ -1,0 +1,43 @@
+{
+  "schemaVersion": 1,
+  "traceId": "trace_pagbank_orders_digest_vector",
+  "provider": "pagbank-orders-webhooks-authenticity-token",
+  "startedAt": "2026-08-18T04:30:00Z",
+  "envelopes": [
+    {
+      "id": "env_pagbank_orders_digest_vector",
+      "provider": "pagbank-orders-webhooks-authenticity-token",
+      "eventType": "order.updated",
+      "receivedAt": "2026-08-18T04:30:00Z",
+      "request": {
+        "method": "POST",
+        "url": "https://example.test/webhooks/pagbank",
+        "headers": [
+          {
+            "name": "x-authenticity-token",
+            "value": "14b2dacb37763176151d0de6df8de408d67bbcc6050277b8e758cd0cca8d2f9e"
+          },
+          {
+            "name": "content-type",
+            "value": "application/json"
+          }
+        ],
+        "headersCompleteness": "complete",
+        "rawQuery": "",
+        "queryFidelity": "exact",
+        "query": [],
+        "bodyFidelity": "exact",
+        "rawBodyBase64": "eyJpZCI6Ik9SREVfTElOVEVSQk9ZXzEwMCIsInN0YXR1cyI6IlBBSUQiLCJyZWZlcmVuY2VfaWQiOiJsYi0xMDAifQ=="
+      },
+      "response": {
+        "status": 200,
+        "headers": [],
+        "headersCompleteness": "complete",
+        "bodyFidelity": "exact",
+        "rawBodyBase64": "",
+        "durationMs": 25.0
+      }
+    }
+  ],
+  "observations": []
+}

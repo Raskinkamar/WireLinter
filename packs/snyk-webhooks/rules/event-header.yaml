@@ -1,0 +1,19 @@
+schemaVersion: 1
+id: WL-SNYK-EVENT-001
+kind: cel
+scope: envelope
+severity: warning
+stability: preview
+title: Snyk event header should identify a versioned event
+explanation: Snyk supplies payload version information as a suffix in X-Snyk-Event.
+docsRef: validation
+remediationKey: snyk-event-header
+requires: >-
+  envelope.request.headersCompleteness == "complete" ||
+  envelope.request.headers.exists(h, h.name.lowerAscii() == "x-snyk-event" && h.value != "")
+assert: >-
+  envelope.request.headers.exists(h, h.name.lowerAscii() == "x-snyk-event" && h.value != "")
+evidencePointers:
+  - /request/headers
+messages:
+  evidence-unavailable: "X-Snyk-Event was not observed, but the header capture is incomplete."

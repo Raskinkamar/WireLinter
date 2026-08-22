@@ -1,0 +1,12 @@
+schemaVersion: 1
+id: WL-TRANSFEERA-METHOD-001
+kind: cel
+scope: envelope
+severity: error
+stability: preview
+title: Transfeera payment events must use POST
+explanation: Transfeera sends payment events through HTTP or HTTPS POST requests.
+docsRef: events
+assert: envelope.request.method == "POST"
+evidencePointers:
+  - /request/method

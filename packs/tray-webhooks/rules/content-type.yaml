@@ -1,0 +1,22 @@
+schemaVersion: 1
+id: WL-TRAY-CONTENT-TYPE-001
+kind: cel
+scope: envelope
+severity: error
+stability: preview
+title: Tray webhook payload must use form URL encoding
+explanation: Tray explicitly documents its webhook payload format as x-www-form-urlencoded.
+docsRef: webhooks
+requires: >-
+  envelope.request.headersCompleteness == "complete" ||
+  envelope.request.headers.exists(h, h.name.lowerAscii() == "content-type")
+assert: >-
+  envelope.request.headers.exists(
+    h,
+    h.name.lowerAscii() == "content-type" &&
+    h.value.lowerAscii().startsWith("application/x-www-form-urlencoded")
+  )
+evidencePointers:
+  - /request/headers
+messages:
+  evidence-unavailable: "Content-Type was not observed, but the Tray request header capture is incomplete."

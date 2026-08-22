@@ -1,0 +1,12 @@
+schemaVersion: 1
+id: WL-PAGBANK-ORDERS-METHOD-001
+kind: cel
+scope: envelope
+severity: error
+stability: preview
+title: PagBank Orders webhooks must use POST
+explanation: PagBank sends Orders webhook notifications to the configured notification URL using HTTP POST.
+docsRef: webhooks
+assert: envelope.request.method == "POST"
+evidencePointers:
+  - /request/method

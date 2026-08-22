@@ -1,0 +1,13 @@
+schemaVersion: 1
+id: WL-SH-HTTPS-METHOD-001
+kind: cel
+scope: envelope
+severity: error
+stability: preview
+title: Shopify HTTPS webhook delivery must use POST
+explanation: Shopify delivers HTTPS webhooks to the configured endpoint using HTTP POST.
+docsRef: webhook-verification
+remediationKey: shopify-https-webhook-method
+assert: envelope.request.method == "POST"
+evidencePointers:
+  - /request/method

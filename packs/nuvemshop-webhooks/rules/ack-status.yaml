@@ -1,0 +1,16 @@
+schemaVersion: 1
+id: WL-NUVEMSHOP-ACK-STATUS-001
+kind: cel
+scope: envelope
+severity: error
+stability: preview
+title: Nuvemshop webhook acknowledgement must be 2xx
+explanation: Nuvemshop expects a 2xx status code to confirm that the application received the webhook notification.
+docsRef: webhooks
+remediationKey: nuvemshop-webhook-ack-status
+requires: has(envelope.response)
+assert: envelope.response.status >= 200 && envelope.response.status < 300
+evidencePointers:
+  - /response/status
+messages:
+  evidence-unavailable: "No response status was captured, so Nuvemshop acknowledgement success cannot be decided."

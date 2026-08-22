@@ -1,0 +1,35 @@
+{
+  "schemaVersion": 1,
+  "traceId": "trace_stripe_demo",
+  "provider": "stripe",
+  "startedAt": "2026-05-28T20:27:40Z",
+  "envelopes": [
+    {
+      "id": "env_stripe_demo",
+      "provider": "stripe",
+      "eventType": "event",
+      "receivedAt": "2026-05-28T20:27:40Z",
+      "request": {
+        "method": "POST",
+        "url": "http://localhost:4242/webhook",
+        "headers": [
+          {
+            "name": "Stripe-Signature",
+            "value": "t=1780000000,v1=bb376357ce82e5d0f49ee158d2f9e6d05bb039981423ffc2e0d00ff05b6c3727"
+          }
+        ],
+        "headersCompleteness": "complete",
+        "rawQuery": "",
+        "queryFidelity": "exact",
+        "query": [],
+        "bodyFidelity": "exact",
+        "rawBodyBase64": "eyJpZCI6ImV2dF9kZW1vIiwib2JqZWN0IjoiZXZlbnQifQ==",
+        "decodedBody": {
+          "id": "evt_demo",
+          "object": "event"
+        }
+      }
+    }
+  ],
+  "observations": []
+}

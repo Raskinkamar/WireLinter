@@ -1,0 +1,18 @@
+schemaVersion: 1
+id: WL-ZOOP-AUTHORIZATION-001
+kind: secret-match
+scope: envelope
+severity: error
+stability: preview
+title: Zoop webhook Authorization value must match
+explanation: Zoop lets the integrator define an authorization value when registering a webhook and sends that same value in the outbound Authorization header.
+secretMatchRef: authorization
+docsRef: authorization
+remediationKey: zoop-webhook-authorization
+messages:
+  secret-match-valid: "Authorization matches the value configured for the Zoop webhook."
+  secret-unavailable: "Set ZOOP_WEBHOOK_AUTHORIZATION to verify the configured Zoop webhook Authorization value."
+  missing-secret-input: "Authorization is missing from a complete Zoop authorized-webhook header capture."
+  ambiguous-secret-input: "Multiple Authorization values were observed; the Zoop webhook authorization must be unambiguous."
+  secret-mismatch: "Authorization does not match the value configured for the Zoop webhook."
+  insufficient-header-evidence: "The header capture is incomplete, so Authorization cannot be proven absent."

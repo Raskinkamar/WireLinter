@@ -1,0 +1,19 @@
+schemaVersion: 1
+id: WL-LINEAR-DELIVERY-001
+kind: cel
+scope: envelope
+severity: error
+stability: preview
+title: Linear delivery identifier must be present
+explanation: Linear sends Linear-Delivery as the UUID that uniquely identifies the webhook payload.
+docsRef: webhooks
+remediationKey: linear-delivery-header
+requires: >-
+  envelope.request.headersCompleteness == "complete" ||
+  envelope.request.headers.exists(h, h.name.lowerAscii() == "linear-delivery" && h.value != "")
+assert: >-
+  envelope.request.headers.exists(h, h.name.lowerAscii() == "linear-delivery" && h.value != "")
+evidencePointers:
+  - /request/headers
+messages:
+  evidence-unavailable: "Linear-Delivery was not observed, but the request header capture is incomplete, so its absence cannot be proven."

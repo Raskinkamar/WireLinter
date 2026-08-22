@@ -1,0 +1,15 @@
+schemaVersion: 1
+id: WL-PLUGGY-ACK-DURATION-001
+kind: cel
+scope: envelope
+severity: error
+stability: preview
+title: Pluggy webhook receiver must respond in under 5 seconds
+explanation: Pluggy treats a notification as successful only when the receiver returns 2xx in less than five seconds.
+docsRef: webhooks
+requires: envelope.response != null
+assert: envelope.response.durationMs < 5000.0
+evidencePointers:
+  - /response/durationMs
+messages:
+  evidence-unavailable: "No receiver response was captured, so the Pluggy five-second deadline cannot be checked."

@@ -1,0 +1,19 @@
+schemaVersion: 1
+id: WL-BUILDKITE-EVENT-001
+kind: cel
+scope: envelope
+severity: error
+stability: preview
+title: Buildkite Pipelines event header must be present
+explanation: Buildkite Pipelines webhook requests include X-Buildkite-Event identifying the event type.
+docsRef: pipelines
+remediationKey: buildkite-event-header
+requires: >-
+  envelope.request.headersCompleteness == "complete" ||
+  envelope.request.headers.exists(h, h.name.lowerAscii() == "x-buildkite-event" && h.value != "")
+assert: >-
+  envelope.request.headers.exists(h, h.name.lowerAscii() == "x-buildkite-event" && h.value != "")
+evidencePointers:
+  - /request/headers
+messages:
+  evidence-unavailable: "X-Buildkite-Event was not observed, but the header capture is incomplete."

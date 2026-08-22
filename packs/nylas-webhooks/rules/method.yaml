@@ -1,0 +1,13 @@
+schemaVersion: 1
+id: WL-NYLAS-METHOD-001
+kind: cel
+scope: envelope
+severity: error
+stability: preview
+title: Nylas webhook notification delivery must use POST
+explanation: After endpoint verification, Nylas delivers webhook notifications as HTTP POST requests.
+docsRef: notifications
+remediationKey: nylas-webhook-method
+assert: envelope.request.method == "POST"
+evidencePointers:
+  - /request/method

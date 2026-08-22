@@ -1,0 +1,18 @@
+schemaVersion: 1
+id: WL-LINE-SIGNATURE-001
+kind: signature
+scope: envelope
+severity: error
+stability: preview
+title: LINE Messaging API webhook signature must be valid
+explanation: LINE signs the exact received webhook request body with HMAC-SHA256 using the channel secret and sends the Base64 digest in x-line-signature.
+signatureRef: raw-body-hmac-sha256
+docsRef: verification
+remediationKey: line-messaging-webhook-signature
+messages:
+  missing-signature: "x-line-signature is missing from a complete LINE webhook capture."
+  malformed-signature: "x-line-signature is not valid Base64 HMAC-SHA256 signature material."
+  signature-mismatch: "x-line-signature does not match HMAC-SHA256 of the exact raw request body for the supplied LINE channel secret."
+  secret-unavailable: "Set LINE_CHANNEL_SECRET to verify webhook authenticity."
+  insufficient-body-fidelity: "LINE requires the request body to remain unmodified before verification, so reconstructed or unavailable body bytes cannot prove authenticity."
+  insufficient-header-evidence: "The captured header set is incomplete, so x-line-signature cannot be proven absent."

@@ -1,0 +1,18 @@
+schemaVersion: 1
+id: WL-NUVEMSHOP-SIGNATURE-001
+kind: signature
+scope: envelope
+severity: error
+stability: preview
+title: Nuvemshop webhook signature must be valid
+explanation: Nuvemshop signs the exact webhook request data with HMAC-SHA256 using the app secret and sends the hexadecimal digest in x-linkedstore-hmac-sha256.
+signatureRef: payload-hmac-sha256
+docsRef: webhooks
+remediationKey: nuvemshop-webhook-signature
+messages:
+  missing-signature: "x-linkedstore-hmac-sha256 is missing from a complete webhook capture."
+  malformed-signature: "x-linkedstore-hmac-sha256 is not a valid hexadecimal HMAC-SHA256 digest."
+  signature-mismatch: "x-linkedstore-hmac-sha256 does not match the exact raw body for the supplied Nuvemshop app secret."
+  secret-unavailable: "Set NUVEMSHOP_APP_SECRET to verify webhook authenticity."
+  insufficient-body-fidelity: "Nuvemshop verifies the original request data, so reconstructed or unavailable body bytes cannot prove authenticity."
+  insufficient-header-evidence: "The header capture is incomplete, so x-linkedstore-hmac-sha256 cannot be proven absent."

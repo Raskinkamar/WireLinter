@@ -1,0 +1,22 @@
+schemaVersion: 1
+id: WL-GH-GQL-AUTH-001
+kind: cel
+scope: envelope
+severity: error
+stability: preview
+title: GitHub GraphQL calls must send Bearer authorization
+explanation: GitHub GraphQL requests authenticate with an Authorization header carrying a bearer token. WireLinter preserves the scheme while redacting the credential value from outbound Trace evidence.
+docsRef: graphql-calls
+requires: >-
+  envelope.request.headersCompleteness == "complete" ||
+  envelope.request.headers.exists(h, h.name.lowerAscii() == "authorization")
+assert: >-
+  envelope.request.headers.exists(
+    h,
+    h.name.lowerAscii() == "authorization" &&
+    h.value.lowerAscii().startsWith("bearer ")
+  )
+evidencePointers:
+  - /request/headers
+messages:
+  evidence-unavailable: "Authorization was not observed, but the request header capture is incomplete, so its absence cannot be proven."

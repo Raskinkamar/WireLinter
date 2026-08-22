@@ -1,0 +1,18 @@
+schemaVersion: 1
+id: WL-GDRIVE-TOKEN-001
+kind: secret-match
+scope: envelope
+severity: error
+stability: preview
+title: Google Drive channel token must match
+explanation: When a token is configured on the Drive notification channel, Google includes the exact value in X-Goog-Channel-Token and documents it as usable to verify the notification source/channel.
+secretMatchRef: channel-token
+docsRef: push
+remediationKey: google-drive-channel-token
+messages:
+  secret-match-valid: "X-Goog-Channel-Token matches the expected Drive notification channel token."
+  secret-unavailable: "Set GOOGLE_DRIVE_CHANNEL_TOKEN to verify the channel token."
+  missing-secret-input: "X-Goog-Channel-Token is missing from a complete capture of token-configured channel mode."
+  ambiguous-secret-input: "Multiple X-Goog-Channel-Token values were observed where exactly one is expected."
+  secret-mismatch: "X-Goog-Channel-Token does not match the expected Drive channel token."
+  insufficient-header-evidence: "The header capture is incomplete, so absence of X-Goog-Channel-Token cannot be proven."

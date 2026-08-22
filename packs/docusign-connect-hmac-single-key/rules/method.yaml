@@ -1,0 +1,13 @@
+schemaVersion: 1
+id: WL-DOCUSIGN-METHOD-001
+kind: cel
+scope: envelope
+severity: error
+stability: preview
+title: Docusign Connect notification delivery must use POST
+explanation: Docusign Connect notification messages are delivered to listener applications as HTTPS POST requests.
+docsRef: listener
+remediationKey: docusign-connect-method
+assert: envelope.request.method == "POST"
+evidencePointers:
+  - /request/method

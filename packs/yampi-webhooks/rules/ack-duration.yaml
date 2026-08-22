@@ -1,0 +1,15 @@
+schemaVersion: 1
+id: WL-YAMPI-ACK-DURATION-001
+kind: cel
+scope: envelope
+severity: error
+stability: preview
+title: Yampi webhook receiver must respond within 5 seconds
+explanation: Yampi aborts a webhook request and records a failure when the application does not respond within five seconds.
+docsRef: webhooks
+requires: envelope.response != null
+assert: envelope.response.durationMs <= 5000.0
+evidencePointers:
+  - /response/durationMs
+messages:
+  evidence-unavailable: "No receiver response was captured, so the Yampi five-second acknowledgement deadline cannot be checked."

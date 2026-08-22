@@ -1,0 +1,31 @@
+packProtocol: "1.2"
+id: snyk-webhooks
+name: Snyk Webhooks
+packVersion: 0.1.0
+providerDocsRevision: "2026-08-17"
+minWireLinterVersion: 0.1.0
+capabilities:
+  - passive-lint
+secrets:
+  webhook-secret:
+    env: SNYK_WEBHOOK_SECRET
+    required: false
+    description: Secret supplied when creating the Snyk webhook
+docs:
+  validation:
+    url: https://docs.snyk.io/snyk-api/using-specific-snyk-apis/webhooks-apis/validation-and-versioning-of-payloads
+    revision: "2026-08-17"
+    section: Validating payloads
+  overview:
+    url: https://docs.snyk.io/snyk-api/using-specific-snyk-apis/webhooks-apis/about-webhooks
+    revision: "2026-08-17"
+    section: Request signing
+signatures:
+  transport-hmac-sha256: signatures/transport-hmac-sha256.yaml
+rules:
+  - rules/signature.yaml
+  - rules/event-header.yaml
+metadata:
+  status: preview
+  maintainer: wirelint
+  surface: signed-webhook-transport

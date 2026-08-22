@@ -1,0 +1,17 @@
+schemaVersion: 1
+id: WL-GRAPH-VALIDATE-TOKEN-001
+kind: cel
+scope: envelope
+severity: error
+stability: preview
+title: Microsoft Graph validation request must contain exactly one validationToken
+explanation: Microsoft Graph includes an opaque URL-encoded validationToken query parameter when validating a notification URL.
+docsRef: validation
+remediationKey: graph-notification-url-validation-token
+requires: envelope.request.queryFidelity == "exact"
+assert: envelope.request.query.filter(q, q.name == "validationToken").size() == 1 && envelope.request.query.exists(q, q.name == "validationToken" && q.value != "")
+evidencePointers:
+  - /request/query
+  - /request/queryFidelity
+messages:
+  evidence-unavailable: "Exact decoded query evidence was not captured, so validationToken cannot be decided safely."

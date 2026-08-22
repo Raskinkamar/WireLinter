@@ -1,0 +1,19 @@
+schemaVersion: 1
+id: WL-BLIP-MESSAGE-RECEIVER-ENVELOPE-001
+kind: cel
+scope: envelope
+severity: error
+stability: preview
+title: Blip chatbot message envelope must expose core LIME routing fields
+explanation: Blip's HTTP message receiver examples and message format document id, from, to and type as core fields required to identify and route an inbound message.
+docsRef: receiver
+requires: has(envelope.request.decodedBody)
+assert: >-
+  has(envelope.request.decodedBody.id) && envelope.request.decodedBody.id != "" &&
+  has(envelope.request.decodedBody.from) && envelope.request.decodedBody.from != "" &&
+  has(envelope.request.decodedBody.to) && envelope.request.decodedBody.to != "" &&
+  has(envelope.request.decodedBody.type) && envelope.request.decodedBody.type != ""
+evidencePointers:
+  - /request/decodedBody
+messages:
+  evidence-unavailable: "Decoded Blip message JSON is unavailable, so the LIME envelope cannot be checked."

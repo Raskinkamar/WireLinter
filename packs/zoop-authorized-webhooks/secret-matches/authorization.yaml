@@ -1,0 +1,15 @@
+schemaVersion: 1
+id: authorization
+sourceRefs:
+  - authorization
+secret:
+  ref: authorization
+  representation: utf8
+candidate:
+  fromHeader:
+    name: Authorization
+    cardinality: exactly-one
+comparison: constant-time-exact
+metadata:
+  transport: header
+  integratorDefined: true

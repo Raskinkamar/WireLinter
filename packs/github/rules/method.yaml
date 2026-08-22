@@ -1,0 +1,13 @@
+schemaVersion: 1
+id: WL-GH-METHOD-001
+kind: cel
+scope: envelope
+severity: error
+stability: preview
+title: GitHub webhook delivery must use POST
+explanation: GitHub delivers webhook payloads to the configured endpoint with HTTP POST.
+docsRef: webhook-delivery-docs
+remediationKey: github-webhook-method
+assert: envelope.request.method == "POST"
+evidencePointers:
+  - /request/method

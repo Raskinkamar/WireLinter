@@ -1,0 +1,25 @@
+schemaVersion: 1
+id: WL-SH-HTTPS-API-VERSION-001
+kind: cel
+scope: envelope
+severity: warning
+stability: preview
+title: Shopify webhook API version should be observable
+explanation: Shopify HTTPS deliveries include X-Shopify-API-Version so handlers can identify the API version that serialized the webhook payload.
+docsRef: webhook-subscriptions
+remediationKey: shopify-api-version-header
+requires: >-
+  envelope.request.headersCompleteness == "complete" ||
+  envelope.request.headers.exists(
+    h,
+    h.name.lowerAscii() == "x-shopify-api-version" && h.value != ""
+  )
+assert: >-
+  envelope.request.headers.exists(
+    h,
+    h.name.lowerAscii() == "x-shopify-api-version" && h.value != ""
+  )
+evidencePointers:
+  - /request/headers
+messages:
+  evidence-unavailable: "X-Shopify-API-Version was not observed, but the request header capture is incomplete, so its absence cannot be proven."

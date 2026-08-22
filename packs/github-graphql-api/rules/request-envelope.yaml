@@ -1,0 +1,25 @@
+schemaVersion: 1
+id: WL-GH-GQL-REQUEST-001
+kind: cel
+scope: envelope
+severity: error
+stability: preview
+title: GitHub GraphQL request body must contain a GraphQL document
+explanation: A JSON GraphQL request carries the document in query and may carry operationName and variables with their standard GraphQL-over-HTTP shapes.
+docsRef: graphql-calls
+requires: has(envelope.request.decodedBody)
+assert: >-
+  type(envelope.request.decodedBody) == type({}) &&
+  has(envelope.request.decodedBody.query) &&
+  type(envelope.request.decodedBody.query) == string &&
+  size(envelope.request.decodedBody.query) > 0 &&
+  (!has(envelope.request.decodedBody.operationName) ||
+    envelope.request.decodedBody.operationName == null ||
+    type(envelope.request.decodedBody.operationName) == string) &&
+  (!has(envelope.request.decodedBody.variables) ||
+    envelope.request.decodedBody.variables == null ||
+    type(envelope.request.decodedBody.variables) == type({}))
+evidencePointers:
+  - /request/decodedBody
+messages:
+  evidence-unavailable: "Decoded request JSON is unavailable, so the GraphQL request envelope cannot be checked."

@@ -1,0 +1,17 @@
+schemaVersion: 1
+id: WL-GH-GQL-RESPONSE-001
+kind: cel
+scope: envelope
+severity: error
+stability: preview
+title: GitHub GraphQL response must contain data or errors
+explanation: The GraphQL response contract uses data for execution results and errors for request or execution errors; an object containing neither does not describe a GraphQL result.
+docsRef: graphql-response
+requires: has(envelope.response) && has(envelope.response.decodedBody)
+assert: >-
+  type(envelope.response.decodedBody) == type({}) &&
+  (has(envelope.response.decodedBody.data) || has(envelope.response.decodedBody.errors))
+evidencePointers:
+  - /response/decodedBody
+messages:
+  evidence-unavailable: "Decoded provider response JSON is unavailable, so GraphQL response semantics cannot be checked."

@@ -1,0 +1,19 @@
+schemaVersion: 1
+id: WL-REVENUECAT-SIGNATURE-001
+kind: signature
+scope: envelope
+severity: error
+stability: preview
+title: RevenueCat HMAC webhook signature must be valid
+explanation: When HMAC signing is enabled, RevenueCat signs timestamp dot exact raw JSON body with HMAC-SHA256 and sends t and v1 in X-RevenueCat-Webhook-Signature.
+signatureRef: timestamp-body-v1
+docsRef: webhooks
+remediationKey: revenuecat-webhook-signature
+messages:
+  missing-signature: "X-RevenueCat-Webhook-Signature is missing from a complete capture of HMAC-signing mode."
+  missing-signature-input: "RevenueCat HMAC signing requires both t and v1 signature fields."
+  malformed-signature: "X-RevenueCat-Webhook-Signature contains malformed signature material."
+  signature-mismatch: "RevenueCat v1 does not match HMAC-SHA256 of timestamp dot exact raw JSON body for the supplied signing secret."
+  secret-unavailable: "Set REVENUECAT_WEBHOOK_SIGNING_SECRET to verify HMAC-signed deliveries."
+  insufficient-body-fidelity: "RevenueCat signs the raw JSON body, so reconstructed or unavailable body bytes cannot prove authenticity."
+  insufficient-header-evidence: "The header capture is incomplete, so X-RevenueCat-Webhook-Signature cannot be proven absent."

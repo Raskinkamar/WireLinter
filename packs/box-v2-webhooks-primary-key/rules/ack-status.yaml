@@ -1,0 +1,16 @@
+schemaVersion: 1
+id: WL-BOX-V2-ACK-STATUS-001
+kind: cel
+scope: envelope
+severity: error
+stability: preview
+title: Box V2 webhook acknowledgement must be 2xx
+explanation: Box requires the webhook notification URL to return an HTTP status from 200 through 299.
+docsRef: delivery
+remediationKey: box-v2-webhook-ack-status
+requires: has(envelope.response)
+assert: envelope.response.status >= 200 && envelope.response.status < 300
+evidencePointers:
+  - /response/status
+messages:
+  evidence-unavailable: "No response status was captured, so Box acknowledgement success cannot be decided."

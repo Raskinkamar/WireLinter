@@ -1,0 +1,16 @@
+schemaVersion: 1
+id: WL-NYLAS-ACK-STATUS-001
+kind: cel
+scope: envelope
+severity: error
+stability: preview
+title: Nylas webhook acknowledgement must be HTTP 200
+explanation: Nylas requires webhook notification receivers to return HTTP 200 to avoid marking the destination failing or failed.
+docsRef: notifications
+remediationKey: nylas-webhook-ack-status
+requires: has(envelope.response)
+assert: envelope.response.status == 200
+evidencePointers:
+  - /response/status
+messages:
+  evidence-unavailable: "No response was captured, so Nylas' HTTP 200 acknowledgement cannot be decided."

@@ -1,0 +1,36 @@
+packProtocol: "1.2"
+id: nfeio-dfe-inbound-v2-webhooks
+name: NFE.io DFe Inbound V2 Webhooks
+packVersion: 0.1.0
+providerDocsRevision: "2026-08-18"
+minWireLinterVersion: 0.1.0
+capabilities:
+  - passive-lint
+secrets:
+  webhook-secret:
+    env: NFEIO_DFE_INBOUND_WEBHOOK_SECRET
+    required: false
+    description: Webhook Secret configurado para o DFe Inbound V2 da NFE.io
+docs:
+  inbound:
+    url: https://nfe.io/docs/documentacao/distribuicao/dfe-inbound-webhook-nfe-cte/
+    revision: "2026-08-18"
+    section: Webhook - Contrato técnico e Validação HMAC
+signatures:
+  payload-hmac-sha256: signatures/payload-hmac-sha256.yaml
+rules:
+  - rules/signature.yaml
+  - rules/method.yaml
+  - rules/content-type.yaml
+  - rules/ack-status.yaml
+  - rules/ack-duration.yaml
+metadata:
+  status: preview
+  maintainer: wirelint
+  vendor: nfeio
+  region: BR
+  surface: dfe-inbound-webhook-v2
+  webhookVersion: 2
+  retryAttemptsMax: 50
+  retryWindowHours: 24
+  scopeNote: "This contract is specifically for NFE.io DFe Inbound WebhookVersion 2, which documents X-NFe-Signature HMAC-SHA256. It is intentionally separate from the classic X-Hub-Signature HMAC-SHA1 webhook surface."

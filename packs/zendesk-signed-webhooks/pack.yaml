@@ -1,0 +1,31 @@
+packProtocol: "1.2"
+id: zendesk-signed-webhooks
+name: Zendesk Signed Webhooks
+packVersion: 0.1.0
+providerDocsRevision: "2026-08-17"
+minWireLinterVersion: 0.1.0
+capabilities:
+  - passive-lint
+secrets:
+  signing-secret:
+    env: ZENDESK_WEBHOOK_SIGNING_SECRET
+    required: false
+    description: Zendesk webhook signing secret
+docs:
+  verification:
+    url: https://developer.zendesk.com/documentation/webhooks/verifying/
+    revision: "2026-08-17"
+    section: Verifying the signature
+  anatomy:
+    url: https://developer.zendesk.com/documentation/webhooks/anatomy-of-a-webhook-request/
+    revision: "2026-08-17"
+    section: Request headers
+signatures:
+  timestamp-body-hmac-sha256: signatures/timestamp-body-hmac-sha256.yaml
+rules:
+  - rules/signature.yaml
+metadata:
+  status: preview
+  maintainer: wirelint
+  surface: signed-webhook-request
+  methodPolicy: varies-by-subscription

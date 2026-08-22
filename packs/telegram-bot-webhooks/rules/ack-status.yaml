@@ -1,0 +1,16 @@
+schemaVersion: 1
+id: WL-TELEGRAM-ACK-STATUS-001
+kind: cel
+scope: envelope
+severity: error
+stability: preview
+title: Telegram webhook acknowledgement must be 2xx
+explanation: Telegram retries webhook updates when the response status is outside the 2xx range.
+docsRef: bot-api
+remediationKey: telegram-webhook-ack-status
+requires: has(envelope.response)
+assert: envelope.response.status >= 200 && envelope.response.status < 300
+evidencePointers:
+  - /response/status
+messages:
+  evidence-unavailable: "No response was captured, so Telegram acknowledgement status cannot be decided."

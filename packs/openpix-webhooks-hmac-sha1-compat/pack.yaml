@@ -1,0 +1,44 @@
+packProtocol: "1.2"
+id: openpix-webhooks-hmac-sha1-compat
+name: OpenPix Webhooks HMAC-SHA1 Compatibility
+packVersion: 0.1.0
+providerDocsRevision: "2026-08-18"
+minWireLinterVersion: 0.1.0
+capabilities:
+  - passive-lint
+secrets:
+  hmac-secret:
+    env: OPENPIX_WEBHOOK_HMAC_SECRET
+    required: false
+    description: HMAC secret key configurada no webhook OpenPix
+docs:
+  hmac:
+    url: https://developers.openpix.com.br/docs/webhook/seguranca/webhook-hmac
+    revision: "2026-07-28"
+    section: Como validar o HMAC Signature?
+  platform:
+    url: https://developers.openpix.com.br/docs/webhook/platform/webhook-platform-api
+    revision: "2026-07-28"
+    section: Step 1 - Ajustes
+  timeout:
+    url: https://developers.openpix.com.br/docs/webhook/webhook-timeout
+    revision: "2026-05-04"
+    section: Timeout
+  recommended-signature:
+    url: https://developers.woovi.com/docs/webhook/seguranca/webhook-signature-validation
+    revision: "2026-08-18"
+    section: Como validar o Webhook Signature?
+signatures:
+  payload-hmac-sha1: signatures/payload-hmac-sha1.yaml
+rules:
+  - rules/signature.yaml
+  - rules/method.yaml
+  - rules/ack-duration.yaml
+metadata:
+  status: preview
+  maintainer: wirelint
+  vendor: openpix-woovi
+  region: BR
+  surface: webhook-hmac-sha1-compatibility
+  compatibility: legacy-hmac
+  migrationNote: "Woovi's current documentation recommends x-webhook-signature with its public key. This contract intentionally supports the still-documented X-OpenPix-Signature HMAC method without presenting it as the preferred modern verification path."

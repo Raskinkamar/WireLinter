@@ -1,0 +1,33 @@
+packProtocol: "1.2"
+id: cashfree-payments-webhooks
+name: Cashfree Payments Webhooks
+packVersion: 0.1.0
+providerDocsRevision: "2026-08-18"
+minWireLinterVersion: 0.1.0
+capabilities:
+  - passive-lint
+secrets:
+  client-secret:
+    env: CASHFREE_CLIENT_SECRET
+    required: false
+    description: Cashfree client secret used for webhook signature verification
+docs:
+  verification:
+    url: https://www.cashfree.com/docs/payments/online/webhooks/signature-verification
+    revision: "2026-08-18"
+    section: Webhook Signature Verification
+  delivery:
+    url: https://www.cashfree.com/docs/payments/webhooks
+    revision: "2026-08-18"
+    section: Webhook migration
+signatures:
+  timestamp-body-hmac-sha256: signatures/timestamp-body-hmac-sha256.yaml
+rules:
+  - rules/signature.yaml
+  - rules/method.yaml
+  - rules/ack-status.yaml
+metadata:
+  status: preview
+  maintainer: wirelint
+  vendor: cashfree
+  surface: payments-webhook

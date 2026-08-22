@@ -1,0 +1,18 @@
+schemaVersion: 1
+id: WL-NFEIO-DFE-V2-SIGNATURE-001
+kind: signature
+scope: envelope
+severity: error
+stability: preview
+title: NFE.io DFe Inbound V2 signature must be valid
+explanation: NFE.io DFe Inbound WebhookVersion 2 signs the exact raw request body with HMAC-SHA256 and sends the hexadecimal digest in X-NFe-Signature.
+signatureRef: payload-hmac-sha256
+docsRef: inbound
+remediationKey: nfeio-dfe-v2-webhook-signature
+messages:
+  missing-signature: "X-NFe-Signature is missing from a complete DFe Inbound V2 webhook capture."
+  malformed-signature: "X-NFe-Signature is not a valid hexadecimal HMAC-SHA256 digest."
+  signature-mismatch: "X-NFe-Signature does not match the exact raw body for the supplied DFe Inbound webhook secret."
+  secret-unavailable: "Set NFEIO_DFE_INBOUND_WEBHOOK_SECRET to verify DFe Inbound V2 authenticity."
+  insufficient-body-fidelity: "DFe Inbound V2 signs the exact raw payload bytes, so reconstructed or unavailable bytes cannot prove authenticity."
+  insufficient-header-evidence: "The header capture is incomplete, so X-NFe-Signature cannot be proven absent."

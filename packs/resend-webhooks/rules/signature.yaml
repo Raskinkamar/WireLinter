@@ -1,0 +1,20 @@
+schemaVersion: 1
+id: WL-RESEND-SIGNATURE-001
+kind: signature
+scope: envelope
+severity: error
+stability: preview
+title: Resend webhook signature must be valid
+explanation: Resend uses Svix signing headers and requires verification against the exact raw webhook body.
+signatureRef: svix-v1
+docsRef: verification
+remediationKey: resend-webhook-signature
+messages:
+  missing-signature: "svix-signature is missing from a complete header capture. Verify Resend webhook signatures before processing deliveries."
+  malformed-signature: "svix-signature is malformed; expected one or more v1,<base64> signatures."
+  missing-signature-input: "A required Resend/Svix signing input is missing from the request."
+  ambiguous-signature-input: "A Resend/Svix signing input appeared more than once where exactly one value is required."
+  signature-mismatch: "No v1 signature matches the signed Resend/Svix request for the supplied webhook secret."
+  secret-unavailable: "Set RESEND_WEBHOOK_SECRET to verify Resend webhook authenticity."
+  insufficient-body-fidelity: "Resend signature verification requires the exact raw body. Reconstructed or unavailable body bytes cannot prove the signature."
+  insufficient-header-evidence: "The captured header set is incomplete, so WireLinter cannot safely decide whether Resend/Svix signing headers were absent."

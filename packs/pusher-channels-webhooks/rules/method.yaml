@@ -1,0 +1,13 @@
+schemaVersion: 1
+id: WL-PUSHER-CHANNELS-METHOD-001
+kind: cel
+scope: envelope
+severity: error
+stability: preview
+title: Pusher Channels webhook delivery must use POST
+explanation: Pusher Channels sends webhook events as HTTP POST requests to the configured URL.
+docsRef: webhooks
+remediationKey: pusher-channels-webhook-method
+assert: envelope.request.method == "POST"
+evidencePointers:
+  - /request/method

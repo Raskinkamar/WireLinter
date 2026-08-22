@@ -1,0 +1,13 @@
+schemaVersion: 1
+id: WL-ASANA-HANDSHAKE-METHOD-001
+kind: cel
+scope: envelope
+severity: error
+stability: preview
+title: Asana webhook handshake must use POST
+explanation: During webhook creation, Asana sends a test POST request to the target endpoint.
+docsRef: create-webhook
+remediationKey: asana-webhook-handshake-method
+assert: envelope.request.method == "POST"
+evidencePointers:
+  - /request/method

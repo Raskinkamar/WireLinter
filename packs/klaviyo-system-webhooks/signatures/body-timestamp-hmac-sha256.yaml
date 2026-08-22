@@ -1,0 +1,29 @@
+schemaVersion: 1
+id: body-timestamp-hmac-sha256
+sourceRefs:
+  - system-webhooks
+secret:
+  ref: webhook-secret
+  representation: utf8
+bindings:
+  signature-candidates:
+    fromHeader:
+      name: Klaviyo-Signature
+      cardinality: exactly-one
+      trimSpace: true
+  timestamp:
+    fromHeader:
+      name: Klaviyo-Timestamp
+      cardinality: exactly-one
+      trimSpace: true
+  body:
+    fromRawBody:
+      requireFidelity: exact
+message:
+  - binding: body
+  - binding: timestamp
+candidates:
+  binding: signature-candidates
+  encoding: hex
+mac:
+  algorithm: hmac-sha256

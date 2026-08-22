@@ -1,0 +1,13 @@
+schemaVersion: 1
+id: WL-RESEND-METHOD-001
+kind: cel
+scope: envelope
+severity: error
+stability: preview
+title: Resend webhook delivery must use POST
+explanation: Resend webhook notifications are delivered as HTTPS POST requests.
+docsRef: webhooks
+remediationKey: resend-webhook-method
+assert: envelope.request.method == "POST"
+evidencePointers:
+  - /request/method

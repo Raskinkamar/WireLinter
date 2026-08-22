@@ -1,0 +1,12 @@
+schemaVersion: 1
+id: WL-OMIE-WEBHOOK-METHOD-001
+kind: cel
+scope: envelope
+severity: error
+stability: preview
+title: Omie webhooks must use POST
+explanation: Omie groups webhook events per application and endpoint and delivers them to the configured destination using HTTP POST.
+docsRef: webhooks
+assert: envelope.request.method == "POST"
+evidencePointers:
+  - /request/method

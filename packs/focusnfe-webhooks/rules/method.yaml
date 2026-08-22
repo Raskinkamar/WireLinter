@@ -1,0 +1,12 @@
+schemaVersion: 1
+id: WL-FOCUSNFE-METHOD-001
+kind: cel
+scope: envelope
+severity: error
+stability: preview
+title: Focus NFe webhooks must use POST
+explanation: Focus NFe sends fiscal-document webhook notifications as HTTP POST requests to the configured URL.
+docsRef: webhooks
+assert: envelope.request.method == "POST"
+evidencePointers:
+  - /request/method

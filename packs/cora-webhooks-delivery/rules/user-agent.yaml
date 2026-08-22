@@ -1,0 +1,21 @@
+schemaVersion: 1
+id: WL-CORA-WEBHOOK-USER-AGENT-001
+kind: cel
+scope: envelope
+severity: warning
+stability: preview
+title: Cora webhook User-Agent should identify Cora-Webhook
+explanation: Cora's notification reference documents user-agent Cora-Webhook on outbound webhook calls.
+docsRef: notifications
+requires: >-
+  envelope.request.headersCompleteness == "complete" ||
+  envelope.request.headers.exists(h, h.name.lowerAscii() == "user-agent")
+assert: >-
+  envelope.request.headers.exists(
+    h,
+    h.name.lowerAscii() == "user-agent" && h.value == "Cora-Webhook"
+  )
+evidencePointers:
+  - /request/headers
+messages:
+  evidence-unavailable: "User-Agent was not observed, but the Cora request header capture is incomplete."

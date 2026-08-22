@@ -1,0 +1,17 @@
+schemaVersion: 1
+id: WL-META-WA-VERIFY-TOKEN-001
+kind: secret-match
+scope: envelope
+severity: error
+stability: preview
+title: Meta webhook verification token must match
+explanation: The hub.verify_token value must match the verify token configured for the webhook subscription.
+secretMatchRef: verification-token
+docsRef: verification
+messages:
+  secret-match-valid: "hub.verify_token matches the configured Meta verify token."
+  secret-unavailable: "Set META_WEBHOOK_VERIFY_TOKEN to verify hub.verify_token."
+  missing-secret-input: "hub.verify_token is missing from an exact query capture."
+  ambiguous-secret-input: "Multiple hub.verify_token values were observed."
+  secret-mismatch: "hub.verify_token does not match the configured Meta verify token."
+  insufficient-query-evidence: "The query capture is not exact, so the verify token cannot be decided safely."

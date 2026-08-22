@@ -1,0 +1,15 @@
+schemaVersion: 1
+id: hottok-header
+sourceRefs:
+  - hottok-auth
+secret:
+  ref: hottok
+  representation: utf8
+candidate:
+  fromHeader:
+    name: X-HOTMART-HOTTOK
+    cardinality: exactly-one
+comparison: constant-time-exact
+metadata:
+  transport: header
+  bearer: false

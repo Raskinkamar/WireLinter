@@ -1,0 +1,16 @@
+schemaVersion: 1
+id: WL-VERCEL-ACK-DURATION-001
+kind: cel
+scope: envelope
+severity: error
+stability: preview
+title: Vercel webhook acknowledgement must complete within 30 seconds
+explanation: Vercel aborts the webhook request if a 2xx response is not received within 30 seconds.
+docsRef: webhook-api
+remediationKey: vercel-webhook-ack-duration
+requires: has(envelope.response)
+assert: double(envelope.response.durationMs) < 30000.0
+evidencePointers:
+  - /response/durationMs
+messages:
+  evidence-unavailable: "No response timing was captured, so the Vercel 30-second deadline cannot be decided."

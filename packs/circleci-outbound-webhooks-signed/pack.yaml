@@ -1,0 +1,30 @@
+packProtocol: "1.2"
+id: circleci-outbound-webhooks-signed
+name: CircleCI Signed Outbound Webhooks
+packVersion: 0.1.0
+providerDocsRevision: "2026-08-17"
+minWireLinterVersion: 0.1.0
+capabilities:
+  - passive-lint
+secrets:
+  secret-token:
+    env: CIRCLECI_WEBHOOK_SECRET
+    required: false
+    description: Secret token configured for the CircleCI outbound webhook
+docs:
+  outbound:
+    url: https://circleci.com/docs/guides/integration/outbound-webhooks/
+    revision: "2026-08-17"
+    section: Communication protocol for outbound webhooks
+signatures:
+  outbound-v1: signatures/outbound-v1.yaml
+rules:
+  - rules/signature.yaml
+  - rules/method.yaml
+  - rules/event-header.yaml
+  - rules/ack-status.yaml
+  - rules/ack-duration.yaml
+metadata:
+  status: preview
+  maintainer: wirelint
+  surface: signed-outbound-webhook

@@ -1,0 +1,24 @@
+schemaVersion: 1
+id: content-hmac-sha256
+sourceRefs:
+  - security
+secret:
+  ref: hmac-secret
+  representation: utf8
+bindings:
+  signature-candidates:
+    fromHeader:
+      name: Content-Hmac
+      cardinality: exactly-one
+      trimSpace: true
+  body:
+    fromRawBody:
+      requireFidelity: exact
+message:
+  - binding: body
+candidates:
+  binding: signature-candidates
+  encoding: hex
+  stripPrefix: "sha256="
+mac:
+  algorithm: hmac-sha256

@@ -1,0 +1,13 @@
+schemaVersion: 1
+id: WL-GCAL-METHOD-001
+kind: cel
+scope: envelope
+severity: error
+stability: preview
+title: Google Calendar push notification must use POST
+explanation: Google Calendar sends notification messages as HTTPS POST requests to the channel address.
+docsRef: push
+remediationKey: google-calendar-push-method
+assert: envelope.request.method == "POST"
+evidencePointers:
+  - /request/method

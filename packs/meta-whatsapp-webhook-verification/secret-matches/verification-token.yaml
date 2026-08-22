@@ -1,0 +1,11 @@
+schemaVersion: 1
+id: verification-token
+sourceRefs: [verification]
+secret:
+  ref: verification-token
+  representation: utf8
+candidate:
+  fromQuery:
+    name: hub.verify_token
+    cardinality: exactly-one
+comparison: constant-time-exact

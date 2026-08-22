@@ -1,0 +1,12 @@
+schemaVersion: 1
+id: WL-CORA-WEBHOOK-METHOD-001
+kind: cel
+scope: envelope
+severity: error
+stability: preview
+title: Cora webhook notifications must use POST
+explanation: Cora's notification reference sends webhook events to the registered endpoint using HTTP POST.
+docsRef: notifications
+assert: envelope.request.method == "POST"
+evidencePointers:
+  - /request/method

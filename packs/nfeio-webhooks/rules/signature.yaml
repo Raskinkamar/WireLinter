@@ -1,0 +1,18 @@
+schemaVersion: 1
+id: WL-NFEIO-SIGNATURE-001
+kind: signature
+scope: envelope
+severity: error
+stability: preview
+title: NFE.io webhook signature must be valid
+explanation: NFE.io signs the exact raw webhook body using HMAC-SHA1 and sends the hexadecimal digest prefixed with sha1= in X-Hub-Signature.
+signatureRef: payload-hmac-sha1
+docsRef: verification
+remediationKey: nfeio-webhook-signature
+messages:
+  missing-signature: "X-Hub-Signature is missing from a complete NFE.io webhook capture."
+  malformed-signature: "X-Hub-Signature must use sha1=<40 hex HMAC-SHA1 digest>."
+  signature-mismatch: "X-Hub-Signature does not match the exact raw body for the supplied NFE.io webhook secret."
+  secret-unavailable: "Set NFEIO_WEBHOOK_SECRET to verify webhook authenticity."
+  insufficient-body-fidelity: "NFE.io signs the exact raw bytes, so parsed/re-serialized or unavailable body bytes cannot prove authenticity."
+  insufficient-header-evidence: "The header capture is incomplete, so X-Hub-Signature cannot be proven absent."

@@ -1,0 +1,18 @@
+schemaVersion: 1
+id: WL-WEBEX-MSG-SIGNATURE-001
+kind: signature
+scope: envelope
+severity: error
+stability: preview
+title: Webex Messaging X-Spark-Signature must be valid
+explanation: Webex Messaging can sign the raw JSON webhook payload with HMAC-SHA1 using the webhook secret and sends the hexadecimal digest in X-Spark-Signature.
+signatureRef: raw-json-hmac-sha1
+docsRef: secret-example
+remediationKey: webex-messaging-webhook-signature
+messages:
+  missing-signature: "X-Spark-Signature is missing from a complete capture of this Webex Messaging signed-webhook surface."
+  malformed-signature: "X-Spark-Signature is malformed; the documented HMAC-SHA1 example uses a hexadecimal digest."
+  signature-mismatch: "X-Spark-Signature does not match HMAC-SHA1 of the exact raw JSON payload for the supplied webhook secret."
+  secret-unavailable: "Set WEBEX_WEBHOOK_SECRET to verify Webex Messaging webhook authenticity."
+  insufficient-body-fidelity: "Webex signs the webhook payload, so reconstructed or unavailable body bytes cannot prove authenticity."
+  insufficient-header-evidence: "The captured header set is incomplete, so X-Spark-Signature cannot be proven absent."

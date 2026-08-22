@@ -1,0 +1,13 @@
+schemaVersion: 1
+id: WL-GRAFANA-METHOD-001
+kind: cel
+scope: envelope
+severity: error
+stability: preview
+title: Grafana Alerting webhook method must be POST or PUT
+explanation: Grafana Alerting webhook contact points support HTTP POST or PUT.
+docsRef: notifier
+remediationKey: grafana-alerting-webhook-method
+assert: envelope.request.method == "POST" || envelope.request.method == "PUT"
+evidencePointers:
+  - /request/method

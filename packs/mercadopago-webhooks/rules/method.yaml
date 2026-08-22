@@ -1,0 +1,13 @@
+schemaVersion: 1
+id: WL-MP-WEBHOOKS-METHOD-001
+kind: cel
+scope: envelope
+severity: error
+stability: preview
+title: Mercado Pago webhook delivery must use POST
+explanation: Mercado Pago Webhooks deliver notifications to the configured URL using HTTP POST.
+docsRef: webhook-docs
+remediationKey: mercadopago-webhook-method
+assert: envelope.request.method == "POST"
+evidencePointers:
+  - /request/method

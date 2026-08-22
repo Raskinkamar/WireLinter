@@ -1,0 +1,24 @@
+packProtocol: "1.2"
+id: dropbox-webhook-verification
+name: Dropbox Webhook Verification
+packVersion: 0.1.0
+providerDocsRevision: "2026-08-17"
+minWireLinterVersion: 0.1.0
+capabilities:
+  - passive-lint
+docs:
+  webhooks:
+    url: https://www.dropbox.com/developers/reference/webhooks
+    revision: "2026-08-17"
+    section: The verification request
+rules:
+  - rules/method.yaml
+  - rules/challenge.yaml
+  - rules/ack-status.yaml
+  - rules/content-type.yaml
+  - rules/nosniff.yaml
+  - rules/echo-challenge.yaml
+metadata:
+  status: preview
+  maintainer: wirelint
+  surface: initial-webhook-uri-verification

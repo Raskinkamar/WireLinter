@@ -1,0 +1,18 @@
+schemaVersion: 1
+id: WL-SNYK-SIGNATURE-001
+kind: signature
+scope: envelope
+severity: error
+stability: preview
+title: Snyk webhook transport signature must be valid
+explanation: Snyk signs webhook transports with HMAC-SHA256 over the request body and sends sha256=<hex digest> in X-Hub-Signature.
+signatureRef: transport-hmac-sha256
+docsRef: validation
+remediationKey: snyk-webhook-signature
+messages:
+  missing-signature: "X-Hub-Signature is missing from a complete Snyk webhook capture."
+  malformed-signature: "Snyk X-Hub-Signature must use sha256=<hex digest>."
+  signature-mismatch: "Snyk X-Hub-Signature does not match the exact raw request body for the supplied secret."
+  secret-unavailable: "Set SNYK_WEBHOOK_SECRET to verify authenticity."
+  insufficient-body-fidelity: "Snyk signs the request body, so reconstructed or unavailable body bytes cannot prove authenticity."
+  insufficient-header-evidence: "The header capture is incomplete, so X-Hub-Signature cannot be proven absent."

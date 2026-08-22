@@ -1,0 +1,20 @@
+schemaVersion: 1
+id: WL-GITLAB-SIGNATURE-001
+kind: signature
+scope: envelope
+severity: error
+stability: preview
+title: GitLab webhook signing-token signature must be valid
+explanation: GitLab signing-token webhooks follow Standard Webhooks and sign webhook-id, webhook-timestamp, and the exact raw body with HMAC-SHA256.
+signatureRef: standard-webhook-v1
+docsRef: webhooks
+remediationKey: gitlab-webhook-signature
+messages:
+  missing-signature: "webhook-signature is missing from a complete header capture. Configure a GitLab signing token and verify the HMAC before processing the delivery."
+  malformed-signature: "webhook-signature is malformed; GitLab sends space-separated v1,<base64> signatures."
+  missing-signature-input: "A required Standard Webhooks signing input is missing from the GitLab request."
+  ambiguous-signature-input: "A GitLab signing input appeared more than once where exactly one value is required."
+  signature-mismatch: "No v1 signature matches HMAC-SHA256 of webhook-id.webhook-timestamp.<raw body> for the supplied signing token."
+  secret-unavailable: "Set GITLAB_WEBHOOK_SIGNING_TOKEN to verify signing-token authenticity."
+  insufficient-body-fidelity: "GitLab signs the exact raw body. Reconstructed or unavailable body bytes cannot prove the signature."
+  insufficient-header-evidence: "The captured header set is incomplete, so WireLinter cannot safely decide whether GitLab signing headers were absent."

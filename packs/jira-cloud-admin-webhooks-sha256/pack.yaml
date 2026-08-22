@@ -1,0 +1,27 @@
+packProtocol: "1.2"
+id: jira-cloud-admin-webhooks-sha256
+name: Jira Cloud Secure Admin Webhooks SHA-256
+packVersion: 0.1.0
+providerDocsRevision: "2026-08-17"
+minWireLinterVersion: 0.1.0
+capabilities:
+  - passive-lint
+secrets:
+  webhook-secret:
+    env: JIRA_WEBHOOK_SECRET
+    required: false
+    description: Secret configured for a Jira Cloud admin webhook
+docs:
+  secure-admin:
+    url: https://developer.atlassian.com/cloud/jira/software/webhooks/
+    revision: "2026-07-31"
+    section: Secure admin webhooks
+signatures:
+  current-sha256: signatures/current-sha256.yaml
+rules:
+  - rules/signature.yaml
+metadata:
+  status: preview
+  maintainer: wirelint
+  surface: secure-admin-webhook-current-sha256
+  note: Jira documents method agility; this contract intentionally covers the current sha256 method only

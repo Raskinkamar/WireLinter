@@ -1,0 +1,29 @@
+packProtocol: "1.2"
+id: focusnfe-webhooks
+name: Focus NFe Webhooks
+packVersion: 0.1.0
+providerDocsRevision: "2026-08-18"
+minWireLinterVersion: 0.1.0
+capabilities:
+  - passive-lint
+docs:
+  webhooks:
+    url: https://doc.focusnfe.com.br/reference/webhooks
+    revision: "2026-08-18"
+    section: Webhooks
+  create:
+    url: https://doc.focusnfe.com.br/reference/criar_webhook
+    revision: "2026-08-18"
+    section: Criar
+rules:
+  - rules/method.yaml
+  - rules/content-type.yaml
+  - rules/ack-status.yaml
+metadata:
+  status: preview
+  maintainer: wirelint
+  vendor: focus-nfe
+  region: BR
+  surface: fiscal-webhook-delivery
+  retrySchedule: 1m-30m-1h-3h-24h
+  authPolicyNote: "Focus NFe lets the integrator configure both the authorization header name and value. Because both are configuration-defined, this delivery contract does not invent a fixed authentication header."

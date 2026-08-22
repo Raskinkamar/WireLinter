@@ -1,0 +1,18 @@
+schemaVersion: 1
+id: WL-X-SIGNATURE-001
+kind: signature
+scope: envelope
+severity: error
+stability: preview
+title: X webhook event signature must be valid
+explanation: X signs each POST event payload with HMAC-SHA256 over the raw request body using the app consumer secret.
+signatureRef: event-hmac-sha256
+docsRef: quickstart
+remediationKey: x-webhook-signature
+messages:
+  missing-signature: "x-twitter-webhooks-signature is missing from a complete POST event capture."
+  malformed-signature: "The X webhook signature must use sha256=<base64 digest>."
+  signature-mismatch: "The X webhook signature does not match the exact raw request body for the supplied consumer secret."
+  secret-unavailable: "Set X_CONSUMER_SECRET to verify webhook event authenticity."
+  insufficient-body-fidelity: "X signs the raw request bytes, so reconstructed or unavailable body evidence cannot prove the signature."
+  insufficient-header-evidence: "The header capture is incomplete, so absence of x-twitter-webhooks-signature cannot be proven."

@@ -1,0 +1,16 @@
+schemaVersion: 1
+id: WL-DROPBOX-VERIFY-CONTENT-TYPE-001
+kind: cel
+scope: envelope
+severity: error
+stability: preview
+title: Dropbox verification response must be text/plain
+explanation: Dropbox instructs webhook endpoints to return the challenge as text/plain to avoid reflected XSS.
+docsRef: webhooks
+remediationKey: dropbox-webhook-verification-content-type
+requires: has(envelope.response) && (envelope.response.headersCompleteness == "complete" || envelope.response.headers.exists(h, h.name.lowerAscii() == "content-type"))
+assert: envelope.response.headers.filter(h, h.name.lowerAscii() == "content-type").size() == 1 && envelope.response.headers.exists(h, h.name.lowerAscii() == "content-type" && h.value.lowerAscii().startsWith("text/plain"))
+evidencePointers:
+  - /response/headers
+messages:
+  evidence-unavailable: "Content-Type was not observed, but the response header capture is incomplete."

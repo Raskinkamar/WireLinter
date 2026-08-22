@@ -1,0 +1,13 @@
+schemaVersion: 1
+id: WL-STORYBLOK-METHOD-001
+kind: cel
+scope: envelope
+severity: error
+stability: preview
+title: Storyblok webhook delivery must use POST
+explanation: Storyblok sends webhook payloads to the configured endpoint as HTTP POST requests.
+docsRef: signed-webhooks
+remediationKey: storyblok-webhook-method
+assert: envelope.request.method == "POST"
+evidencePointers:
+  - /request/method

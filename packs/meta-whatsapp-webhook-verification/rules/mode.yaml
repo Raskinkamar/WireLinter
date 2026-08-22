@@ -1,0 +1,14 @@
+schemaVersion: 1
+id: WL-META-WA-VERIFY-MODE-001
+kind: cel
+scope: envelope
+severity: error
+stability: preview
+title: Meta webhook verification mode must be subscribe
+explanation: Callback verification identifies a subscription request with hub.mode=subscribe.
+docsRef: verification
+requires: envelope.request.queryFidelity == "exact"
+assert: envelope.request.query.filter(q, q.name == "hub.mode").size() == 1 && envelope.request.query.exists(q, q.name == "hub.mode" && q.value == "subscribe")
+evidencePointers: [/request/query]
+messages:
+  evidence-unavailable: "Exact query evidence is unavailable, so hub.mode cannot be checked."

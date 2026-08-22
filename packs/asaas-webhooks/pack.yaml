@@ -1,0 +1,48 @@
+packProtocol: "1.3"
+id: asaas-webhooks
+name: Asaas Webhooks
+packVersion: 0.1.0
+providerDocsRevision: "2026-08-17"
+minWireLinterVersion: 0.1.0
+capabilities:
+  - passive-lint
+secrets:
+  webhook-token:
+    env: ASAAS_WEBHOOK_TOKEN
+    required: false
+    description: authToken configured for the Asaas Webhook
+docs:
+  webhook-overview:
+    url: https://docs.asaas.com/docs/sobre-os-webhooks
+    revision: "2026-08-17"
+    section: Introdução - Webhooks
+  webhook-auth-token:
+    url: https://docs.asaas.com/changelog/obrigatoriedade-e-auto-gera%C3%A7%C3%A3o-de-tokens-para-webhooks
+    revision: "2026-02-20"
+    section: Obrigatoriedade e auto-geração de tokens para Webhooks
+  webhook-faq:
+    url: https://docs.asaas.com/docs/faq-de-webhooks
+    revision: "2026-08-17"
+    section: FAQ de Webhooks
+  webhook-idempotency:
+    url: https://docs.asaas.com/docs/como-implementar-idempotencia-em-webhooks
+    revision: "2026-08-17"
+    section: Como implementar idempotência em Webhooks
+secretMatches:
+  auth-token: secret-matches/auth-token.yaml
+rules:
+  - rules/auth-token.yaml
+  - rules/method.yaml
+  - rules/ack-status.yaml
+  - rules/ack-duration.yaml
+metadata:
+  status: preview
+  maintainer: wirelint
+  vendor: asaas
+  region: BR
+  surface: authenticated-webhook
+  deliveryModel: at-least-once
+  eventIdField: id
+  ackPolicy: http-200-only
+  ackPolicyNote: "The current Asaas Webhooks FAQ explicitly says only HTTP 200 is treated as successful processing, despite broader pages that still describe the 2xx family."
+  authPolicyNote: "authToken became mandatory for newly configured Webhooks in February 2026; legacy configurations may still exist."

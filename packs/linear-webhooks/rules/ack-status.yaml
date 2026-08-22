@@ -1,0 +1,16 @@
+schemaVersion: 1
+id: WL-LINEAR-ACK-STATUS-001
+kind: cel
+scope: envelope
+severity: error
+stability: preview
+title: Linear webhook acknowledgement must be HTTP 200
+explanation: Linear requires the webhook endpoint to respond with HTTP 200 OK.
+docsRef: webhooks
+remediationKey: linear-ack-status
+requires: has(envelope.response)
+assert: envelope.response.status == 200
+evidencePointers:
+  - /response/status
+messages:
+  evidence-unavailable: "No application response was captured, so WireLinter cannot decide whether Linear received HTTP 200."

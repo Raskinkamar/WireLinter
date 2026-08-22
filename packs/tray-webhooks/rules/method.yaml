@@ -1,0 +1,12 @@
+schemaVersion: 1
+id: WL-TRAY-METHOD-001
+kind: cel
+scope: envelope
+severity: error
+stability: preview
+title: Tray webhook notifications must use POST
+explanation: Tray documents webhook notifications as payloads sent via HTTP POST to the configured URL.
+docsRef: webhooks
+assert: envelope.request.method == "POST"
+evidencePointers:
+  - /request/method

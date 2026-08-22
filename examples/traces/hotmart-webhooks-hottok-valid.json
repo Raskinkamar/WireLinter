@@ -1,0 +1,44 @@
+{
+  "schemaVersion": 1,
+  "traceId": "trace_hotmart_hottok_valid",
+  "provider": "hotmart-webhooks-hottok",
+  "startedAt": "2026-08-18T05:30:00Z",
+  "envelopes": [
+    {
+      "id": "env_hotmart_hottok_valid",
+      "provider": "hotmart-webhooks-hottok",
+      "eventType": "PURCHASE_APPROVED",
+      "receivedAt": "2026-08-18T05:30:00Z",
+      "request": {
+        "method": "POST",
+        "url": "https://example.test/webhooks/hotmart",
+        "headers": [
+          {"name": "X-HOTMART-HOTTOK", "value": "hottok_wirelint_demo"},
+          {"name": "Content-Type", "value": "application/json"}
+        ],
+        "headersCompleteness": "complete",
+        "rawQuery": "",
+        "queryFidelity": "exact",
+        "query": [],
+        "bodyFidelity": "exact",
+        "rawBodyBase64": "eyJpZCI6IjI3YjUyZDI4LWFjZjQtNDQ4YS1iYzVmLTRhYjRiYzhkY2IzNSIsImNyZWF0aW9uX2RhdGUiOjE2MzI0MTE0MDY4NzQsImV2ZW50IjoiUFVSQ0hBU0VfQVBQUk9WRUQiLCJ2ZXJzaW9uIjoiMi4wLjAiLCJkYXRhIjp7InByb2R1Y3QiOnsiaWQiOjM1MjY5MDZ9fX0=",
+        "decodedBody": {
+          "id": "27b52d28-acf4-448a-bc5f-4ab4bc8dcb35",
+          "creation_date": 1632411406874,
+          "event": "PURCHASE_APPROVED",
+          "version": "2.0.0",
+          "data": {"product": {"id": 3526906}}
+        }
+      },
+      "response": {
+        "status": 200,
+        "headers": [],
+        "headersCompleteness": "complete",
+        "bodyFidelity": "exact",
+        "rawBodyBase64": "",
+        "durationMs": 18.0
+      }
+    }
+  ],
+  "observations": []
+}
